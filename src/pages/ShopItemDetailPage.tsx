@@ -174,7 +174,7 @@ function AltTipsPanel({ tips, color }: { tips: string[]; color: string }) {
 }
 
 /** Pro tips panel */
-function ProTipsPanel({ tips, color }: { tips: string[]; color: string }) {
+function ProTipsPanel({ tips }: { tips: string[] }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -387,7 +387,7 @@ export function ShopItemDetailPage() {
             {hasAltTips && <AltTipsPanel tips={item.altTips!} color={color} />}
 
             {/* Pro tips */}
-            {hasProTips && <ProTipsPanel tips={item.tips!} color={color} />}
+            {hasProTips && <ProTipsPanel tips={item.tips!} />}
           </div>
 
           {/* Right sidebar: build path + categories */}
