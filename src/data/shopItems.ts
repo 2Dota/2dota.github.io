@@ -196,7 +196,7 @@ export const SHOP_ITEMS: ShopItem[] = [
     slug: 'branch',
     category: 'Attributes',
     cost: 50,
-    imageUrl: img('branch'),
+    imageUrl: img('iron_branch'),
     description: 'A simple branch from the woods. Builds into many items and can create a tree with Tango.',
     stats: ['+1 All Stats'],
     tier: 'Basic',

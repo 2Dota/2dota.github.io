@@ -38,7 +38,10 @@ const HERO_SLUGS: Record<string, string> = {
   'Dragon Knight': 'dragon_knight',
   'Mirana': 'mirana',
   'Invoker': 'invoker',
+  'Riki': 'riki',
 };
+
+const VALVE_HERO_CDN = 'https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes';
 
 function AttributeIcon({ attr }: { attr: string }) {
   switch (attr) {
@@ -51,29 +54,44 @@ function AttributeIcon({ attr }: { attr: string }) {
 }
 
 export function HeroPortrait({ item, className = '', large = false }: HeroPortraitProps) {
-  const [imgError, setImgError] = useState(false);
+  const [heroErr, setHeroErr] = useState(false);
+  const [itemImgErr, setItemImgErr] = useState(false);
   const rarityColor = getRarityHex(item.rarity);
 
   const slug = item.hero ? HERO_SLUGS[item.hero] : null;
   const heroImgUrl = slug
-    ? `https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/${slug}/hero_selection.png`
+    ? `${VALVE_HERO_CDN}/${slug}/hero_selection.png`
     : null;
 
   const sizeClass = large ? 'w-full h-full' : 'w-full h-full';
 
-  if (heroImgUrl && !imgError) {
+  // 1st priority: hero portrait from Valve CDN
+  if (heroImgUrl && !heroErr) {
     return (
       <img
         src={heroImgUrl}
         alt={item.hero ?? item.name}
         className={`${sizeClass} object-cover object-center transition-transform duration-500 group-hover:scale-105 ${className}`}
-        onError={() => setImgError(true)}
+        onError={() => setHeroErr(true)}
         loading="lazy"
       />
     );
   }
 
-  // Fallback: gradient with rarity color + category label
+  // 2nd priority: item.imageUrl (now also points to Valve CDN for non-hero cosmetics)
+  if (item.imageUrl && !itemImgErr) {
+    return (
+      <img
+        src={item.imageUrl}
+        alt={item.name}
+        className={`${sizeClass} object-cover object-center transition-transform duration-500 group-hover:scale-105 ${className}`}
+        onError={() => setItemImgErr(true)}
+        loading="lazy"
+      />
+    );
+  }
+
+  // Fallback: gradient placeholder with rarity color
   return (
     <div
       className={`${sizeClass} flex flex-col items-center justify-center gap-3 ${className}`}

@@ -1,91 +1,68 @@
 import type { StoreItem } from '../types';
 
-// Real Dota 2 item images from d2uax1u4k5j88t.cloudfront.net (DotaShowcase CDN - same source as official)
-// Hero portraits from the same CDN
-const CDN = 'https://d2uax1u4k5j88t.cloudfront.net';
+// Hero portrait images from Valve's official Dota 2 CDN
+const VALVE_CDN = 'https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes';
+const hero = (slug: string) => `${VALVE_CDN}/${slug}/hero_selection.png`;
 
-// Real hero portrait URLs extracted from DotaShowcase
+// Hero portraits (same CDN used by HeroPortrait component)
 const HEROES: Record<string, string> = {
-  lina: `${CDN}/hero/8e14126cb00da18e61fc8f062eaec701e6b1caa15b4e95eb89b3f0f38f0053e1/npc_dota_hero_lina.png`,
-  nevermore: `${CDN}/hero/0e99ff0b0aa723cc9f74605249f1f1a63356014f63cfbb9cadcafa6836b11860/npc_dota_hero_nevermore.png`,
-  phantom_assassin: `${CDN}/hero/b2d02ee96266c317f60751e028f579a175873ceb2c75a6e0e093ac3729f695b2/npc_dota_hero_phantom_assassin.png`,
-  techies: `${CDN}/hero/c81383ae4eda32a0c60fb03ede8a7f693b272470bf462264751e6fa92fff80cc/npc_dota_hero_techies.png`,
-  terrorblade: `${CDN}/hero/d9029522257efec4407b48aadc4944fefc59746e7b5ff207584bc3a34499d11f/npc_dota_hero_terrorblade.png`,
-  zuus: `${CDN}/hero/c68a2aa0af407144c7e7df3bf6000a4b2c2b5cbf27270b87836b7523d450e4eb/npc_dota_hero_zuus.png`,
-  juggernaut: `${CDN}/hero/57a91fcb1448d39f30b86c8b14d1f391d988553bd48c6d28765443807ba096e7/npc_dota_hero_juggernaut.png`,
-  wisp: `${CDN}/hero/0ba15ca312776eb8a46462d1cc6f0ee69fc2553cd7178ccd34dd75c4b96347e0/npc_dota_hero_wisp.png`,
-  rubick: `${CDN}/hero/a6276b3388857643eff950ecd04560054394d581983a9208adbe001c148b6cc1/npc_dota_hero_rubick.png`,
-  earthshaker: `${CDN}/hero/43a5396c08c827161435d909e60a526a67983f4a50525ec36dc0e96591a5c095/npc_dota_hero_earthshaker.png`,
-  ogre_magi: `${CDN}/hero/ffcd35dd77b8c7e2a25a5d18964ddfb4b04ea1353ae73a4b20d30f50ed2a061f/npc_dota_hero_ogre_magi.png`,
-  skeleton_king: `${CDN}/hero/57ad7570e512242c1a002ea4128968788a20df576e5eef0e68317d207a0e2abc/npc_dota_hero_skeleton_king.png`,
-  queenofpain: `${CDN}/hero/cedf4ffc98f1ca847bbceb06205e9b44d595ec35cd2915a444421e67b50884d4/npc_dota_hero_queenofpain.png`,
-  spectre: `${CDN}/hero/c1b80b7e1763862f658e4b60455523f46d9f4eb8cd490c0979d845f088f1c89e/npc_dota_hero_spectre.png`,
-  drow_ranger: `${CDN}/hero/e05ded84c2c6362bd050fc2013719fc6c23fa5e8f3fc0f91b62a21192cd2b6b6/npc_dota_hero_drow_ranger.png`,
-  razor: `${CDN}/hero/6189e794dfdca1a00427352ab64f50c63dfc1844e072e193ee6bb27e0e78bb0d/npc_dota_hero_razor.png`,
-  faceless_void: `${CDN}/hero/fff080bb01112554dbe6f8d2eb1110399615601f02baed33e0daecb66190b158/npc_dota_hero_faceless_void.png`,
-  legion_commander: `${CDN}/hero/1af8f7aefc05b0e5dd7737aeff1a44b55422f04f66d127b8dffffe2b889d23f8/npc_dota_hero_legion_commander.png`,
-  pudge: `${CDN}/hero/e99e286a9bc903b613afbdd54118fd3e13ed96b225eb03eba53d8e00af0def7d/npc_dota_hero_pudge.png`,
-  crystal_maiden: `${CDN}/hero/c15e3de26adda8b4c9c66b18f69bccc24cc928effa1c4a589e0c25bbf1d83cc0/npc_dota_hero_crystal_maiden.png`,
-  monkey_king: `${CDN}/hero/42830731956644ed0d1ab4afb30d703b2762100c65389f111fddde4fc87b8a9f/npc_dota_hero_monkey_king.png`,
-  windrunner: `${CDN}/hero/0b3158d145d88ea4c3341c0a62701a475ce77909e630a41769255701c6a7edf9/npc_dota_hero_windrunner.png`,
-  skywrath_mage: `${CDN}/hero/56f4b15b138511eabfa30b9bbc9130b4476c9c31bbf08db97d04fd666d804b4f/npc_dota_hero_skywrath_mage.png`,
-  vengefulspirit: `${CDN}/hero/ad8269969bc548c92c584511f23dae252c4e6643767deb860b906775191854f2/npc_dota_hero_vengefulspirit.png`,
-  dragon_knight: `${CDN}/hero/6d4195d26e9cd20232c0bae2b020ff6fc332f205aa3afa57ede2a81ab20a8147/npc_dota_hero_dragon_knight.png`,
-  mirana: `${CDN}/hero/b83fe2b3b1b79d8dee45b1c95d86524a2bce7231c518016a67d33fcd5242bf37/npc_dota_hero_mirana.png`,
-  invoker: `${CDN}/hero/ab196aa974ddc96cc65a8ef41743dd122307dbee349c99d8d3967451e850dc5f/npc_dota_hero_invoker.png`,
-  riki: `${CDN}/hero/61abbd07682d9ed6d30ff6abe2da42bde6ce5d125c415bdb6366bad8776db389/npc_dota_hero_riki.png`,
+  lina: hero('lina'),
+  nevermore: hero('nevermore'),
+  phantom_assassin: hero('phantom_assassin'),
+  techies: hero('techies'),
+  terrorblade: hero('terrorblade'),
+  zuus: hero('zuus'),
+  juggernaut: hero('juggernaut'),
+  wisp: hero('wisp'),
+  rubick: hero('rubick'),
+  earthshaker: hero('earthshaker'),
+  ogre_magi: hero('ogre_magi'),
+  skeleton_king: hero('skeleton_king'),
+  queenofpain: hero('queenofpain'),
+  spectre: hero('spectre'),
+  drow_ranger: hero('drow_ranger'),
+  razor: hero('razor'),
+  faceless_void: hero('faceless_void'),
+  legion_commander: hero('legion_commander'),
+  pudge: hero('pudge'),
+  crystal_maiden: hero('crystal_maiden'),
+  monkey_king: hero('monkey_king'),
+  windrunner: hero('windrunner'),
+  skywrath_mage: hero('skywrath_mage'),
+  vengefulspirit: hero('vengefulspirit'),
+  dragon_knight: hero('dragon_knight'),
+  mirana: hero('mirana'),
+  invoker: hero('invoker'),
+  riki: hero('riki'),
 };
 
-// Real Arcana item images from DotaShowcase (same CDN as Valve)
+// For cosmetic items: use hero portrait as imageUrl (matches what HeroPortrait renders)
+// Non-hero cosmetics (couriers, wards, terrain) use a generic Dota 2 icon from Valve's CDN
 const ITEMS: Record<string, string> = {
-  // Fiery Soul of the Slayer (Lina arcana head)
-  fiery_soul: `${CDN}/item/7440bbf6e4c8c26a5bb16af8f5f47c9a0af06e3ce0e7d9ed98ff81e8dae8bc78/fiery_soul_of_the_slayer.png`,
-  // Demon Eater (Shadow Fiend)
-  demon_eater: `${CDN}/item/9c99e729a56fdbb98ea16c68ddf3c02c9d52eb7abc6d32dba9c0fb82a18d8ed6/demon_eater.png`,
-  // Manifold Paradox (Phantom Assassin)
-  manifold_paradox: `${CDN}/item/ab7c9bc30ce038e11f4c8dd53c3ff38c48d01d89d83d1fcbcb8a29e56c37c8e7/manifold_paradox.png`,
-  // Swine of the Sunken Galley (Techies)
-  swine_galley: `${CDN}/item/6cf0a59b0c0457548a87dd1a87c3adfdd644348735972f00d7cb202b6106f4ea/techies_spleen_weapon.png`,
-  // Fractal Horns of Inner Abysm (Terrorblade)
-  fractal_horns: `${CDN}/item/f131afeff42e57ef20341ac95359c2b6d7739c8cc871b4071998d0c65dcde2d5/demon.png`,
-  // Tempest Helm (Zeus)
-  tempest_helm: `${CDN}/item/13b4a42fff7e4c9bf9071f0e3b6dc5bef363f89b12f4dfab032d34e9d4c2177e/zeus_default_weapon.png`,
-  // Bladeform Legacy (Juggernaut)
-  bladeform: `${CDN}/item/99d8058b884eeab938de86471c44b9da9ba016b24cc8861c0bf231df9011ce28/jugg_sword.png`,
-  // Benevolent Companion (IO)
-  benevolent_companion: `${CDN}/item/da0aa9afe9e115518b7307ade6d769b6cb876280b9b641206d0ce0353c7d8125/default_item.png`,
-  // Magus Cypher (Rubick)
-  magus_cypher: `${CDN}/item/67792b3b5398e6753a0c2b668426afc8e737431c297102d2a8d7a2a2ab756fdc/rubick_staff.png`,
-  // Planetfall (Earthshaker)
-  planetfall: `${CDN}/item/8a51f088eb238da6531150ee6bdd25d2d9a809d8e95cd043ab1d2a1d080d0dea/batrider_mount.png`,
-  // Flockheart's Gamble (Ogre Magi)
-  flockhearts: `${CDN}/item/fdd89dc96202cf8e1e9ca76e62225c1b01e7be75082505d21367708239dce4c4/ogre_magi_weapon.png`,
-  // One True King (Wraith King)
-  one_true_king: `${CDN}/item/550bd7082d86fc86ec10916228e4b5d95965af3358a84445a6597062a36a8088/legion_commander_head.png`,
-  // Eminence of Ristul (QoP)
-  eminence_ristul: `${CDN}/item/caddc4a55d2b75212e65396880d4880640c677cfb4bc9dcb6e50c038be6ea78e/queenofpain_legs.png`,
-  // Phantom Advent (Spectre)
-  phantom_advent: `${CDN}/item/c1b80b7e1763862f658e4b60455523f46d9f4eb8cd490c0979d845f088f1c89e/npc_dota_hero_spectre.png`,
-  // Dread Retribution (Drow)
-  dread_retribution: `${CDN}/item/e05ded84c2c6362bd050fc2013719fc6c23fa5e8f3fc0f91b62a21192cd2b6b6/npc_dota_hero_drow_ranger.png`,
-  // Voidstorm Asylum (Razor)
-  voidstorm: `${CDN}/item/6189e794dfdca1a00427352ab64f50c63dfc1844e072e193ee6bb27e0e78bb0d/npc_dota_hero_razor.png`,
-  // Claszian Apostasy (Faceless Void)
-  claszian: `${CDN}/item/fff080bb01112554dbe6f8d2eb1110399615601f02baed33e0daecb66190b158/npc_dota_hero_faceless_void.png`,
-  // Blades of Voth Domosh (Legion Commander)
-  blades_voth: `${CDN}/item/0d12991ecc45210127874ba5059b32fef7077b93e23d8d28a7b825595074f87f/legion_commander_back.png`,
-  // Feast of Abscession (Pudge)
-  feast_abscession: `${CDN}/item/e45de8f60e6f8bb35da5118ad5662e3ab248a4d8eddef470fac5d2b634c45970/righthook.png`,
-  // Frost Avalanche (Crystal Maiden)
-  frost_avalanche: `${CDN}/item/ca59b0b3ba5ac3586bc8cc042dc35ccfddfab04544b0bca5bc547ce3b338d9aa/jugg_cape.png`,
-  // Great Sage's Reckoning (Monkey King)
-  great_sage: `${CDN}/item/cf5a5473f71b4fcd6e4ae2d7ac41fc76d3c9eadb16614dc22a2da6290c7f7223/monkey_king_base_weapon.png`,
-  // Compass of the Rising Gale (Windranger)
-  compass_gale: `${CDN}/item/0b3158d145d88ea4c3341c0a62701a475ce77909e630a41769255701c6a7edf9/npc_dota_hero_windrunner.png`,
-  // Devotions of Dragonus (Skywrath)
-  devotions_dragonus: `${CDN}/item/56f4b15b138511eabfa30b9bbc9130b4476c9c31bbf08db97d04fd666d804b4f/npc_dota_hero_skywrath_mage.png`,
-  // Resurrection of Shen (Vengeful Spirit)
-  resurrection_shen: `${CDN}/item/ad8269969bc548c92c584511f23dae252c4e6643767deb860b906775191854f2/npc_dota_hero_vengefulspirit.png`,
+  fiery_soul: HEROES.lina,
+  demon_eater: HEROES.nevermore,
+  manifold_paradox: HEROES.phantom_assassin,
+  swine_galley: HEROES.techies,
+  fractal_horns: HEROES.terrorblade,
+  tempest_helm: HEROES.zuus,
+  bladeform: HEROES.juggernaut,
+  benevolent_companion: HEROES.wisp,
+  magus_cypher: HEROES.rubick,
+  planetfall: HEROES.earthshaker,
+  flockhearts: HEROES.ogre_magi,
+  one_true_king: HEROES.skeleton_king,
+  eminence_ristul: HEROES.queenofpain,
+  phantom_advent: HEROES.spectre,
+  dread_retribution: HEROES.drow_ranger,
+  voidstorm: HEROES.razor,
+  claszian: HEROES.faceless_void,
+  blades_voth: HEROES.legion_commander,
+  feast_abscession: HEROES.pudge,
+  frost_avalanche: HEROES.crystal_maiden,
+  great_sage: HEROES.monkey_king,
+  compass_gale: HEROES.windrunner,
+  devotions_dragonus: HEROES.skywrath_mage,
+  resurrection_shen: HEROES.vengefulspirit,
 };
 
 export const STORE_ITEMS: StoreItem[] = [
