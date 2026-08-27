@@ -1,233 +1,340 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sword, Star, Shield } from 'lucide-react';
+import {
+  Sparkles,
+  ShoppingBag,
+  ArrowRight,
+  Sword,
+  Star,
+  Shield,
+  Zap,
+  Package,
+  BookOpen,
+} from 'lucide-react';
 import { STORE_ITEMS } from '../data/items';
-import { ItemCard } from '../components/item/ItemCard';
+import { SHOP_ITEMS, SHOP_CATEGORIES } from '../data/shopItems';
 
-const FEATURED_ITEMS = STORE_ITEMS.filter(i => i.category === 'Arcana' && i.isAvailable).slice(0, 6);
+const FADE_UP = {
+  hidden: { opacity: 0, y: 24 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: i * 0.1, ease: 'easeOut' as const },
+  }),
+};
 
-const STAT_ITEMS = [
-  { icon: Sword, label: 'Total Items', value: `${STORE_ITEMS.length}+` },
-  { icon: Star, label: 'Arcanas', value: `${STORE_ITEMS.filter(i => i.category === 'Arcana').length}` },
-  { icon: Shield, label: 'Heroes Covered', value: `${new Set(STORE_ITEMS.filter(i => i.hero).map(i => i.hero)).size}` },
-];
+interface SectionCardProps {
+  to: string;
+  Icon: React.ElementType;
+  title: string;
+  subtitle: string;
+  description: string;
+  stats: { label: string; value: string }[];
+  accentFrom: string;
+  accentTo: string;
+  delay: number;
+  tag: string;
+}
+
+function SectionCard({
+  to, Icon, title, subtitle, description, stats, accentFrom, accentTo, delay, tag,
+}: SectionCardProps) {
+  return (
+    <motion.div
+      custom={delay}
+      initial="hidden"
+      animate="show"
+      variants={FADE_UP}
+    >
+      <Link to={to} className="group block h-full">
+        <article className="relative h-full rounded-3xl border border-white/8 bg-[#0d1117] overflow-hidden hover:border-white/16 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/50">
+          {/* Top gradient bar */}
+          <div className={`h-1 bg-gradient-to-r ${accentFrom} ${accentTo}`} />
+
+          {/* Background glow */}
+          <div
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+            style={{
+              background: `radial-gradient(ellipse 60% 40% at 50% 0%, ${accentFrom.replace('from-', '').replace('[', '').replace(']', '')}08 0%, transparent 70%)`,
+            }}
+          />
+
+          <div className="p-8">
+            {/* Tag */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-gray-400 mb-6">
+              <BookOpen className="w-3 h-3" />
+              {tag}
+            </div>
+
+            {/* Icon + title */}
+            <div className="flex items-start gap-5 mb-6">
+              <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${accentFrom} ${accentTo} flex items-center justify-center shadow-lg shrink-0`}>
+                <Icon className="w-7 h-7 text-white" strokeWidth={1.75} />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-white tracking-tight group-hover:text-rose-300 transition-colors">
+                  {title}
+                </h2>
+                <p className="text-sm text-gray-500 mt-0.5">{subtitle}</p>
+              </div>
+            </div>
+
+            {/* Description */}
+            <p className="text-gray-400 leading-relaxed mb-8 text-sm">
+              {description}
+            </p>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-4 mb-8">
+              {stats.map(s => (
+                <div key={s.label} className="text-center p-3 rounded-xl bg-white/3 border border-white/5">
+                  <p className="text-xl font-bold text-white">{s.value}</p>
+                  <p className="text-xs text-gray-600 mt-0.5">{s.label}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <div className="flex items-center gap-2 text-sm font-semibold text-rose-400 group-hover:text-rose-300 transition-colors">
+              Explore
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+        </article>
+      </Link>
+    </motion.div>
+  );
+}
 
 export function HomePage() {
-  return (
-    <main>
-      {/* Hero section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Atmospheric background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gray-950" />
-          <div
-            className="absolute inset-0 opacity-30"
-            style={{
-              background: `
-                radial-gradient(ellipse 80% 60% at 50% 0%, rgba(244, 63, 94, 0.15) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 40% at 80% 50%, rgba(251, 191, 36, 0.08) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 40% at 20% 70%, rgba(139, 92, 246, 0.08) 0%, transparent 60%)
-              `,
-            }}
-          />
-          {/* Subtle grid */}
-          <div
-            className="absolute inset-0 opacity-5"
-            style={{
-              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-              backgroundSize: '64px 64px',
-            }}
-          />
-        </div>
+  const arcanaCount = STORE_ITEMS.filter(i => i.category === 'Arcana').length;
+  const heroCount = new Set(STORE_ITEMS.filter(i => i.hero).map(i => i.hero)).size;
+  const availableCount = STORE_ITEMS.filter(i => i.isAvailable).length;
 
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pt-32 pb-20 text-center">
-          {/* Eyebrow */}
+  const shopItemCount = SHOP_ITEMS.length;
+  const shopCategoryCount = SHOP_CATEGORIES.length;
+  const upgradeCount = SHOP_ITEMS.filter(i => i.tier === 'Upgrade').length;
+
+  return (
+    <div>
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 bg-[#070a0f]" />
+        <div
+          className="absolute inset-0 opacity-40"
+          style={{
+            background: `
+              radial-gradient(ellipse 80% 50% at 50% -10%, rgba(244,63,94,0.18) 0%, transparent 60%),
+              radial-gradient(ellipse 50% 40% at 85% 60%, rgba(251,191,36,0.07) 0%, transparent 60%),
+              radial-gradient(ellipse 50% 40% at 15% 70%, rgba(139,92,246,0.07) 0%, transparent 60%)
+            `,
+          }}
+        />
+        {/* Grid */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)`,
+            backgroundSize: '80px 80px',
+          }}
+        />
+
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center py-32">
+          {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-rose-500/30 bg-rose-500/10 text-rose-400 text-sm font-medium mb-8"
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-rose-500/30 bg-rose-500/8 text-rose-400 text-sm font-medium mb-8"
           >
             <Star className="w-3.5 h-3.5" />
-            Complete Dota 2 Cosmetics Reference
+            Complete Dota 2 Reference
           </motion.div>
 
           {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-5xl sm:text-7xl font-bold tracking-tight text-white mb-6 leading-none"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-5xl sm:text-7xl font-bold tracking-tight text-white leading-none mb-6"
           >
-            The Dota 2{' '}
-            <span className="relative">
-              <span
-                className="relative z-10"
-                style={{
-                  background: 'linear-gradient(135deg, #fb7185 0%, #f59e0b 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}
-              >
-                Item Wiki
-              </span>
+            The Dota 2
+            <br />
+            <span
+              style={{
+                background: 'linear-gradient(135deg, #fb7185 0%, #f59e0b 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              Knowledge Base
             </span>
           </motion.h1>
 
-          {/* Subheadline */}
+          {/* Sub */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-lg sm:text-xl text-gray-400 leading-relaxed max-w-2xl mx-auto mb-12"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto mb-12"
           >
-            Every Arcana, Persona, Immortal, and cosmetic item in the Dota 2 store.
-            Complete descriptions, official artwork, and everything you need to know
-            about each piece of the game's legendary collection.
+            Your complete reference for Dota 2. Every cosmetic from the store and every
+            purchasable item from the in-game shop, documented with official artwork and full explanations.
           </motion.p>
+
+          {/* Stat pills */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-wrap items-center justify-center gap-3 mb-14"
+          >
+            {[
+              { Icon: Sparkles, label: `${STORE_ITEMS.length} Cosmetics` },
+              { Icon: ShoppingBag, label: `${SHOP_ITEMS.length} Shop Items` },
+              { Icon: Shield, label: `${heroCount} Heroes Covered` },
+              { Icon: Zap, label: `${arcanaCount} Arcanas` },
+            ].map(({ Icon, label }) => (
+              <div
+                key={label}
+                className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/8 bg-white/3 text-sm text-gray-300"
+              >
+                <Icon className="w-3.5 h-3.5 text-rose-400" strokeWidth={1.75} />
+                {label}
+              </div>
+            ))}
+          </motion.div>
 
           {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="flex flex-wrap items-center justify-center gap-4 mb-20"
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="flex flex-wrap items-center justify-center gap-4"
           >
             <Link
-              to="/browse"
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-rose-600 to-rose-500 text-white font-semibold text-sm shadow-lg shadow-rose-500/30 hover:shadow-rose-500/50 hover:-translate-y-0.5 transition-all duration-200"
+              to="/cosmetics"
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-rose-600 to-rose-500 text-white font-semibold text-sm shadow-lg shadow-rose-500/30 hover:shadow-rose-500/50 hover:-translate-y-0.5 transition-all duration-200"
             >
-              Browse All Items
-              <ArrowRight className="w-4 h-4" />
+              <Sparkles className="w-4 h-4" strokeWidth={1.75} />
+              Browse Cosmetics
             </Link>
             <Link
-              to="/browse?category=Arcana"
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl border border-white/15 bg-white/5 text-white font-semibold text-sm hover:bg-white/10 hover:border-white/25 hover:-translate-y-0.5 transition-all duration-200"
+              to="/shop"
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl border border-white/15 bg-white/5 text-white font-semibold text-sm hover:bg-white/10 hover:border-white/25 hover:-translate-y-0.5 transition-all duration-200"
             >
-              View Arcanas
+              <ShoppingBag className="w-4 h-4" strokeWidth={1.75} />
+              Shop Guide
             </Link>
-          </motion.div>
-
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="inline-flex items-center gap-8 sm:gap-12 px-8 py-4 rounded-2xl border border-white/8 bg-white/3"
-          >
-            {STAT_ITEMS.map(({ label, value }) => (
-              <div key={label} className="text-center">
-                <p className="text-2xl sm:text-3xl font-bold text-white">{value}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{label}</p>
-              </div>
-            ))}
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
+        {/* Scroll hint */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-            className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center pt-2"
+            className="w-5 h-9 rounded-full border-2 border-white/15 flex items-start justify-center pt-1.5"
           >
-            <div className="w-1 h-2 rounded-full bg-white/40" />
+            <div className="w-1 h-2 rounded-full bg-white/30" />
           </motion.div>
         </div>
       </section>
 
-      {/* Featured Arcanas */}
+      {/* ── Section cards ────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="flex items-end justify-between mb-12">
-          <div>
-            <p className="text-rose-400 text-sm font-semibold uppercase tracking-widest mb-3">
-              Featured
-            </p>
-            <h2 className="text-4xl font-bold text-white tracking-tight">
-              Available Arcanas
-            </h2>
-            <p className="text-gray-400 mt-3 max-w-lg">
-              The highest tier cosmetics in Dota 2. These transform heroes with new models,
-              animations, particle effects, and voice lines.
-            </p>
-          </div>
-          <Link
-            to="/browse?rarity=Arcana"
-            className="hidden sm:flex items-center gap-2 text-sm text-rose-400 hover:text-rose-300 font-medium transition-colors"
-          >
-            View all arcanas
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
+        <motion.div
+          custom={0}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={FADE_UP}
+          className="text-center mb-14"
+        >
+          <p className="text-rose-400 text-xs font-semibold uppercase tracking-widest mb-3">Explore</p>
+          <h2 className="text-4xl font-bold text-white tracking-tight">Two worlds of Dota 2</h2>
+          <p className="text-gray-500 mt-3">Pick your area of interest</p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {FEATURED_ITEMS.map((item, i) => (
-            <ItemCard key={item.id} item={item} index={i} />
-          ))}
-        </div>
-
-        <div className="text-center mt-12">
-          <Link
-            to="/browse"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/15 bg-white/5 text-white text-sm font-medium hover:bg-white/10 transition-all"
-          >
-            Browse all {STORE_ITEMS.length} items
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <SectionCard
+            to="/cosmetics"
+            Icon={Sparkles}
+            title="Cosmetics Wiki"
+            subtitle="Store Items Reference"
+            description="Every Arcana, Persona, Immortal, Courier, Terrain, HUD, Announcer, and cosmetic item available in the Dota 2 store. Full descriptions, lore, customizations, and official artwork sourced directly from Valve."
+            stats={[
+              { label: 'Total Items', value: String(STORE_ITEMS.length) },
+              { label: 'Arcanas', value: String(arcanaCount) },
+              { label: 'In Store', value: String(availableCount) },
+            ]}
+            accentFrom="from-rose-600"
+            accentTo="to-rose-500"
+            delay={1}
+            tag="Cosmetics"
+          />
+          <SectionCard
+            to="/shop"
+            Icon={ShoppingBag}
+            title="In-Game Shop Guide"
+            subtitle="All Purchasable Items"
+            description="Complete guide to every item buyable in the Dota 2 in-game shop. Stats, costs, build paths, active and passive abilities, with official item artwork. Everything you need to understand the item economy."
+            stats={[
+              { label: 'Shop Items', value: String(shopItemCount) },
+              { label: 'Categories', value: String(shopCategoryCount) },
+              { label: 'Upgrades', value: String(upgradeCount) },
+            ]}
+            accentFrom="from-amber-500"
+            accentTo="to-orange-500"
+            delay={2}
+            tag="In-Game"
+          />
         </div>
       </section>
 
-      {/* Category grid */}
-      <section className="bg-gray-900/30 border-y border-white/5 py-24">
+      {/* ── Coming soon ──────────────────────────────────────── */}
+      <section className="border-t border-white/5 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-3">Browse by Category</h2>
-            <p className="text-gray-400">Everything from hero skins to full map transformations.</p>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12"
+          >
+            <p className="text-gray-600 text-xs font-semibold uppercase tracking-widest mb-3">More pages</p>
+            <h2 className="text-2xl font-bold text-white">Coming Soon</h2>
+          </motion.div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {[
-              { cat: 'Arcana', color: '#FDA4AF', count: STORE_ITEMS.filter(i => i.category === 'Arcana').length, desc: 'Ultimate hero transformations' },
-              { cat: 'Persona', color: '#C4B5FD', count: STORE_ITEMS.filter(i => i.category === 'Persona').length, desc: 'Hero identity reimagined' },
-              { cat: 'Immortal', color: '#FCD34D', count: STORE_ITEMS.filter(i => i.category === 'Immortal').length, desc: 'Unique slot items' },
-              { cat: 'Courier', color: '#6EE7B7', count: STORE_ITEMS.filter(i => i.category === 'Courier').length, desc: 'Item delivery companions' },
-              { cat: 'Terrain', color: '#93C5FD', count: STORE_ITEMS.filter(i => i.category === 'Terrain').length, desc: 'Full map skins' },
-              { cat: 'HUD', color: '#FDBA74', count: STORE_ITEMS.filter(i => i.category === 'HUD').length, desc: 'Interface overhauls' },
-              { cat: 'Announcer', color: '#A5F3FC', count: STORE_ITEMS.filter(i => i.category === 'Announcer').length, desc: 'Voice pack replacements' },
-              { cat: 'Music', color: '#FDE68A', count: STORE_ITEMS.filter(i => i.category === 'Music').length, desc: 'In-game soundtracks' },
-            ].map(({ cat, color, count, desc }) => (
-              <Link
-                key={cat}
-                to={`/browse?category=${cat}`}
-                className="group p-5 rounded-2xl border border-white/8 bg-gray-900/60 hover:border-white/20 hover:-translate-y-1 transition-all duration-200"
-                style={{
-                  boxShadow: '0 0 0 0 transparent',
-                }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = `0 16px 48px -8px ${color}25`;
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = '0 0 0 0 transparent';
-                }}
+              { Icon: Shield, label: 'Heroes', sub: 'All 124 heroes' },
+              { Icon: Package, label: 'Neutral Items', sub: '5 tier drops' },
+              { Icon: Sword, label: 'Patch Notes', sub: 'Change history' },
+              { Icon: Star, label: 'Tier Lists', sub: 'Meta analysis' },
+              { Icon: BookOpen, label: 'Guides', sub: 'Strategy content' },
+            ].map(({ Icon, label, sub }, i) => (
+              <motion.div
+                key={label}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.07 }}
+                className="p-5 rounded-2xl border border-white/5 bg-white/2 flex flex-col items-center text-center gap-3 opacity-50"
               >
-                <div
-                  className="w-8 h-8 rounded-lg mb-4 flex items-center justify-center"
-                  style={{ background: `${color}20`, border: `1px solid ${color}30` }}
-                >
-                  <Sword className="w-4 h-4" style={{ color }} />
+                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">
+                  <Icon className="w-5 h-5 text-gray-500" strokeWidth={1.5} />
                 </div>
-                <p className="font-semibold text-white mb-1 group-hover:text-rose-300 transition-colors">
-                  {cat}
-                </p>
-                <p className="text-xs text-gray-500 mb-2">{desc}</p>
-                <p className="text-xs font-medium" style={{ color }}>
-                  {count} {count === 1 ? 'item' : 'items'}
-                </p>
-              </Link>
+                <div>
+                  <p className="text-sm font-medium text-gray-400">{label}</p>
+                  <p className="text-xs text-gray-600 mt-0.5">{sub}</p>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

@@ -37,7 +37,7 @@ export function ItemDetailPage() {
     return (
       <div className="pt-24 text-center py-40">
         <h1 className="text-2xl font-bold text-white mb-4">Item Not Found</h1>
-        <Link to="/browse" className="text-rose-400 hover:text-rose-300">
+        <Link to="/cosmetics" className="text-rose-400 hover:text-rose-300">
           Back to Browse
         </Link>
       </div>
@@ -71,7 +71,7 @@ export function ItemDetailPage() {
             Back
           </button>
           <ChevronRight className="w-3 h-3" />
-          <Link to="/browse" className="hover:text-white transition-colors">Browse</Link>
+          <Link to="/cosmetics" className="hover:text-white transition-colors">Browse</Link>
           <ChevronRight className="w-3 h-3" />
           <span className="text-gray-300">{item.name}</span>
         </nav>
@@ -306,7 +306,7 @@ export function ItemDetailPage() {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-white">Related Items</h2>
               <Link
-                to="/browse"
+                to="/cosmetics"
                 className="text-sm text-rose-400 hover:text-rose-300 transition-colors"
               >
                 View all

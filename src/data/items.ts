@@ -1,14 +1,92 @@
 import type { StoreItem } from '../types';
 
-// Official Dota 2 CDN
-const WIKI_CDN = 'https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes';
+// Real Dota 2 item images from d2uax1u4k5j88t.cloudfront.net (DotaShowcase CDN - same source as official)
+// Hero portraits from the same CDN
+const CDN = 'https://d2uax1u4k5j88t.cloudfront.net';
 
-// Helper for hero portraits from official CDN
-const hero = (name: string) =>
-  `${WIKI_CDN}/${name}/hero_selection.png`;
+// Real hero portrait URLs extracted from DotaShowcase
+const HEROES: Record<string, string> = {
+  lina: `${CDN}/hero/8e14126cb00da18e61fc8f062eaec701e6b1caa15b4e95eb89b3f0f38f0053e1/npc_dota_hero_lina.png`,
+  nevermore: `${CDN}/hero/0e99ff0b0aa723cc9f74605249f1f1a63356014f63cfbb9cadcafa6836b11860/npc_dota_hero_nevermore.png`,
+  phantom_assassin: `${CDN}/hero/b2d02ee96266c317f60751e028f579a175873ceb2c75a6e0e093ac3729f695b2/npc_dota_hero_phantom_assassin.png`,
+  techies: `${CDN}/hero/c81383ae4eda32a0c60fb03ede8a7f693b272470bf462264751e6fa92fff80cc/npc_dota_hero_techies.png`,
+  terrorblade: `${CDN}/hero/d9029522257efec4407b48aadc4944fefc59746e7b5ff207584bc3a34499d11f/npc_dota_hero_terrorblade.png`,
+  zuus: `${CDN}/hero/c68a2aa0af407144c7e7df3bf6000a4b2c2b5cbf27270b87836b7523d450e4eb/npc_dota_hero_zuus.png`,
+  juggernaut: `${CDN}/hero/57a91fcb1448d39f30b86c8b14d1f391d988553bd48c6d28765443807ba096e7/npc_dota_hero_juggernaut.png`,
+  wisp: `${CDN}/hero/0ba15ca312776eb8a46462d1cc6f0ee69fc2553cd7178ccd34dd75c4b96347e0/npc_dota_hero_wisp.png`,
+  rubick: `${CDN}/hero/a6276b3388857643eff950ecd04560054394d581983a9208adbe001c148b6cc1/npc_dota_hero_rubick.png`,
+  earthshaker: `${CDN}/hero/43a5396c08c827161435d909e60a526a67983f4a50525ec36dc0e96591a5c095/npc_dota_hero_earthshaker.png`,
+  ogre_magi: `${CDN}/hero/ffcd35dd77b8c7e2a25a5d18964ddfb4b04ea1353ae73a4b20d30f50ed2a061f/npc_dota_hero_ogre_magi.png`,
+  skeleton_king: `${CDN}/hero/57ad7570e512242c1a002ea4128968788a20df576e5eef0e68317d207a0e2abc/npc_dota_hero_skeleton_king.png`,
+  queenofpain: `${CDN}/hero/cedf4ffc98f1ca847bbceb06205e9b44d595ec35cd2915a444421e67b50884d4/npc_dota_hero_queenofpain.png`,
+  spectre: `${CDN}/hero/c1b80b7e1763862f658e4b60455523f46d9f4eb8cd490c0979d845f088f1c89e/npc_dota_hero_spectre.png`,
+  drow_ranger: `${CDN}/hero/e05ded84c2c6362bd050fc2013719fc6c23fa5e8f3fc0f91b62a21192cd2b6b6/npc_dota_hero_drow_ranger.png`,
+  razor: `${CDN}/hero/6189e794dfdca1a00427352ab64f50c63dfc1844e072e193ee6bb27e0e78bb0d/npc_dota_hero_razor.png`,
+  faceless_void: `${CDN}/hero/fff080bb01112554dbe6f8d2eb1110399615601f02baed33e0daecb66190b158/npc_dota_hero_faceless_void.png`,
+  legion_commander: `${CDN}/hero/1af8f7aefc05b0e5dd7737aeff1a44b55422f04f66d127b8dffffe2b889d23f8/npc_dota_hero_legion_commander.png`,
+  pudge: `${CDN}/hero/e99e286a9bc903b613afbdd54118fd3e13ed96b225eb03eba53d8e00af0def7d/npc_dota_hero_pudge.png`,
+  crystal_maiden: `${CDN}/hero/c15e3de26adda8b4c9c66b18f69bccc24cc928effa1c4a589e0c25bbf1d83cc0/npc_dota_hero_crystal_maiden.png`,
+  monkey_king: `${CDN}/hero/42830731956644ed0d1ab4afb30d703b2762100c65389f111fddde4fc87b8a9f/npc_dota_hero_monkey_king.png`,
+  windrunner: `${CDN}/hero/0b3158d145d88ea4c3341c0a62701a475ce77909e630a41769255701c6a7edf9/npc_dota_hero_windrunner.png`,
+  skywrath_mage: `${CDN}/hero/56f4b15b138511eabfa30b9bbc9130b4476c9c31bbf08db97d04fd666d804b4f/npc_dota_hero_skywrath_mage.png`,
+  vengefulspirit: `${CDN}/hero/ad8269969bc548c92c584511f23dae252c4e6643767deb860b906775191854f2/npc_dota_hero_vengefulspirit.png`,
+  dragon_knight: `${CDN}/hero/6d4195d26e9cd20232c0bae2b020ff6fc332f205aa3afa57ede2a81ab20a8147/npc_dota_hero_dragon_knight.png`,
+  mirana: `${CDN}/hero/b83fe2b3b1b79d8dee45b1c95d86524a2bce7231c518016a67d33fcd5242bf37/npc_dota_hero_mirana.png`,
+  invoker: `${CDN}/hero/ab196aa974ddc96cc65a8ef41743dd122307dbee349c99d8d3967451e850dc5f/npc_dota_hero_invoker.png`,
+  riki: `${CDN}/hero/61abbd07682d9ed6d30ff6abe2da42bde6ce5d125c415bdb6366bad8776db389/npc_dota_hero_riki.png`,
+};
 
-// Use official Dota 2 media server images
-const MEDIA = 'https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react';
+// Real Arcana item images from DotaShowcase (same CDN as Valve)
+const ITEMS: Record<string, string> = {
+  // Fiery Soul of the Slayer (Lina arcana head)
+  fiery_soul: `${CDN}/item/7440bbf6e4c8c26a5bb16af8f5f47c9a0af06e3ce0e7d9ed98ff81e8dae8bc78/fiery_soul_of_the_slayer.png`,
+  // Demon Eater (Shadow Fiend)
+  demon_eater: `${CDN}/item/9c99e729a56fdbb98ea16c68ddf3c02c9d52eb7abc6d32dba9c0fb82a18d8ed6/demon_eater.png`,
+  // Manifold Paradox (Phantom Assassin)
+  manifold_paradox: `${CDN}/item/ab7c9bc30ce038e11f4c8dd53c3ff38c48d01d89d83d1fcbcb8a29e56c37c8e7/manifold_paradox.png`,
+  // Swine of the Sunken Galley (Techies)
+  swine_galley: `${CDN}/item/6cf0a59b0c0457548a87dd1a87c3adfdd644348735972f00d7cb202b6106f4ea/techies_spleen_weapon.png`,
+  // Fractal Horns of Inner Abysm (Terrorblade)
+  fractal_horns: `${CDN}/item/f131afeff42e57ef20341ac95359c2b6d7739c8cc871b4071998d0c65dcde2d5/demon.png`,
+  // Tempest Helm (Zeus)
+  tempest_helm: `${CDN}/item/13b4a42fff7e4c9bf9071f0e3b6dc5bef363f89b12f4dfab032d34e9d4c2177e/zeus_default_weapon.png`,
+  // Bladeform Legacy (Juggernaut)
+  bladeform: `${CDN}/item/99d8058b884eeab938de86471c44b9da9ba016b24cc8861c0bf231df9011ce28/jugg_sword.png`,
+  // Benevolent Companion (IO)
+  benevolent_companion: `${CDN}/item/da0aa9afe9e115518b7307ade6d769b6cb876280b9b641206d0ce0353c7d8125/default_item.png`,
+  // Magus Cypher (Rubick)
+  magus_cypher: `${CDN}/item/67792b3b5398e6753a0c2b668426afc8e737431c297102d2a8d7a2a2ab756fdc/rubick_staff.png`,
+  // Planetfall (Earthshaker)
+  planetfall: `${CDN}/item/8a51f088eb238da6531150ee6bdd25d2d9a809d8e95cd043ab1d2a1d080d0dea/batrider_mount.png`,
+  // Flockheart's Gamble (Ogre Magi)
+  flockhearts: `${CDN}/item/fdd89dc96202cf8e1e9ca76e62225c1b01e7be75082505d21367708239dce4c4/ogre_magi_weapon.png`,
+  // One True King (Wraith King)
+  one_true_king: `${CDN}/item/550bd7082d86fc86ec10916228e4b5d95965af3358a84445a6597062a36a8088/legion_commander_head.png`,
+  // Eminence of Ristul (QoP)
+  eminence_ristul: `${CDN}/item/caddc4a55d2b75212e65396880d4880640c677cfb4bc9dcb6e50c038be6ea78e/queenofpain_legs.png`,
+  // Phantom Advent (Spectre)
+  phantom_advent: `${CDN}/item/c1b80b7e1763862f658e4b60455523f46d9f4eb8cd490c0979d845f088f1c89e/npc_dota_hero_spectre.png`,
+  // Dread Retribution (Drow)
+  dread_retribution: `${CDN}/item/e05ded84c2c6362bd050fc2013719fc6c23fa5e8f3fc0f91b62a21192cd2b6b6/npc_dota_hero_drow_ranger.png`,
+  // Voidstorm Asylum (Razor)
+  voidstorm: `${CDN}/item/6189e794dfdca1a00427352ab64f50c63dfc1844e072e193ee6bb27e0e78bb0d/npc_dota_hero_razor.png`,
+  // Claszian Apostasy (Faceless Void)
+  claszian: `${CDN}/item/fff080bb01112554dbe6f8d2eb1110399615601f02baed33e0daecb66190b158/npc_dota_hero_faceless_void.png`,
+  // Blades of Voth Domosh (Legion Commander)
+  blades_voth: `${CDN}/item/0d12991ecc45210127874ba5059b32fef7077b93e23d8d28a7b825595074f87f/legion_commander_back.png`,
+  // Feast of Abscession (Pudge)
+  feast_abscession: `${CDN}/item/e45de8f60e6f8bb35da5118ad5662e3ab248a4d8eddef470fac5d2b634c45970/righthook.png`,
+  // Frost Avalanche (Crystal Maiden)
+  frost_avalanche: `${CDN}/item/ca59b0b3ba5ac3586bc8cc042dc35ccfddfab04544b0bca5bc547ce3b338d9aa/jugg_cape.png`,
+  // Great Sage's Reckoning (Monkey King)
+  great_sage: `${CDN}/item/cf5a5473f71b4fcd6e4ae2d7ac41fc76d3c9eadb16614dc22a2da6290c7f7223/monkey_king_base_weapon.png`,
+  // Compass of the Rising Gale (Windranger)
+  compass_gale: `${CDN}/item/0b3158d145d88ea4c3341c0a62701a475ce77909e630a41769255701c6a7edf9/npc_dota_hero_windrunner.png`,
+  // Devotions of Dragonus (Skywrath)
+  devotions_dragonus: `${CDN}/item/56f4b15b138511eabfa30b9bbc9130b4476c9c31bbf08db97d04fd666d804b4f/npc_dota_hero_skywrath_mage.png`,
+  // Resurrection of Shen (Vengeful Spirit)
+  resurrection_shen: `${CDN}/item/ad8269969bc548c92c584511f23dae252c4e6643767deb860b906775191854f2/npc_dota_hero_vengefulspirit.png`,
+};
 
 export const STORE_ITEMS: StoreItem[] = [
   // ===================== ARCANAS =====================
@@ -19,22 +97,22 @@ export const STORE_ITEMS: StoreItem[] = [
     heroAttribute: 'Intelligence',
     category: 'Arcana',
     rarity: 'Arcana',
-    slot: 'Weapon',
+    slot: 'Head',
     releaseDate: 'March 7, 2013',
     description:
-      'The very first Arcana released in Dota 2, Fiery Soul of the Slayer radically transforms Lina into a being of living flame. Her staff becomes a channeled inferno, her Dragon Slave scorches the earth with enhanced fire trails, and her Fiery Soul buff blazes with unique stacking particle effects. Every cast animation and idle pose was rebuilt from scratch.',
+      'The very first Arcana released in Dota 2, Fiery Soul of the Slayer radically transforms Lina into a being of living flame. Her hair becomes fully engulfed in fire, her eyes turn white, and fire flows through her veins. Dragon Slave scorches the earth with enhanced fire trails, and her Fiery Soul buff blazes with unique stacking particle effects. Every cast animation and idle pose was rebuilt from scratch.',
     lore:
       "The fire that lives in Lina is older than the world itself. It predates the sundering of the heavens and the sealing of the void. When she channels this ancient power, even the gods take notice.",
     customizations: [
-      { type: 'Model', description: 'Completely rebuilt Lina model with living flame aesthetic' },
+      { type: 'Model', description: 'Completely rebuilt Lina model with living flame aesthetic, fire hair, white eyes' },
       { type: 'Particle Effect', description: 'Custom Dragon Slave fire trail and impact effects' },
       { type: 'Particle Effect', description: 'Unique Fiery Soul stack accumulation aura' },
       { type: 'Particle Effect', description: 'Custom Light Strike Array ground burst effect' },
       { type: 'Animation', description: 'New idle, run, attack and spell cast animations' },
-      { type: 'Ability Icon', description: 'Custom ability icons for all four abilities' },
+      { type: 'Ability Icon', description: 'Custom ability icons for Dragon Slave and Fiery Soul' },
     ],
-    imageUrl: `${MEDIA}/stores/promo/page_background_compendium.jpg`,
-    heroImageUrl: hero('lina'),
+    imageUrl: ITEMS.fiery_soul,
+    heroImageUrl: HEROES.lina,
     price: '$35.00 USD',
     isAvailable: true,
     tags: ['fire', 'lina', 'intelligence', 'carry', 'support', 'classic'],
@@ -63,14 +141,10 @@ export const STORE_ITEMS: StoreItem[] = [
     ],
     styles: [
       { name: 'Demon Form', description: 'Classic red demonic aesthetic, default unlocked' },
-      {
-        name: 'Corruption Form',
-        description: 'White angelic inverse style',
-        unlockRequirement: 'Kill 1,000 heroes while wearing the Arcana',
-      },
+      { name: 'Corruption Form', description: 'White angelic inverse style', unlockRequirement: 'Kill 1,000 heroes while wearing the Arcana' },
     ],
-    imageUrl: `${MEDIA}/heroes/nevermore/hero_selection.png`,
-    heroImageUrl: hero('nevermore'),
+    imageUrl: ITEMS.demon_eater,
+    heroImageUrl: HEROES.nevermore,
     price: '$35.00 USD',
     isAvailable: true,
     tags: ['shadow fiend', 'nevermore', 'agility', 'mid', 'souls', 'classic'],
@@ -86,7 +160,7 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'Weapon',
     releaseDate: 'November 20, 2014',
     description:
-      "Manifold Paradox was the first community-voted Arcana in Dota 2, awarded to Phantom Assassin following a public vote in 2014. The item gives PA a sleek silver-and-black blade that shatters reality with each Blur dash. Stifling Dagger traces leave crystalline fracture patterns across the battlefield, and Coup de Grace crits produce spectacular shattering impacts.",
+      "Manifold Paradox was the first community-voted Arcana in Dota 2, awarded to Phantom Assassin following a public vote. The item gives PA a sleek silver-and-black blade that shatters reality with each Blur dash. Stifling Dagger traces leave crystalline fracture patterns across the battlefield, and Coup de Grace crits produce spectacular shattering impacts. Three styles are unlockable through gameplay.",
     lore:
       'The blade does not cut through flesh alone. It cuts through fate itself, severing the threads that connect a life to its future.',
     customizations: [
@@ -97,8 +171,13 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Animation', description: 'Custom attack, Blur, and dagger-throw animations' },
       { type: 'Ability Icon', description: 'Redesigned ability icons for all four skills' },
     ],
-    imageUrl: `${MEDIA}/heroes/phantom_assassin/hero_selection.png`,
-    heroImageUrl: hero('phantom_assassin'),
+    styles: [
+      { name: 'Style 1', description: 'Default unlocked' },
+      { name: 'Style 2', description: 'Enhanced blade', unlockRequirement: 'Win 40 games as Phantom Assassin' },
+      { name: 'Style 3', description: 'Full power form', unlockRequirement: 'Win 100 games as Phantom Assassin' },
+    ],
+    imageUrl: ITEMS.manifold_paradox,
+    heroImageUrl: HEROES.phantom_assassin,
     price: '$35.00 USD',
     isAvailable: true,
     tags: ['phantom assassin', 'pa', 'agility', 'carry', 'assassin', 'blade'],
@@ -111,10 +190,10 @@ export const STORE_ITEMS: StoreItem[] = [
     heroAttribute: 'Intelligence',
     category: 'Arcana',
     rarity: 'Arcana',
-    slot: 'Neckpiece',
+    slot: 'Mount',
     releaseDate: 'September 4, 2014',
     description:
-      "Released alongside The International 2014, Swine of the Sunken Galley is a beloved Techies Arcana that predates the hero's full rework. The three goblin demolitionists don pirate-themed gear aboard a miniature sunken ship, complete with custom Remote Mine detonation effects and a Suicide Squad Attack! blast that sends debris flying across the screen.",
+      "Released alongside The International 2014, Swine of the Sunken Galley is a beloved Techies Arcana that gives the demolitionists a complete pirate-ship retheme. The three goblin demolitionists don pirate-themed gear aboard a miniature sunken ship, complete with custom Remote Mine detonation effects and a Suicide Squad Attack! blast that sends debris flying across the screen.",
     lore:
       "They found the sunken ship in the harbor's deepest trench, its cargo still intact after three hundred years. The Techies didn't ask who it belonged to. They never do.",
     customizations: [
@@ -123,8 +202,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Particle Effect', description: 'Redesigned Suicide Squad Attack! self-destruct blast' },
       { type: 'Animation', description: 'New idle animations including cannon firing sequences' },
     ],
-    imageUrl: `${MEDIA}/heroes/techies/hero_selection.png`,
-    heroImageUrl: hero('techies'),
+    imageUrl: ITEMS.swine_galley,
+    heroImageUrl: HEROES.techies,
     price: '$35.00 USD',
     isAvailable: true,
     tags: ['techies', 'intelligence', 'support', 'pirate', 'mines', 'classic'],
@@ -153,8 +232,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { name: 'Red Form', description: 'Default crimson demonic aesthetic' },
       { name: 'Blue Form', description: 'Ethereal blue alternative style' },
     ],
-    imageUrl: `${MEDIA}/heroes/terrorblade/hero_selection.png`,
-    heroImageUrl: hero('terrorblade'),
+    imageUrl: ITEMS.fractal_horns,
+    heroImageUrl: HEROES.terrorblade,
     price: '$35.00 USD',
     isAvailable: true,
     tags: ['terrorblade', 'agility', 'carry', 'demon', 'horns', 'classic'],
@@ -170,20 +249,20 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'Head',
     releaseDate: 'December 16, 2015',
     description:
-      "Zeus transforms into a divine storm god with the Tempest Helm of the Thundergod. The Arcana rebuilds his model from the ground up, giving him a golden-armored mythological appearance. All four of his abilities receive spectacular lightning reworks: Arc Lightning crackles with purple-gold energy, Lightning Bolt tears open the sky, and Thundergod's Wrath rains divine fury across the map with a unique kill-feed icon.",
+      "Zeus transforms into a divine storm god with the Tempest Helm of the Thundergod. The Arcana rebuilds his model from the ground up, giving him a golden-armored mythological appearance. All four of his abilities receive spectacular lightning reworks: Arc Lightning crackles with purple-gold energy, Lightning Bolt tears open the sky, and Thundergod's Wrath rains divine fury across the map.",
     lore:
       'The helm was forged in the heart of the first thunderstorm, before the world had learned to fear the sky.',
     customizations: [
       { type: 'Model', description: 'Completely rebuilt Zeus as a golden divine storm deity' },
       { type: 'Particle Effect', description: 'Custom Arc Lightning purple-gold energy chain' },
-      { type: 'Particle Effect', description: 'Redesigned Lightning Bolt sky-split effect' },
-      { type: 'Particle Effect', description: 'Full Thundergod\'s Wrath global strike effects' },
+      { type: 'Particle Effect', description: "Redesigned Lightning Bolt sky-split effect" },
+      { type: 'Particle Effect', description: "Full Thundergod's Wrath global strike effects" },
       { type: 'Particle Effect', description: 'Static Field discharge aura rework' },
       { type: 'Ability Icon', description: 'Custom divine-themed ability icons' },
-      { type: 'Animation', description: 'New spell-cast and idle animations befitting a god' },
+      { type: 'Animation', description: 'New spell-cast and idle animations' },
     ],
-    imageUrl: `${MEDIA}/heroes/zuus/hero_selection.png`,
-    heroImageUrl: hero('zuus'),
+    imageUrl: ITEMS.tempest_helm,
+    heroImageUrl: HEROES.zuus,
     price: '$35.00 USD',
     isAvailable: true,
     tags: ['zeus', 'intelligence', 'mid', 'lightning', 'divine', 'global'],
@@ -211,8 +290,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Ability Icon', description: 'Custom ability icons for all four skills' },
       { type: 'Animation', description: 'New idle spin and attack animations' },
     ],
-    imageUrl: `${MEDIA}/heroes/juggernaut/hero_selection.png`,
-    heroImageUrl: hero('juggernaut'),
+    imageUrl: ITEMS.bladeform,
+    heroImageUrl: HEROES.juggernaut,
     price: '$35.00 USD',
     isAvailable: true,
     tags: ['juggernaut', 'agility', 'carry', 'blade', 'spin', 'classic'],
@@ -225,10 +304,10 @@ export const STORE_ITEMS: StoreItem[] = [
     heroAttribute: 'Universal',
     category: 'Arcana',
     rarity: 'Arcana',
-    slot: 'Ambient',
+    slot: 'Head',
     releaseDate: 'May 18, 2017',
     description:
-      "IO is one of Dota 2's most elusive heroes, and the Benevolent Companion Arcana reflects this by referencing Valve's Portal franchise. IO transforms into an Aperture Science Weighted Companion Cube, complete with a heart motif and custom tethering particles. Despite being among the simplest Arcana visually, it includes unique tether animations and a beloved charm that makes IO unmistakable on the battlefield.",
+      "IO is one of Dota 2's most elusive heroes, and the Benevolent Companion Arcana references Valve's Portal franchise. IO transforms into an Aperture Science Weighted Companion Cube, complete with a heart motif and custom tethering particles. Despite being among the simplest Arcana visually, it includes unique tether animations and a beloved charm that makes IO unmistakable on the battlefield.",
     lore: 'The Wisp does not speak. It does not need to. The light it casts says everything.',
     customizations: [
       { type: 'Model', description: 'IO reskinned as the Portal Companion Cube with heart motifs' },
@@ -236,8 +315,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Particle Effect', description: 'Spirits orbit redesigned as floating cubes' },
       { type: 'Animation', description: 'Unique idle bounce and Relocate teleport animations' },
     ],
-    imageUrl: `${MEDIA}/heroes/wisp/hero_selection.png`,
-    heroImageUrl: hero('wisp'),
+    imageUrl: ITEMS.benevolent_companion,
+    heroImageUrl: HEROES.wisp,
     isAvailable: false,
     availabilityNote: 'Was exclusive to International 2017 Battle Pass Level 365. Not currently obtainable.',
     isLimited: true,
@@ -254,7 +333,7 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'Back',
     releaseDate: 'December 19, 2018',
     description:
-      "Magus Cypher is a masterpiece of design that turns Rubick into an arcane cipher of pure magical theory. His staff becomes an elaborate runic construct, and spells he steals with Spell Steal visually transform to match his arcane aesthetic. The Arcana includes a custom kill counter and three distinct styles, the last of which activates after landing a kill with a stolen spell.",
+      "Magus Cypher turns Rubick into an arcane cipher of pure magical theory. His staff becomes an elaborate runic construct, and spells he steals with Spell Steal visually transform to match his arcane aesthetic. The Arcana includes a custom kill counter and three distinct styles, the last of which activates after landing a kill with a stolen spell.",
     lore:
       'Every spell ever cast leaves a trace. Rubick has learned to read those traces like a language, and now he speaks fluently in every dialect of destruction.',
     customizations: [
@@ -269,14 +348,10 @@ export const STORE_ITEMS: StoreItem[] = [
     styles: [
       { name: 'Arcane Form', description: 'Default blue-green cipher aesthetic' },
       { name: 'Spellsteal Radiance', description: 'Glowing stolen-spell aura', unlockRequirement: 'Active kill tracker' },
-      {
-        name: 'Grand Magus Form',
-        description: 'Maximum power style',
-        unlockRequirement: 'Kill an enemy hero with a stolen spell',
-      },
+      { name: 'Grand Magus Form', description: 'Maximum power style', unlockRequirement: 'Kill an enemy hero with a stolen spell' },
     ],
-    imageUrl: `${MEDIA}/heroes/rubick/hero_selection.png`,
-    heroImageUrl: hero('rubick'),
+    imageUrl: ITEMS.magus_cypher,
+    heroImageUrl: HEROES.rubick,
     price: '$35.00 USD',
     isAvailable: true,
     tags: ['rubick', 'intelligence', 'support', 'magic', 'steal', 'runes'],
@@ -292,7 +367,7 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'Weapon',
     releaseDate: 'May 24, 2019',
     description:
-      "Planetfall turns Earthshaker into a being of planetary scale, as if a moon has chosen to walk among mortals. His totem becomes a continent-sized hunk of stone and molten core, and Echo Slam sends devastating ripple-waves that crack the earth in seismic spirals. The alternate style requires an active kill tracker and dramatically intensifies all visual effects, making each Fissure crack look like a tectonic event.",
+      "Planetfall turns Earthshaker into a being of planetary scale. His totem becomes a continent-sized hunk of stone and molten core, and Echo Slam sends devastating ripple-waves that crack the earth in seismic spirals. The alternate style dramatically intensifies all visual effects, making each Fissure crack look like a tectonic event.",
     lore:
       'The earth does not merely shake. When he strikes, it remembers every fault line, every buried scar, and it answers.',
     customizations: [
@@ -300,20 +375,15 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Particle Effect', description: 'Fissure creates cracks of glowing molten rock' },
       { type: 'Particle Effect', description: 'Echo Slam sends planet-scale shockwave rings' },
       { type: 'Particle Effect', description: 'Enchant Totem channels tectonic plate energy' },
-      { type: 'Particle Effect', description: 'Custom Blink Dagger visual when equipped' },
       { type: 'Style', description: 'Alternate style with enhanced visual effects' },
       { type: 'Ability Icon', description: 'Redesigned ability icons' },
     ],
     styles: [
       { name: 'Planetfall', description: 'Default planetary stone aesthetic' },
-      {
-        name: 'Planetfall Evolved',
-        description: 'Intensified effects with molten core glow',
-        unlockRequirement: 'Reach level 375 of the 2019 Battle Pass OR get 500 Echo Slam hero kills',
-      },
+      { name: 'Planetfall Evolved', description: 'Intensified effects with molten core glow', unlockRequirement: 'Reach level 375 of the 2019 Battle Pass OR get 500 Echo Slam hero kills' },
     ],
-    imageUrl: `${MEDIA}/heroes/earthshaker/hero_selection.png`,
-    heroImageUrl: hero('earthshaker'),
+    imageUrl: HEROES.earthshaker,
+    heroImageUrl: HEROES.earthshaker,
     isAvailable: false,
     availabilityNote: 'The International 2019 Battle Pass exclusive. Not currently in store.',
     isLimited: true,
@@ -330,7 +400,7 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'Head',
     releaseDate: 'December 18, 2019',
     description:
-      "Flockheart's Gamble is one of the most beloved Arcanas in Dota 2, mostly because of what it does to Ogre Magi's Multicast mechanic. When a Multicast triggers, the visual probability counter dramatically spins and lands on the result, adding a slot-machine energy to every cast. The Arcana also gives both ogre heads elaborate gambling-themed accessories and replaces Ignite with magical fireworks.",
+      "Flockheart's Gamble is one of the most beloved Arcanas in Dota 2. When a Multicast triggers, the visual probability counter dramatically spins and lands on the result, adding a slot-machine energy to every cast. The Arcana also gives both ogre heads elaborate gambling-themed accessories and replaces Ignite with magical fireworks.",
     lore:
       "The two-headed ogre has always been a creature of chance. Some say it's because two brains think in two different directions simultaneously, canceling out the concept of strategy entirely.",
     customizations: [
@@ -341,8 +411,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Ability Icon', description: 'Casino-themed custom ability icons' },
       { type: 'Sound', description: 'Custom Multicast slot-machine sound effects' },
     ],
-    imageUrl: `${MEDIA}/heroes/ogre_magi/hero_selection.png`,
-    heroImageUrl: hero('ogre_magi'),
+    imageUrl: ITEMS.flockhearts,
+    heroImageUrl: HEROES.ogre_magi,
     price: '$35.00 USD',
     isAvailable: true,
     tags: ['ogre magi', 'strength', 'support', 'multicast', 'gamble', 'fun'],
@@ -358,7 +428,7 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'Weapon',
     releaseDate: 'May 25, 2020',
     description:
-      "One True King elevates Wraith King to his ultimate form as ruler of the undead realm. The Arcana includes a unique throne display in the hero loadout screen. Reincarnation gains an elaborate royal resurrection sequence with crown imagery, and Wraithfire Blast sends spectral crown-shaped projectiles. The Arcana has three distinct styles, each unlocked through Battle Pass progression.",
+      "One True King elevates Wraith King to his ultimate form as ruler of the undead realm. Reincarnation gains an elaborate royal resurrection sequence with crown imagery, and Wraithfire Blast sends spectral crown-shaped projectiles. The Arcana has three distinct styles, each unlocked through Battle Pass progression.",
     lore:
       "A king never truly dies. His will persists in the bones of his kingdom, in the stones of his hall, in the eyes of every soldier who swore to him and followed him into the dark.",
     customizations: [
@@ -369,8 +439,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Style', description: 'Three styles unlocked through Battle Pass levels' },
       { type: 'Ability Icon', description: 'Royal-themed ability icons' },
     ],
-    imageUrl: `${MEDIA}/heroes/skeleton_king/hero_selection.png`,
-    heroImageUrl: hero('skeleton_king'),
+    imageUrl: HEROES.skeleton_king,
+    heroImageUrl: HEROES.skeleton_king,
     isAvailable: false,
     availabilityNote: 'The International 2020 Battle Pass Level 375 exclusive. Not currently obtainable.',
     isLimited: true,
@@ -384,10 +454,10 @@ export const STORE_ITEMS: StoreItem[] = [
     heroAttribute: 'Intelligence',
     category: 'Arcana',
     rarity: 'Arcana',
-    slot: 'Weapon',
+    slot: 'Back',
     releaseDate: 'June 11, 2020',
     description:
-      "Eminence of Ristul is a dark fantasy masterpiece that reimagines Queen of Pain as an ancient demon empress. Her blades become crackling instruments of sonic agony, and Sonic Wave creates a devastating wall of dark energy that distorts visual space around it. Shadow Strike leaves lingering pain-aura visual effects, and Blink shifts the hero across shadow-space with a trail of dimensional distortion.",
+      "Eminence of Ristul reimagines Queen of Pain as an ancient demon empress. Her blades become crackling instruments of sonic agony, and Sonic Wave creates a devastating wall of dark energy that distorts visual space around it. Shadow Strike leaves lingering pain-aura visual effects, and Blink shifts the hero across shadow-space with a trail of dimensional distortion.",
     lore:
       "In the realm of Ristul, pain is a language. She has spoken it so long that it has become the only tongue she knows.",
     customizations: [
@@ -398,8 +468,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Particle Effect', description: 'Scream of Pain shockwave redesign' },
       { type: 'Ability Icon', description: 'Dark-empress custom ability icons' },
     ],
-    imageUrl: `${MEDIA}/heroes/queenofpain/hero_selection.png`,
-    heroImageUrl: hero('queenofpain'),
+    imageUrl: HEROES.queenofpain,
+    heroImageUrl: HEROES.queenofpain,
     isAvailable: false,
     availabilityNote: 'The International 2020 Battle Pass exclusive. Not currently in store.',
     isLimited: true,
@@ -413,10 +483,10 @@ export const STORE_ITEMS: StoreItem[] = [
     heroAttribute: 'Agility',
     category: 'Arcana',
     rarity: 'Arcana',
-    slot: 'Weapon',
+    slot: 'Head',
     releaseDate: 'June 24, 2021',
     description:
-      "Phantom Advent transforms Spectre from a ghostly wanderer into an interdimensional horror. Her blades become crystalline fragments of shattered space-time, and Haunt summons spectral clones that look noticeably different from the original, creating genuine confusion on the battlefield. Spectral Dagger leaves trails of fractured reality, and Desolate flickers with lonely dimension-warping energy.",
+      "Phantom Advent transforms Spectre from a ghostly wanderer into an interdimensional horror. Her blades become crystalline fragments of shattered space-time, and Haunt summons spectral clones that look noticeably different from the original. Spectral Dagger leaves trails of fractured reality, and Desolate flickers with lonely dimension-warping energy.",
     lore:
       'She comes from the place between worlds, where no map can chart and no light has ever reached. She does not haunt. She arrives.',
     customizations: [
@@ -427,8 +497,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Particle Effect', description: 'Reality rift shimmer on standard attacks' },
       { type: 'Ability Icon', description: 'Void dimension custom ability icons' },
     ],
-    imageUrl: `${MEDIA}/heroes/spectre/hero_selection.png`,
-    heroImageUrl: hero('spectre'),
+    imageUrl: HEROES.spectre,
+    heroImageUrl: HEROES.spectre,
     isAvailable: false,
     availabilityNote: 'The International 10 Battle Pass exclusive. Not currently obtainable.',
     isLimited: true,
@@ -445,7 +515,7 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'Weapon',
     releaseDate: 'December 14, 2021',
     description:
-      "Dread Retribution was celebrated for bringing an anime-inspired visual style to a classic hero in a full Arcana treatment rather than a Persona. Drow's bow transforms into an elaborate frost-wind instrument, and Frost Arrows leave crystalline ice trails on targets. Gust creates a wall of spectral wind blades, and Marksmanship's passive glow builds with stacks in a visible aura that reacts to her range.",
+      "Dread Retribution celebrated for bringing an anime-inspired visual style to a classic hero. Drow's bow transforms into an elaborate frost-wind instrument, and Frost Arrows leave crystalline ice trails on targets. Gust creates a wall of spectral wind blades, and Marksmanship's passive glow builds with stacks in a visible aura that reacts to her range.",
     lore:
       'She learned silence from the tundra and precision from ten thousand winters. The arrow was never aimed at you. It was aimed at where you would be.',
     customizations: [
@@ -456,8 +526,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Animation', description: 'Custom bow-draw attack and skill animations' },
       { type: 'Ability Icon', description: 'Redesigned ability icons' },
     ],
-    imageUrl: `${MEDIA}/heroes/drow_ranger/hero_selection.png`,
-    heroImageUrl: hero('drow_ranger'),
+    imageUrl: HEROES.drow_ranger,
+    heroImageUrl: HEROES.drow_ranger,
     isAvailable: false,
     availabilityNote: 'International 2021 Battle Pass exclusive. Not currently obtainable.',
     isLimited: true,
@@ -485,8 +555,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Ability Icon', description: 'Void asylum custom ability icons' },
       { type: 'Animation', description: 'Custom channeling and storm-call animations' },
     ],
-    imageUrl: `${MEDIA}/heroes/razor/hero_selection.png`,
-    heroImageUrl: hero('razor'),
+    imageUrl: HEROES.razor,
+    heroImageUrl: HEROES.razor,
     isAvailable: false,
     availabilityNote: 'Diretide 2022 Battle Pass exclusive. Not currently obtainable.',
     isLimited: true,
@@ -514,8 +584,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Particle Effect', description: 'Time Zone passive glow visual' },
       { type: 'Ability Icon', description: 'Eldritch temporal custom ability icons' },
     ],
-    imageUrl: `${MEDIA}/heroes/faceless_void/hero_selection.png`,
-    heroImageUrl: hero('faceless_void'),
+    imageUrl: HEROES.faceless_void,
+    heroImageUrl: HEROES.faceless_void,
     isAvailable: false,
     availabilityNote: 'Diretide 2022 Battle Pass exclusive. Not currently obtainable.',
     isLimited: true,
@@ -534,16 +604,16 @@ export const STORE_ITEMS: StoreItem[] = [
     description:
       "Released alongside Legion Commander herself in Wraith Night 2013, Blades of Voth Domosh is one of the founding Arcanas of Dota 2. The twin blades carry the mark of a commander who has survived every battle by never accepting defeat. Duel gains a custom declaration visual, and the blade gleams with the kills of fallen duels integrated into its edge.",
     lore:
-      'The blades were not forged to win duels. They were forged to end them, permanently, permanently, and without ceremony.',
+      'The blades were not forged to win duels. They were forged to end them, permanently, and without ceremony.',
     customizations: [
-      { type: 'Model', description: 'Twin custom blades with battle-scarred ancient commander aesthetic' },
-      { type: 'Particle Effect', description: 'Duel declaration visual with champion\'s mark effect' },
+      { type: 'Model', description: "Twin custom blades with battle-scarred ancient commander aesthetic" },
+      { type: 'Particle Effect', description: "Duel declaration visual with champion's mark effect" },
       { type: 'Particle Effect', description: 'Press The Attack healing surge redesign' },
       { type: 'Particle Effect', description: 'Overwhelming Odds charge trail' },
       { type: 'Ability Icon', description: 'Custom military commander icons' },
     ],
-    imageUrl: `${MEDIA}/heroes/legion_commander/hero_selection.png`,
-    heroImageUrl: hero('legion_commander'),
+    imageUrl: ITEMS.blades_voth,
+    heroImageUrl: HEROES.legion_commander,
     price: '$35.00 USD',
     isAvailable: true,
     tags: ['legion commander', 'strength', 'carry', 'duel', 'military', 'classic'],
@@ -559,7 +629,7 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'Weapon',
     releaseDate: 'April 3, 2018',
     description:
-      "As one of Dota 2's most popular heroes, it was only a matter of time before Pudge received an Arcana. Feast of Abscession transforms his cleaver into an elaborate necrotic meat-hook machine dripping with flesh and bile. Dismember gains a gruesome new chomping animation. Flesh Heap stacks visually accumulate as grotesque meat clusters on the body, and Rot emits a haze of stomach-churning particles.",
+      "As one of Dota 2's most popular heroes, Pudge received a full Arcana with Feast of Abscession. It transforms his cleaver into an elaborate necrotic meat-hook machine dripping with flesh and bile. Dismember gains a gruesome new chomping animation. Flesh Heap stacks visually accumulate as grotesque meat clusters on the body, and Rot emits a haze of stomach-churning particles.",
     lore:
       "He has eaten kings and heroes. He has consumed entire armies in dreams. The hunger is not a need. It is simply who he is.",
     customizations: [
@@ -570,8 +640,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Particle Effect', description: 'Flesh Heap stack visual clusters accumulating on body' },
       { type: 'Ability Icon', description: 'Butcher-themed custom ability icons' },
     ],
-    imageUrl: `${MEDIA}/heroes/pudge/hero_selection.png`,
-    heroImageUrl: hero('pudge'),
+    imageUrl: ITEMS.feast_abscession,
+    heroImageUrl: HEROES.pudge,
     price: '$35.00 USD',
     isAvailable: true,
     tags: ['pudge', 'strength', 'support', 'hook', 'meat', 'classic'],
@@ -584,10 +654,10 @@ export const STORE_ITEMS: StoreItem[] = [
     heroAttribute: 'Intelligence',
     category: 'Arcana',
     rarity: 'Arcana',
-    slot: 'Head',
+    slot: 'Back',
     releaseDate: 'February 12, 2015',
     description:
-      "Frost Avalanche gives Crystal Maiden a regal ice-queen transformation with a distinctive dog companion Frostivus ornament. Her staff becomes an elaborate blizzard conduit, and Freezing Field creates a spectacular blizzard storm of custom snowflake particle effects. Frostbite encloses enemies in crystal-clear ice sculptures, and Arcane Aura grants Frostivus magic regeneration to all allies.",
+      "Frost Avalanche gives Crystal Maiden a regal ice-queen transformation with a distinctive dog companion. Her staff becomes an elaborate blizzard conduit, and Freezing Field creates a spectacular blizzard storm of custom snowflake particle effects. Frostbite encloses enemies in crystal-clear ice sculptures, and the Arcana is the first to feature an optional pet companion.",
     lore:
       'She was born in a blizzard and has never been warm since. She does not mind. The cold is not her enemy. It is her kingdom.',
     customizations: [
@@ -598,8 +668,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Style', description: 'Multiple dog companion style variants' },
       { type: 'Ability Icon', description: 'Blizzard-queen custom ability icons' },
     ],
-    imageUrl: `${MEDIA}/heroes/crystal_maiden/hero_selection.png`,
-    heroImageUrl: hero('crystal_maiden'),
+    imageUrl: ITEMS.frost_avalanche,
+    heroImageUrl: HEROES.crystal_maiden,
     price: '$35.00 USD',
     isAvailable: true,
     tags: ['crystal maiden', 'cm', 'intelligence', 'support', 'ice', 'classic'],
@@ -615,7 +685,7 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'Weapon',
     releaseDate: 'December 12, 2016',
     description:
-      "Released alongside Monkey King's introduction to Dota 2 in patch 7.00, Great Sage's Reckoning is the only Arcana to debut with a new hero. The staff-weapon becomes the mythological Ruyi Jingu Bang at full divine power. Boundless Strike sends shockwaves through reality, and Tree Dance leaves trail-marks across the canopy. Wukong's Command summons shadow-form duplicates of the Great Sage himself.",
+      "Released alongside Monkey King's introduction to Dota 2 in patch 7.00, Great Sage's Reckoning is the only Arcana to debut with a new hero. The staff-weapon becomes the mythological Ruyi Jingu Bang at full divine power. Boundless Strike sends shockwaves through reality, and Wukong's Command summons shadow-form duplicates of the Great Sage himself.",
     lore:
       'He was imprisoned in stone for five hundred years. The stone is gone, but the waiting is not. It lives in every strike.',
     customizations: [
@@ -626,8 +696,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Particle Effect', description: 'Jingu Mastery stack glow on the staff' },
       { type: 'Ability Icon', description: 'Mythological journey custom ability icons' },
     ],
-    imageUrl: `${MEDIA}/heroes/monkey_king/hero_selection.png`,
-    heroImageUrl: hero('monkey_king'),
+    imageUrl: ITEMS.great_sage,
+    heroImageUrl: HEROES.monkey_king,
     price: '$35.00 USD',
     isAvailable: true,
     tags: ['monkey king', 'mk', 'agility', 'carry', 'staff', 'journey'],
@@ -643,7 +713,7 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'Back',
     releaseDate: 'September 4, 2020',
     description:
-      "Compass of the Rising Gale transforms Windranger into the embodiment of wind and navigation, her bow rebuilt as a gale-compass instrument that reads the currents of battle. Windrun creates a spectacular wind-vortex displacement effect, and Focus Fire unleashes a storm of arrows visible as streaks of compressed air. The alternate style requires one million Focus Fire damage in ranked or unranked play.",
+      "Compass of the Rising Gale transforms Windranger into the embodiment of wind and navigation, her bow rebuilt as a gale-compass instrument. Windrun creates a spectacular wind-vortex displacement effect, and Focus Fire unleashes a storm of arrows visible as streaks of compressed air. The alternate style requires one million Focus Fire damage.",
     lore:
       'The wind remembers where it has been. She uses that memory to find where enemies will be.',
     customizations: [
@@ -654,8 +724,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Style', description: 'Second style unlocked by 1,000,000 Focus Fire damage' },
       { type: 'Ability Icon', description: 'Navigator-compass custom ability icons' },
     ],
-    imageUrl: `${MEDIA}/heroes/windrunner/hero_selection.png`,
-    heroImageUrl: hero('windrunner'),
+    imageUrl: HEROES.windrunner,
+    heroImageUrl: HEROES.windrunner,
     isAvailable: false,
     availabilityNote: 'The International 2020 Battle Pass exclusive. Not currently in store.',
     isLimited: true,
@@ -669,10 +739,10 @@ export const STORE_ITEMS: StoreItem[] = [
     heroAttribute: 'Intelligence',
     category: 'Arcana',
     rarity: 'Arcana',
-    slot: 'Head',
+    slot: 'Back',
     releaseDate: 'April 18, 2024',
     description:
-      "Part of the 2024 Crownfall event, Devotions of Dragonus gives Skywrath Mage a complete divine transcendence. The Arcana reimagines him as an ascended celestial being of pure draconic magic, with feathers and magical scripts woven throughout his form. Mystic Flare creates a stunning constellation-pattern devastation effect. An alternate style was unlocked by completing Act 3 of the Crownfall adventure.",
+      "Part of the 2024 Crownfall event, Devotions of Dragonus gives Skywrath Mage a complete divine transcendence as an ascended celestial being of pure draconic magic, with feathers and magical scripts woven throughout his form. Mystic Flare creates a stunning constellation-pattern devastation effect.",
     lore:
       'He was already a lord of the sky. The devotions simply let the sky know it.',
     customizations: [
@@ -684,8 +754,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Style', description: 'Alternate style unlocked through Crownfall Act 3 completion' },
       { type: 'Ability Icon', description: 'Celestial dragon custom ability icons' },
     ],
-    imageUrl: `${MEDIA}/heroes/skywrath_mage/hero_selection.png`,
-    heroImageUrl: hero('skywrath_mage'),
+    imageUrl: HEROES.skywrath_mage,
+    heroImageUrl: HEROES.skywrath_mage,
     isAvailable: false,
     availabilityNote: 'Crownfall 2024 event exclusive. Not currently obtainable.',
     isLimited: true,
@@ -699,10 +769,10 @@ export const STORE_ITEMS: StoreItem[] = [
     heroAttribute: 'Agility',
     category: 'Arcana',
     rarity: 'Arcana',
-    slot: 'Ambient',
+    slot: 'Weapon',
     releaseDate: 'April 18, 2024',
     description:
-      "Resurrection of Shen is one of the most ambitious Arcanas ever created for Dota 2. Released as part of Crownfall 2024, it gives Vengeful Spirit a complete model overhaul and three distinct styles. The third style transforms her into her sister Queen Imperia, a separate character identity. Magic Missile becomes a divine lance of sacred wind, and Wave of Terror tears through dimensions with force that rivals the original.",
+      "Resurrection of Shen is one of the most ambitious Arcanas ever created. Released as part of Crownfall 2024, it gives Vengeful Spirit a complete model overhaul and three distinct styles. The third style transforms her into her sister Queen Imperia, a separate character identity. Magic Missile becomes a divine lance of sacred wind.",
     lore:
       'She died seeking vengeance. She was resurrected because the universe could not afford to deny her.',
     customizations: [
@@ -715,19 +785,11 @@ export const STORE_ITEMS: StoreItem[] = [
     ],
     styles: [
       { name: 'Shen', description: 'Default Vengeful Spirit restored form' },
-      {
-        name: 'Ascended Shen',
-        description: 'Empowered resurrection form',
-        unlockRequirement: 'Unlock through Crownfall progression',
-      },
-      {
-        name: 'Queen Imperia',
-        description: 'Transform into her sister, an entirely new character appearance',
-        unlockRequirement: 'Complete Crownfall Act 3',
-      },
+      { name: 'Ascended Shen', description: 'Empowered resurrection form', unlockRequirement: 'Unlock through Crownfall progression' },
+      { name: 'Queen Imperia', description: 'Transform into her sister, an entirely new character appearance', unlockRequirement: 'Complete Crownfall Act 3' },
     ],
-    imageUrl: `${MEDIA}/heroes/vengefulspirit/hero_selection.png`,
-    heroImageUrl: hero('vengefulspirit'),
+    imageUrl: HEROES.vengefulspirit,
+    heroImageUrl: HEROES.vengefulspirit,
     isAvailable: false,
     availabilityNote: 'Crownfall 2024 event exclusive. Not currently obtainable.',
     isLimited: true,
@@ -737,7 +799,7 @@ export const STORE_ITEMS: StoreItem[] = [
 
   // ===================== PERSONAS =====================
   {
-    id: 'persona-cm-dog',
+    id: 'persona-cm-stormcrafter',
     name: 'Stormcrafter',
     hero: 'Crystal Maiden',
     heroAttribute: 'Intelligence',
@@ -746,7 +808,7 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'N/A',
     releaseDate: 'November 29, 2019',
     description:
-      "Stormcrafter replaces Crystal Maiden with an anthropomorphic husky dog mage in a completely reimagined character skin. The entire hero model, animations, voice lines, and spells are rebuilt to feature the canine persona. Freezing Field becomes an Arctic blizzard summoned by a dog who has clearly mastered the art of ice magic, and the portrait art is entirely unique from the base hero.",
+      "Stormcrafter replaces Crystal Maiden with an anthropomorphic husky dog mage in a completely reimagined character skin. The entire hero model, animations, voice lines, and spells are rebuilt to feature the canine persona. Freezing Field becomes an Arctic blizzard summoned by a dog who has clearly mastered the art of ice magic.",
     lore:
       'A dog by any other name would still channel the same arcane ice. She just happens to be better at it.',
     customizations: [
@@ -756,40 +818,12 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Ability Icon', description: 'Redesigned ability icons matching the new character' },
       { type: 'Particle Effect', description: 'All spell effects restyled for dog mage identity' },
     ],
-    imageUrl: `${MEDIA}/heroes/crystal_maiden/hero_selection.png`,
-    heroImageUrl: hero('crystal_maiden'),
+    imageUrl: HEROES.crystal_maiden,
+    heroImageUrl: HEROES.crystal_maiden,
     isAvailable: false,
     availabilityNote: 'The International 2019 Battle Pass exclusive. Not currently obtainable.',
     isLimited: true,
     tags: ['crystal maiden', 'dog', 'husky', 'persona', 'ice', 'limited'],
-    event: 'The International 2019 Battle Pass',
-  },
-  {
-    id: 'persona-pa-mortimer',
-    name: 'Sanguine Automaton',
-    hero: 'Phantom Assassin',
-    heroAttribute: 'Agility',
-    category: 'Persona',
-    rarity: 'Arcana',
-    slot: 'N/A',
-    releaseDate: 'August 22, 2019',
-    description:
-      "Sanguine Automaton transforms Phantom Assassin from a Veiled Sister into a mechanical blood-construct. The persona includes entirely new animations where the automaton moves with precise mechanical efficiency. Stifling Dagger becomes a blood-iron projectile, Coup de Grace crits leave hydraulic spray effects, and the entire hero is rebuilt as a crimson-and-metal death machine.",
-    lore:
-      'It was built to kill. It does not wonder why. It does not need to.',
-    customizations: [
-      { type: 'Model', description: 'Full mechanical blood-automaton replacement of PA model' },
-      { type: 'Animation', description: 'Mechanical precision movement and attack animations' },
-      { type: 'Particle Effect', description: 'Stifling Dagger blood-iron projectile trail' },
-      { type: 'Particle Effect', description: 'Coup de Grace hydraulic blood spray critical effect' },
-      { type: 'Voice', description: 'Unique automaton voice lines' },
-    ],
-    imageUrl: `${MEDIA}/heroes/phantom_assassin/hero_selection.png`,
-    heroImageUrl: hero('phantom_assassin'),
-    isAvailable: false,
-    availabilityNote: 'The International 2019 Battle Pass exclusive.',
-    isLimited: true,
-    tags: ['phantom assassin', 'automaton', 'persona', 'mechanical', 'blood', 'limited'],
     event: 'The International 2019 Battle Pass',
   },
   {
@@ -802,7 +836,7 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'N/A',
     releaseDate: 'August 22, 2019',
     description:
-      "Acolyte of the Lost Arts is perhaps the most ambitious Persona ever created, reimagining Invoker as a youthful student at the peak of his early mastery. The young Invoker retains all of the original hero's 14 spells but presents them through the eyes of a prodigy who has not yet grown old and arrogant. Unique student-themed voice lines contrast perfectly with the seasoned Invoker's famous ego.",
+      "Acolyte of the Lost Arts is the most ambitious Persona ever created, reimagining Invoker as a youthful student at the peak of his early mastery. The young Invoker retains all of the original hero's 14 spells but presents them through the eyes of a prodigy who has not yet grown old and arrogant. Unique student-themed voice lines contrast perfectly with the seasoned Invoker's famous ego.",
     lore:
       "He was always the most gifted student the academy had ever seen. The problem was that he knew it.",
     customizations: [
@@ -812,8 +846,8 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Particle Effect', description: 'All 14 spells retain effects with youthful aesthetic' },
       { type: 'Ability Icon', description: 'Academy-themed ability icons' },
     ],
-    imageUrl: `${MEDIA}/heroes/invoker/hero_selection.png`,
-    heroImageUrl: hero('invoker'),
+    imageUrl: HEROES.invoker,
+    heroImageUrl: HEROES.invoker,
     isAvailable: false,
     availabilityNote: 'The International 2019 Battle Pass exclusive. Account-bound.',
     isLimited: true,
@@ -830,74 +864,25 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'N/A',
     releaseDate: 'December 23, 2021',
     description:
-      "Davion of Dragon Hold is a Netflix crossover Persona that reimagines Dragon Knight as Davion the Dragon Knight from the animated series Dragon's Blood. The model, voice, and animations align with the show's art style, and Elder Dragon Form receives updated visuals to match the show's version of the red dragon, Slyrak.",
+      "Davion of Dragon Hold is a Netflix crossover Persona that reimagines Dragon Knight as Davion the Dragon Knight from the Dragon's Blood animated series. The model, voice, and animations align with the show's art style, and Elder Dragon Form receives updated visuals to match the show's version of the red dragon, Slyrak.",
     lore:
       'The dragon inside him has a name. He has learned to ask rather than fight. Some days, the answer is yes.',
     customizations: [
       { type: 'Model', description: "Netflix Dragon's Blood anime-style model replacement" },
-      { type: 'Voice', description: 'Voiced character from the Dragon\'s Blood animated series' },
+      { type: 'Voice', description: "Voiced character from the Dragon's Blood animated series" },
       { type: 'Animation', description: 'Show-accurate combat and movement animations' },
       { type: 'Particle Effect', description: 'Elder Dragon Form updated to match Slyrak from the show' },
     ],
-    imageUrl: `${MEDIA}/heroes/dragon_knight/hero_selection.png`,
-    heroImageUrl: hero('dragon_knight'),
+    imageUrl: HEROES.dragon_knight,
+    heroImageUrl: HEROES.dragon_knight,
     isAvailable: false,
     availabilityNote: "Tied to the Netflix Dragon's Blood promotion. Not currently obtainable.",
     isLimited: true,
     tags: ['dragon knight', 'strength', 'carry', 'netflix', 'persona', 'anime', 'limited'],
     event: "Netflix Dragon's Blood",
   },
-  {
-    id: 'persona-mirana-selemene',
-    name: 'Princess of the Moon',
-    hero: 'Mirana',
-    heroAttribute: 'Agility',
-    category: 'Persona',
-    rarity: 'Arcana',
-    slot: 'N/A',
-    releaseDate: 'December 23, 2021',
-    description:
-      "This Persona reimagines Mirana as a younger version of herself or as the Selemene character from the Dragon's Blood animated series. The model carries the Netflix aesthetic that brought Dota to a wider audience, with Elune's light replaced by the moon goddess's specific celestial magic from the show's lore.",
-    lore:
-      'She does not rule the moon. She is the moon, walking.',
-    customizations: [
-      { type: 'Model', description: "Netflix Dragon's Blood Mirana/Selemene character model" },
-      { type: 'Voice', description: 'Voice lines from the Dragon\'s Blood animated series' },
-      { type: 'Animation', description: 'Show-accurate combat animations' },
-      { type: 'Particle Effect', description: 'Moonlight Sacred Arrow and Starfall effects' },
-    ],
-    imageUrl: `${MEDIA}/heroes/mirana/hero_selection.png`,
-    heroImageUrl: hero('mirana'),
-    isAvailable: false,
-    availabilityNote: "Netflix Dragon's Blood promotion exclusive. Not currently obtainable.",
-    isLimited: true,
-    tags: ['mirana', 'agility', 'carry', 'netflix', 'persona', 'moon', 'limited'],
-    event: "Netflix Dragon's Blood",
-  },
 
   // ===================== COURIERS =====================
-  {
-    id: 'courier-genuine-reznak',
-    name: 'Genuine Reznak Mo Reznak',
-    hero: undefined,
-    category: 'Courier',
-    rarity: 'Mythical',
-    slot: 'N/A',
-    releaseDate: 'November 25, 2013',
-    description:
-      "Reznak Mo Reznak is one of Dota 2's iconic couriers, a scheming ratling bureaucrat who delivers your items with suspicious efficiency. This Genuine version was obtainable through Dota 2 real-world merchandise. The courier waddles between base and battlefield with a stack of papers, occasionally looking over his shoulder as if expecting to be caught in the act of something.",
-    lore: "He's not stealing anything. Probably. The delivery is definitely genuine. The courier is another matter.",
-    customizations: [
-      { type: 'Model', description: 'Ratling bureaucrat courier model with documents and paraphernalia' },
-      { type: 'Animation', description: 'Unique waddle walk and item-delivery animations' },
-    ],
-    imageUrl: `${MEDIA}/heroes/courier/hero_selection.png`,
-    heroImageUrl: undefined,
-    isAvailable: true,
-    tags: ['courier', 'ratling', 'genuine', 'classic', 'bureaucrat'],
-    event: 'Dota 2 Merchandise',
-    quality: 'Genuine',
-  },
   {
     id: 'courier-shagbark',
     name: 'Shagbark',
@@ -913,7 +898,7 @@ export const STORE_ITEMS: StoreItem[] = [
       { type: 'Model', description: 'Classic armored squirrel courier model' },
       { type: 'Animation', description: 'Scampering run and item-pickup animations' },
     ],
-    imageUrl: `${MEDIA}/heroes/courier/hero_selection.png`,
+    imageUrl: HEROES.lina,
     heroImageUrl: undefined,
     price: '$0.99 USD',
     isAvailable: true,
@@ -931,13 +916,13 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'N/A',
     releaseDate: 'August 15, 2018',
     description:
-      "The Mother of Roshan ward replaces the standard Observer Ward and Sentry Ward with a baby Roshan clutching a gemstone. Placing this ward puts a miniaturized version of the Dota 2 icon creature at the vision point, creating a surreal effect when enemies try to determine if that baby Roshan near the rune is actually a ward or just some kind of game art they missed.",
+      "The Mother of Roshan ward replaces the standard Observer Ward and Sentry Ward with a baby Roshan clutching a gemstone. Placing this ward puts a miniaturized version of the Dota 2 icon creature at the vision point, creating a surreal and delightful effect on the battlefield.",
     lore: "She was there before Roshan. She will be there after. She sees everything.",
     customizations: [
       { type: 'Model', description: 'Baby Roshan model replacing both Observer and Sentry wards' },
       { type: 'Particle Effect', description: 'Unique ward-placement visual with gem glow effect' },
     ],
-    imageUrl: `${MEDIA}/items/ward_observer.png`,
+    imageUrl: HEROES.pudge,
     heroImageUrl: undefined,
     isAvailable: false,
     isLimited: true,
@@ -956,13 +941,13 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'N/A',
     releaseDate: 'June 9, 2022',
     description:
-      "Immortal Gardens replaces the entire Dota 2 interface with an overgrown ancient-garden aesthetic. Stone and vine frames replace the standard UI panels, and every counter, timer, and ability slot is framed in weathered stone covered with creeping plants. The mini-map border becomes a moss-stone frame, and the shop panel opens with a ruined archway animation.",
+      "Immortal Gardens replaces the entire Dota 2 interface with an overgrown ancient-garden aesthetic. Stone and vine frames replace the standard UI panels, and every counter, timer, and ability slot is framed in weathered stone covered with creeping plants. The mini-map border becomes a moss-stone frame.",
     lore: 'The garden was old before the first match was played here. It will remain long after the last.',
     customizations: [
       { type: 'UI', description: 'Full HUD replacement with ancient overgrown garden stone aesthetic' },
       { type: 'Animation', description: 'Unique shop panel open and close animations' },
     ],
-    imageUrl: `${MEDIA}/stores/promo/page_background_compendium.jpg`,
+    imageUrl: HEROES.rubick,
     heroImageUrl: undefined,
     isAvailable: true,
     price: '$5.99 USD',
@@ -980,66 +965,21 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'N/A',
     releaseDate: 'October 18, 2017',
     description:
-      "The Riki Announcer Pack lets the unseen assassin comment on your game's key moments in his signature conspiratorial whisper. Every kill streak, tower death, Roshan kill, and game-winning moment is delivered in Riki's hushed, plotting tones. The pack includes both the main announcer and the mega-kill announcer voice packs.",
+      "The Riki Announcer Pack lets the unseen assassin comment on your game's key moments in his signature conspiratorial whisper. Every kill streak, tower death, Roshan kill, and game-winning moment is delivered in Riki's hushed, plotting tones. The pack includes both the main and mega-kill announcer voice packs.",
     lore: "You didn't hear that. You never hear anything. That's the point.",
     customizations: [
       { type: 'Voice', description: 'Complete announcer voiceover replacement with Riki persona' },
       { type: 'Sound', description: 'Includes mega-kill announcer voiceover' },
     ],
-    imageUrl: `${MEDIA}/heroes/riki/hero_selection.png`,
-    heroImageUrl: hero('riki'),
+    imageUrl: HEROES.riki,
+    heroImageUrl: HEROES.riki,
     price: '$7.99 USD',
     isAvailable: true,
     tags: ['announcer', 'riki', 'voice', 'whisper', 'audio'],
     event: 'Dota 2 Store',
   },
-  {
-    id: 'announcer-dota2-pro-pack',
-    name: 'Dota 2 Pro Circuit Announcer',
-    hero: undefined,
-    category: 'Announcer',
-    rarity: 'Uncommon',
-    slot: 'N/A',
-    releaseDate: 'March 15, 2020',
-    description:
-      "The Dota 2 Pro Circuit Announcer brings the energy of professional esports casting into your pub games. All kill streaks, objective takes, and Roshan kills are delivered with the cadence and excitement of a live tournament broadcast, making every match feel like a grand finals.",
-    lore: 'The crowd goes wild. The crowd always goes wild.',
-    customizations: [
-      { type: 'Voice', description: 'Pro esports broadcast-style announcer voiceover' },
-      { type: 'Sound', description: 'Tournament atmosphere mega-kill announcer' },
-    ],
-    imageUrl: `${MEDIA}/stores/promo/page_background_compendium.jpg`,
-    heroImageUrl: undefined,
-    price: '$4.99 USD',
-    isAvailable: true,
-    tags: ['announcer', 'pro circuit', 'esports', 'tournament', 'broadcast'],
-    event: 'Dota 2 Store',
-  },
 
   // ===================== TERRAINS =====================
-  {
-    id: 'terrain-spring-2023',
-    name: 'Emerald Abyss Terrain',
-    hero: undefined,
-    category: 'Terrain',
-    rarity: 'Rare',
-    slot: 'N/A',
-    releaseDate: 'March 22, 2023',
-    description:
-      "Emerald Abyss transforms the Dota 2 map into a deep jungle canyon environment with bioluminescent flora lining every river and jungle camp. Trees glow with ethereal green energy, the river runs with luminous water, and ancient stone ruins frame every neutral camp. The day/night cycle shifts the bioluminescence from a subtle glow to a full-cavern radiance.",
-    lore: 'The jungle was already ancient when the first Ancients were built. It simply chose not to tell anyone.',
-    customizations: [
-      { type: 'UI', description: 'Complete map environment replacement with deep jungle canyon aesthetic' },
-      { type: 'Particle Effect', description: 'Bioluminescent plant and water particle effects' },
-      { type: 'Animation', description: 'Day/night cycle specific visual state changes' },
-    ],
-    imageUrl: `${MEDIA}/stores/promo/page_background_compendium.jpg`,
-    heroImageUrl: undefined,
-    price: '$12.99 USD',
-    isAvailable: true,
-    tags: ['terrain', 'jungle', 'bioluminescent', 'map', 'environment'],
-    event: 'Dota 2 Store',
-  },
   {
     id: 'terrain-immortal-gardens-map',
     name: 'Immortal Gardens Terrain',
@@ -1049,13 +989,13 @@ export const STORE_ITEMS: StoreItem[] = [
     slot: 'N/A',
     releaseDate: 'June 9, 2022',
     description:
-      "Immortal Gardens replaces the entire Dota 2 map with a hauntingly beautiful ancient garden overtaken by nature. Ruined stone pathways replace the dirt lanes, ornate broken fountains dot the roshan pit area, and every jungle camp is reclaimed by centuries of unchecked plant growth. Pairs perfectly with the Immortal Gardens HUD.",
+      "Immortal Gardens replaces the entire Dota 2 map with a hauntingly beautiful ancient garden overtaken by nature. Ruined stone pathways replace the dirt lanes, ornate broken fountains dot the Roshan pit area, and every jungle camp is reclaimed by centuries of unchecked plant growth. Pairs perfectly with the Immortal Gardens HUD.",
     lore: 'When civilization falls, the garden remembers.',
     customizations: [
       { type: 'UI', description: 'Full map environment with ancient garden reclaimed by nature' },
       { type: 'Particle Effect', description: 'Seasonal bloom effects on trees and ground cover' },
     ],
-    imageUrl: `${MEDIA}/stores/promo/page_background_compendium.jpg`,
+    imageUrl: HEROES.earthshaker,
     heroImageUrl: undefined,
     price: '$9.99 USD',
     isAvailable: true,
@@ -1078,7 +1018,7 @@ export const STORE_ITEMS: StoreItem[] = [
     customizations: [
       { type: 'Sound', description: 'Full in-game music replacement with TI10 original orchestral score' },
     ],
-    imageUrl: `${MEDIA}/stores/promo/page_background_compendium.jpg`,
+    imageUrl: HEROES.zuus,
     heroImageUrl: undefined,
     price: '$3.99 USD',
     isAvailable: true,

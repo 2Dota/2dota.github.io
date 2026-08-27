@@ -19,7 +19,7 @@ export function ItemCard({ item, index = 0 }: ItemCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.04, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
-      <Link to={`/item/${item.id}`} className="group block h-full">
+      <Link to={`/cosmetics/${item.id}`} className="group block h-full">
         <article
           className="relative h-full flex flex-col rounded-2xl border border-white/8 bg-gray-900/60 backdrop-blur-sm overflow-hidden transition-all duration-300 group-hover:border-white/20 group-hover:-translate-y-1 group-hover:shadow-2xl"
           style={{

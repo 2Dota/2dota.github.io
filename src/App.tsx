@@ -1,24 +1,25 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Header } from './components/layout/Header';
+import { Layout } from './components/layout/Layout';
 import { HomePage } from './pages/HomePage';
-import { ItemDetailPage } from './pages/ItemDetailPage';
 import { BrowsePage } from './pages/BrowsePage';
-import { AboutPage } from './pages/AboutPage';
+import { ItemDetailPage } from './pages/ItemDetailPage';
+import { ShopGuidePage } from './pages/ShopGuidePage';
+import { ShopItemDetailPage } from './pages/ShopItemDetailPage';
 
 const basename = import.meta.env.BASE_URL;
 
 export default function App() {
   return (
     <BrowserRouter basename={basename}>
-      <div className="min-h-screen bg-gray-950 text-gray-100">
-        <Header />
+      <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/browse" element={<BrowsePage />} />
-          <Route path="/item/:id" element={<ItemDetailPage />} />
-          <Route path="/about" element={<AboutPage />} />
+          <Route path="/cosmetics" element={<BrowsePage />} />
+          <Route path="/cosmetics/:id" element={<ItemDetailPage />} />
+          <Route path="/shop" element={<ShopGuidePage />} />
+          <Route path="/shop/:id" element={<ShopItemDetailPage />} />
         </Routes>
-      </div>
+      </Layout>
     </BrowserRouter>
   );
 }
