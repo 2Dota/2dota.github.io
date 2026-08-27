@@ -34,6 +34,12 @@ export interface ShopItem {
   isRecipe?: boolean;
   tier: ShopItemTier;
   lore?: string;
+  /** In-depth guide: role, when to buy, combos, advanced usage */
+  guide?: string;
+  /** Tips revealed when holding Alt in-game — hidden mechanics, exact numbers */
+  altTips?: string[];
+  /** Pro tips and tricks most players never figure out */
+  tips?: string[];
 }
 
 export const SHOP_ITEMS: ShopItem[] = [
@@ -50,6 +56,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Devour: Consumes a target tree or ward, regenerating 115 HP over 16 seconds.',
     tier: 'Basic',
     lore: 'The woodsman had a particular fondness for this dance.',
+    guide: `Tango is your lane sustain backbone. Every hero buys 1–2 sets at the start of most games. The 115 HP over 16 seconds is enough to negate a full creep wave of harassment if timed correctly. On supports, buy a Tango set and immediately share one charge with your carry before walking to lane — this costs you nothing since you get the charge back on the next wave.\n\nTango is critical for pulling off denies and staying close to the enemy while they are trying to harass you out of lane. The heal has no target range limit as long as you click a tree or ward within cast range (165 units). Trees created by Crystal Maiden's Arctic Aura, Natures Prophet's sprout, or Ironwood Tree ability are all valid targets.\n\nAgainst tri-lane aggression or heavy harass lanes, stack two or three Tangos. They are cheap enough that buying four is not an embarrassment. Many pros buy three sets versus a dual offlane.`,
+    altTips: [
+      'Tango consumes enemy Sentry Wards and Observer Wards — if you can see the ward, you can eat it to deny the enemy 75–150 gold worth of vision.',
+      'Sharing a Tango with an allied hero gives them 1 charge to use (2 uses → 1 to ally). The shared charge heals for the full 115 HP.',
+      'You can eat trees created by Tangos that you or allies have already placed, refreshing the heal.',
+      'Iron Branch planted as a tree (with the Iron Branch active ability) can be consumed by Tango for the full 115 HP heal.',
+    ],
+    tips: [
+      'If you\'re running Tango as a support, buy Tangos first and eat the closest tree immediately upon reaching lane — this denies the enemy from using that tree as cover for attacks.',
+      'Enemy carries who eat a Tango are momentarily distracted and often miss last hits — punish them during the 1-second animation.',
+      'In the offlane, Tango can eat cliff-edge trees to open sightlines onto the highground without a ward.',
+      'Tangos shared to you by an Iron Branch tree cannot be given to a third ally — they\'re single use only.',
+    ],
   },
   {
     id: 'healing_salve',
@@ -63,6 +82,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Rejuvenate: Restores 400 HP over 8 seconds to the target unit. Breaks on damage.',
     tier: 'Basic',
     lore: 'An ancient alchemical preparation of moss and bark.',
+    guide: `Healing Salve is the fastest burst heal available in the early game at 400 HP over 8 seconds — but it's fragile. Any single instance of player-dealt damage will dispel it instantly. This means it's strictly a heal-out-of-combat item in lane.\n\nUse it the moment you've walked away from danger — behind your tower, under trees, or just out of the enemy's spell range. It's especially powerful on strength heroes who have high base HP and can soak more damage before salve becomes relevant. Salve can be used on allies within cast range (600 units), making it a good support purchase.\n\nDo not salve if there's a Pudge hook in the air, a Skywrath silence en route, or any DoT (damage over time) ticking on the target — all of these will cancel it instantly. Save Salve for after the fight, not during it.`,
+    altTips: [
+      'Any player-based damage dispels Salve — creep damage does NOT dispel it. You can walk through the creep wave while healing.',
+      'Illusion damage also dispels Salve, so be careful around Manta Style users.',
+      'Applies to allied units including illusions, but there\'s no benefit to salving an illusion.',
+      'Healing Salve can be used on couriers, which lets you keep couriers alive in a pinch.',
+    ],
+    tips: [
+      'If you\'re being chased, pop Salve right BEFORE you get out of range — the heal will tick for its full duration even if you eventually get hit once it has completed.',
+      'Save Salve for when your HP is low enough that 400 HP actually matters — using it at 80% HP is wasteful. Wait until sub-50%.',
+      'Support players: salving your carry at the right moment (between fights) is often more valuable than a TP to base and back.',
+      'Salve + Tango together on lane means you essentially have 515 HP of off-tower sustain — more than most enemy rotators expect.',
+    ],
   },
   {
     id: 'clarity',
@@ -76,6 +108,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Clarity: Restores 100 mana over 30 seconds. Dispelled by damage.',
     tier: 'Basic',
     lore: 'A crystal vial of purified spring water.',
+    guide: `Clarity is the mana version of Healing Salve — 100 mana over 30 seconds at a rock-bottom 50 gold cost. That's essentially infinite mana early game if you chain them. Supports with low mana pools (Dark Willow, Jakiro, Crystal Maiden) should buy 2–3 clarities at the start.\n\nThe longer duration (30s vs 8s for Salve) means it's more likely to be dispelled by enemy harass. Drink it in bush or under tower. The 100 mana is often exactly the cost of one key spell — a Fissure, a Shackle, a Shadow Demon disruption. Chaining two Clarities gives you 200 mana which is often enough to cycle your entire kit.\n\nMid heroes using spells to last-hit (Puck, Storm Spirit, Skywrath) can delay ring/bottle purchases by carrying 2–3 Clarities in the early minutes.`,
+    altTips: [
+      'Like Salve, Clarity is dispelled by player-based damage — creep damage does NOT dispel it.',
+      'Clarity can be cast on allied heroes up to 600 units away, great for supports mana-boosting their carries.',
+      'Clarity restores exactly 100 mana — at 30 seconds this is ~3.33 mana/second regen.',
+      'You can drink Clarity before a teamfight if you are not in combat yet — the first few ticks will land even if dispelled mid-fight.',
+    ],
+    tips: [
+      'Buy Clarities on ANY hero who has a good stun or initiation spell but low mana pool — saving yourself from base trips is worth 50 gold many times over.',
+      'If a mid hero enemy doesn\'t have a bottle, spamming harassment forces them to use clarities faster than they buy them — winning lane through attrition.',
+      'You can give a Clarity to a Bottle-wielding ally — they use the free clarity, leaving their Bottle charges for fights.',
+      'Clarity under a smoke of deceit will finish its tick-heal before the smoke breaks, giving you both effects.',
+    ],
   },
   {
     id: 'enchanted_mango',
@@ -89,6 +134,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Consume: Instantly restores 100 mana.',
     tier: 'Basic',
     lore: 'Its mystical properties are only outclassed by its irresistible taste.',
+    guide: `Mango is strictly better than Clarity in one key scenario: you need mana RIGHT NOW in the middle of a fight. The 100 mana is identical but the delivery is instant. This makes Mango the go-to for initiators and heroes with crucial single spells — Earthshaker needs just 145 mana for Echo Slam, a Mango can rescue a seemingly dead play.\n\nThe passive 0.6 HP/sec regen is small but consistent — on lane it adds up to about 36 HP per minute. Carry 2–3 Mangos on mana-starved initiators (Beastmaster, Magnus, Tidehunter) early game. They're also amazing on supports — you can give them to your carry from your inventory without them returning to base.\n\nMango cannot be dispelled because it's instant — pop it mid-combo between spells. This is its key advantage over Clarity in any actual engagement.`,
+    altTips: [
+      'Can be used (given) to allied heroes — the active can be cast on an ally within 200 units to give them the 100 mana instantly.',
+      'The +0.6 HP Regen is permanent while in your inventory, stacks with other sources, and does not dispel.',
+      'Buying a Mango vs a Clarity comes down to safety — if you\'re in a safe position, Clarity is more gold-efficient. In active lanes, Mango wins.',
+      'Enchanted Mango does NOT count as a ward — you cannot eat it with a Tango.',
+    ],
+    tips: [
+      'Carry 2 Mangos as a hard support — use one yourself during a fight, and give the second to your carry when they\'re mana-starved mid-game.',
+      'On Storm Spirit, a Mango can complete an escape when you have 2/3 of the mana needed for a Ball Lightning but not the full amount.',
+      'Mangos are incredible on Rubick — catching a spell early game costs mana you may not have. Mango bridges that gap.',
+      'Many pro players buy 3+ Mangos on Pudge to guarantee hook-rot-dismember combos in lane without needing a Bottle.',
+    ],
   },
   {
     id: 'faerie_fire',
@@ -102,6 +160,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Consume: Instantly restores 75 HP.',
     tier: 'Basic',
     lore: 'The faint light guides heroes through their darkest moments.',
+    guide: `Faerie Fire is the emergency HP version of Mango — 75 HP instantly, no dispel risk. It also passively gives +2 damage while in your inventory, which is significant in close CS contests early game. The combined cost-to-value is excellent.\n\nOn carries that need every point of damage to secure last hits (Drow, Sniper, Gyrocopter), carrying 2 Faerie Fires gives you +4 damage in lane — often the difference between last-hitting and not. On melee carries these matter even more since they're fighting for CS up close.\n\nThe instant 75 HP heal is a lifesaver in trades. If you took 80 HP of harass and the enemy thinks you're in kill range, pop Faerie Fire to throw off their math. It's instant and cannot be dispelled — use it mid-fight.`,
+    altTips: [
+      '+2 damage applies from your inventory without equipping — just having it in your bag counts.',
+      'Consuming it is instant and cannot be interrupted — use it in the middle of a stun or channel if needed.',
+      'You CAN drop it for an ally to pick up and use, but there\'s no cast-to-ally function like Mango has.',
+      'Faerie Fire is visible when dropped on the ground — enemies can see it and contest if you try to share via dropping.',
+    ],
+    tips: [
+      'Buy 2 Faerie Fires at the start of a game as a carry — sell them later for 32 gold each when you need item slot space. The damage is free in the meantime.',
+      'Against burst combo heroes (Lion, Lina), saving a Faerie Fire for the exact moment of execution can cheat death by 30–50 HP at critical thresholds.',
+      'On Ursa or Bristleback, pair Faerie Fire with natural sustain — the 75 HP stacks with your regen to make you nearly unkillable in lane.',
+      'Faerie Fire counts as an item — it fills an inventory slot. Factor this into planning your early build; don\'t carry 3 Fires if you need slot space.',
+    ],
   },
   {
     id: 'smoke_of_deceit',
@@ -114,6 +185,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: [],
     active: 'Smoke Screen: Applies invisibility and +15% movement speed to you and nearby allies.',
     tier: 'Basic',
+    guide: `Smoke of Deceit is the primary tool for setting up ganks and rotations. Pop Smoke on your team when leaving base for a gank — it gives invisibility to everyone within 500 units and +15% movement speed. Smoke breaks when you come within 1025 units of an enemy hero or within 400 units of their buildings.\n\nSmoke is how professional teams execute rotations without being spotted on the minimap. Even if the enemy has no wards, Smoke prevents hero blips showing up while you're in it. Always pop Smoke before crossing a key chokepoint (river rune, enemy high ground ramp, jungle transitions).\n\nYou can hold up to 4 smokes at once. Supports should buy 1 every few minutes — they cost 50 gold and pay off massively as setup tools. Don't smoke when you already have vision of the enemy — walk to them instead since smoke breaks anyway.`,
+    altTips: [
+      'Smoke breaks when you come within 1025 units of an enemy hero — this is slightly further than you\'d expect. Heroes at the edge of fog can break your smoke.',
+      'Smoke does NOT break when you attack a unit — only proximity to heroes/buildings breaks it. You can auto-attack creeps under Smoke.',
+      'Smoked heroes appear completely invisible on the minimap to enemies — this is the primary reason to smoke, not just ganks.',
+      'The +15% movement speed is a flat multiplier, not a bonus — it applies on top of your base movement speed after all other calculations.',
+    ],
+    tips: [
+      'Never pop Smoke when you have high ground advantage and the enemy doesn\'t know your position — you waste the smoke for nothing.',
+      'Buy 2 Smokes as position 5 — use one to rotate yourself, save the second for when your carry needs to gank mid.',
+      'Deward with Smoke: use Smoke to walk near suspected ward locations, then place a Sentry without being seen placing it.',
+      'Wait until your entire team is grouped within 500 range BEFORE popping Smoke — people who are too far don\'t get the buff.',
+    ],
   },
   {
     id: 'dust_of_appearance',
@@ -126,6 +210,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: [],
     active: 'Dust: Reveals invisible units in 1050 radius and slows them by 10%.',
     tier: 'Basic',
+    guide: `Dust of Appearance is mandatory against invisibility heroes like Riki, Clinkz, Bounty Hunter, Nyx Assassin, and Broodmother. The 1050 AoE reveal radius is massive — activate it in fights and you'll catch any invis hero nearby.\n\nThe 10% slow is modest but meaningful — combined with your team's follow-up it's often enough to lock down a fleeing Riki. Dust lasts 12 seconds and costs 80 gold, making it one of the cheapest counters in the game.\n\nAlways carry dust when the enemy team has invis. If multiple heroes have invis, it's worth having 2 people carry it. Note that Dust can be counter-played: Riki has Tricks of the Trade which teleports him away, and Clinkz has Wind Walk with enough speed to escape the slow. Having Gem or a Sentry is more reliable for heroes with strong invis escape tools.`,
+    altTips: [
+      'Dust only slows — it does NOT damage or apply any other debuff besides the 10% slow.',
+      'The reveal persists on dusted units for 12 seconds even if they leave your vision — if a Riki runs into fog, he stays revealed.',
+      'Dust does NOT reveal units that use Shadow Blade — it only reveals naturally invisible heroes and heroes with item/spell invisibility that doesn\'t have a special interaction.',
+      'Actually, Dust DOES reveal Shadow Blade users — Shadow Blade is treated as regular invisibility by Dust.',
+    ],
+    tips: [
+      'Carry Dust on the hero most likely to be attacked by the invis hero — if Riki is targeting your carry, the carry should carry the Dust themselves.',
+      'Don\'t pop Dust too early in a chase — use it right as you\'re committing. Wasting Dust\'s 12 seconds on a chase that goes cold loses you vision when it matters.',
+      'Sentry Ward vs Dust: Sentries are better for defending static areas (your jungle, key rune spots). Dust is better for active fights and ganks.',
+      'Buy Dust at the shop, not from the side-shop — the side-shop doesn\'t restock consumables as reliably.',
+    ],
   },
   {
     id: 'tome_of_knowledge',
@@ -139,6 +236,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Read: Gain 1 level. Only usable once.',
     tier: 'Basic',
     lore: 'Words of power, condensed into portable form.',
+    guide: `Tome of Knowledge is deceptively powerful. At 100 gold for a full level, it's the single best gold-to-value item in the game at level 6 or level 11 — getting your ultimate one creep wave early can change the entire trajectory of a fight.\n\nThe timing of Tome usage matters enormously. Use it right as you're about to hit level 6 (when you're at 75–90% of the XP needed) to spike your power. Alternatively, save it for level 11 when your ultimate usually gets its key upgrade. Don't waste it going from level 12 to 13 where the impact is minimal.\n\nTomes spawn every 10 minutes on the map and can also be purchased at the shop. A 5-stack all buying Tomes and using them at the right moment is a professional-level trick. Supports especially love Tomes since they often fall behind in XP.`,
+    altTips: [
+      'You can hold Tomes in your backpack (the 4th–6th slots) — they don\'t need to be in active slots to be used.',
+      'The XP given by Tome scales with your current level — at higher levels it gives more raw XP, but one level is always one level.',
+      'Tome cannot be used if you\'re at level 25 — it gives an error. Don\'t waste 100 gold buying one at max level.',
+      'Couriers can carry and deliver Tomes — you can buy them from base and have courier bring them to you mid-fight.',
+    ],
+    tips: [
+      'If you\'re a hard support 2 levels behind, use Tome at 7 to unlock a key level-7 talent. Talents at 10/15/20/25 often flip matchups entirely.',
+      'Don\'t use Tome if you\'re at 90% XP to next level — just farm one more wave first and get the level naturally, saving the Tome for a more impactful level.',
+      'Tome on a mid hero going from level 5 to 6 gives you your ultimate before your opponent reaches it — a massive early game power spike.',
+      'In professional games, Tomes are often held until late game to secure a level 25 faster than the enemy — the compounding stat advantage is enormous.',
+    ],
   },
   {
     id: 'tp_scroll',
@@ -151,6 +261,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: [],
     active: 'Teleport: Channel for 3 seconds, then teleport to a friendly building.',
     tier: 'Basic',
+    guide: `Town Portal Scroll (TP) is the single most important item in Dota 2. Every hero should always have one. The ability to defend a tower from across the map, rotate to a winning fight, or escape a bad lane in seconds defines entire game states.\n\nThe 3-second channel means you need to anticipate — TPs take commitment. Seasoned players TP the moment they see an enemy rotation beginning (watching the minimap) rather than waiting until their tower is already half-dead. The difference is often a saved T1 vs a lost T1.\n\nTP restock is automatic when you buy one — keep your scroll purchased at all times. Some heroes (Boots of Travel users) replace the TP scroll, but until you have BoT, never leave base without one. You can TP to allied creeps, allied heroes, friendly towers, barracks, and the ancient.\n\nTP canceling (interrupting an enemy's TP with any stun, root, or silence) is one of the highest-skill moves in the game. Prioritize learning when to stun a TPing enemy.`,
+    altTips: [
+      'The 3-second channel is interrupted by ANY damage or disable — even creep attacks during the animation will cancel it.',
+      'Multiple heroes cannot TP to the same building within 1 second of each other — there\'s a brief lockout. Stagger your TPs.',
+      'You can TP to any friendly unit, including allied heroes — useful if you want to arrive at a fight location instead of a tower.',
+      'The TP Scroll\'s cooldown is 70 seconds — even if you\'re at base, you can\'t TP out again immediately after arriving.',
+    ],
+    tips: [
+      'Buy TPs at the side-shop whenever you\'re farming near the edge of the map — never be caught without one mid-game.',
+      'If you\'re about to die with a TP channeling, cancel it yourself. TP gives enemies a free stun animation that often leads to your death AND a wasted TP.',
+      'TP to barracks instead of T3 towers when defending high ground — barrack TPs are further inside your base, making you safer upon arrival.',
+      'TPs used by your teammates appear as golden circles on the minimap — watch these to understand where your team is rotating and plan accordingly.',
+    ],
   },
   {
     id: 'ward_observer',
@@ -163,6 +286,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: [],
     active: 'Place: Deploy an observer ward at target location.',
     tier: 'Basic',
+    guide: `Observer Wards are free and arguably the most impactful consumable in the game. Vision is information — knowing where enemies are lets you avoid ganks, secure rune control, and set up kills. Every support should buy and place Observers constantly.\n\nPrimary ward spots: the river rune nodes (both 0- and 2-minute rune positions), the enemy jungle entrances, the Roshan pit, high ground near T1 towers, and crossroads/chokepoints your team uses frequently. The 1800 radius is enormous — a single well-placed ward can cover two lanes worth of territory.\n\nWards restock at base automatically — you can carry up to 2 at a time. After placing both, immediately walk back or TP to restock. A support who keeps 4 wards on the map at all times wins warding. Don't let them expire unrefreshed.`,
+    altTips: [
+      'Observer Wards grant 1800 radius ground vision — this does not reveal Fog of War on cliffs or treetops (you need a ward on high ground for that).',
+      'Wards have 200 HP and can be killed by enemy units — they die in 1 attack from a hero.',
+      'Your ward counter resets to 2 as soon as you drop below 2 in your stock — you always have access to 2 fresh wards.',
+      'The minimap shows a small yellow dot where your wards are placed — enemy players cannot see this, but your allies can.',
+    ],
+    tips: [
+      'Ward DEFENSIVELY when losing — place wards deep in your own jungle to know when enemies are invading, not just on the river.',
+      'Place wards on cliffs and high ground for the best vision angles — ground wards are often blocked by trees and terrain.',
+      'Counter-warding: before placing a Sentry, predict where an Observer is placed by looking at which areas the enemy can\'t see you approaching from.',
+      'Deny your own Observer Wards when retreating if you know enemies will find them — right-click them yourself to save the intelligence they provide.',
+    ],
   },
   {
     id: 'ward_sentry',
@@ -175,6 +311,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: [],
     active: 'Place: Deploy a sentry ward revealing invisible units.',
     tier: 'Basic',
+    guide: `Sentry Wards are the primary method of countering invisibility and finding enemy Observer Wards. At 50 gold, they're cheap enough to buy frequently. Sentries do not grant normal vision — they only reveal invisible units and invisible wards within 850 radius.\n\nPrimary uses: deward (killing enemy Observer Wards), countering invis heroes in your jungle or near objectives, and blocking neutral camps from enemy stacking. The 850 reveal radius means a Sentry near the center of a common ward spot will often find the ward.\n\nThe professional meta requires constant dewarding. When you kill an Observer Ward, you get 75 gold bounty — buying 2 Sentries for 100 gold and finding 2 Observer Wards gives you 150 gold back plus the vision denial. It's almost always gold-positive.`,
+    altTips: [
+      'Sentry Ward reveals: Invisible heroes, Observer Wards, and other Sentry Wards in range.',
+      'Sentry Wards last 4 minutes (vs Observer\'s 6 minutes) — factor this into timing when placing near Roshan or objectives.',
+      'Killing an enemy Observer Ward grants 75 gold to the hero who killed it — always attack-click the ward.',
+      'Sentries can be placed in the same spots as Observers — common ward spots are common SENTRY spots too.',
+    ],
+    tips: [
+      'When decommitting from a fight, place a Sentry Ward at the edge of a smoke or fog — you\'ll catch invis heroes trying to jump on your retreating team.',
+      'Sentry + Observer combo at the same location: place a Sentry first to check for enemy wards, then place your Observer once the area is clean.',
+      'Roshan pit: place Sentry at the right-side entrance when your team starts Roshan to catch any hero trying to contest with invis.',
+      'Buy 2 Sentries before dewarding — sometimes one Sentry finds a ward in an unusual spot you didn\'t expect, and you\'ll want a second to deward the normal spot too.',
+    ],
   },
 
   // ─── ATTRIBUTES ────────────────────────────────────────────────────────────
@@ -189,6 +338,15 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: ['+2 All Stats'],
     tier: 'Basic',
     buildsInto: ['Magic Wand', 'Wraith Band', 'Bracer', 'Null Talisman'],
+    guide: `Circlet is a pure build-toward component. You almost never keep a Circlet as a standalone item — you buy it specifically to build Wraith Band, Bracer, Null Talisman, or Magic Wand. The +2 All Stats it provides while sitting in your inventory is a minor bonus worth about 22 HP and a small mana amount.\n\nBuying multiple Circlets early gives you flexibility — depending on how the game develops, you can build the carry-appropriate stat item. Early Circlets into Wraith Band pairs with agility carries, Gauntlets into Bracer for strength carries, and Mantle into Null Talisman for intelligence heroes.\n\nNever discard a Circlet without building it — even at full build, sell it as the last piece to build out an upgrade rather than dropping it early.`,
+    altTips: [
+      '+2 All Stats means: +2 Strength (+38 HP, +0.22 HP regen), +2 Agility (+0.28 armor, +2 attack speed), +2 Intelligence (+26 mana, +0.4 mana regen).',
+      'Circlet contributes to your total stats for talent and item bonuses — it\'s a micro-buff in every category.',
+    ],
+    tips: [
+      'Buy Circlet + matching attribute component (Gauntlets/Slippers/Mantle) at the start of the game for flexibility — you can pivot to whichever band/bracer/talisman suits your needs.',
+      'If you wind up with a spare Circlet and no need for a band/bracer/talisman, sell it for 77 gold (50% value) rather than letting it waste a slot.',
+    ],
   },
   {
     id: 'iron_branch',
@@ -201,6 +359,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: ['+1 All Stats'],
     tier: 'Basic',
     lore: 'It amazes the sages that something so useful grows on every corner.',
+    guide: `Iron Branch is the most cost-efficient early game item in Dota 2. At 50 gold for +1 All Stats, it's better stat-per-gold than nearly any other item in the game at that tier. Most heroes buy 3–5 Iron Branches at the start.\n\nBranches build into Magic Wand (alongside Magic Stick and Circlet), making them a seamless component. Even if you never use the active, they provide:\n- Small stats across all three attributes\n- A one-time tree creation that can be consumed by Tango for 115 HP\n- Component for Magic Wand, the most widely used support item\n\nThe active ability to plant a tree is an underused trick — placed trees can block jungle camps, create cliff-access paths for some heroes, and be eaten by Tango.`,
+    altTips: [
+      'Iron Branch can be activated to plant a tree at a target location — this tree can be consumed by Tango for the full 115 HP heal.',
+      'Planted trees can block neutral camps from spawning if placed inside the camp boundary.',
+      'Iron Branch sells for 25 gold (50% of 50). Never throw them away — sell them when you need the slot.',
+      'Three Iron Branches contribute +3 All Stats which equals roughly +114 HP, a notable amount in the laning phase.',
+    ],
+    tips: [
+      'Buy 3–4 Iron Branches at the start as ANY hero — sell them when your build fills out. The HP and mana they provide early game keeps you alive through harassment.',
+      'Plant an Iron Branch in the Roshan pit entrance — you create a tree that slightly repositions the gap, confusing enemies or blocking pull angles.',
+      'If you have Tango, plant an Iron Branch tree mid-lane and eat it while laning — this gives you 115 HP without needing an actual tree nearby.',
+      'Iron Branch into Magic Wand is a must on almost every support — don\'t sell branches until you\'ve built the Wand.',
+    ],
   },
   {
     id: 'slippers_of_agility',
@@ -212,6 +383,13 @@ export const SHOP_ITEMS: ShopItem[] = [
     description: 'Simple slippers that grant a bonus to agility.',
     stats: ['+3 Agility'],
     tier: 'Basic',
+    guide: `Slippers of Agility is the agility carry's early game component. On heroes like Phantom Assassin, Drow Ranger, or Anti-Mage, +3 agility translates to +3 armor (for survivability), +3 attack speed (faster farming), and increased primary attribute damage. It builds into Wraith Band.\n\nAlone it's situationally purchased — mainly when you specifically need the Wraith Band and don't have the gold for it all at once. Buy Slippers + Circlet as your first trip to base, then fill out the Wraith Band next.`,
+    altTips: [
+      '+3 Agility = +3 attack speed, +0.42 armor, +3 primary damage if you are an agility hero.',
+    ],
+    tips: [
+      'On agility carries, Slippers + Circlet is the standard Wraith Band recipe — buy this combo before the game starts to get both components from the fountain.',
+    ],
   },
   {
     id: 'mantle_of_intelligence',
@@ -223,6 +401,13 @@ export const SHOP_ITEMS: ShopItem[] = [
     description: 'A thin cloak that enhances the intellect of the wearer.',
     stats: ['+3 Intelligence'],
     tier: 'Basic',
+    guide: `Mantle of Intelligence is the starting component for Null Talisman, the go-to early item for intelligence-primary heroes (Invoker, Zeus, Skywrath, Pugna). +3 Intelligence provides mana, mana regen, and spell damage scaling. Buy it alongside Circlet to have the Null Talisman components ready.\n\nOn support heroes without a clear stat item direction, Mantle is occasionally purchased for its cheap mana boost while you're building toward a utility item.`,
+    altTips: [
+      '+3 Intelligence = +39 mana, +0.6 mana/sec regen, and +3 spell damage amplification (on Int heroes).',
+    ],
+    tips: [
+      'Mantle + Circlet + Recipe = Null Talisman. Buy all three components in one base visit at the start of the game on any intelligence carry.',
+    ],
   },
   {
     id: 'gauntlets_of_strength',
@@ -234,6 +419,13 @@ export const SHOP_ITEMS: ShopItem[] = [
     description: 'A pair of sturdy gauntlets that grant bonus strength.',
     stats: ['+3 Strength'],
     tier: 'Basic',
+    guide: `Gauntlets of Strength is the strength carry's lane component. +3 Strength = +57 HP and +0.33 HP regen, which is genuinely meaningful during early fights. It combines with Circlet to make Bracer, one of the best early survivability items for strength heroes like Wraith King, Dragon Knight, and Axe.\n\nSupports also purchase Gauntlets as part of the Soul Ring recipe (Soul Ring builds from Ring of Regen + Gauntlets of Strength), giving mana-hungry strength supports a sustainable mana solution.`,
+    altTips: [
+      '+3 Strength = +57 HP and +0.33 HP/sec regeneration. Small but meaningful in the laning phase.',
+    ],
+    tips: [
+      'Buy Gauntlets early if you\'re going Bracer — the Bracer+Bracer double stack on strength offlane heroes is a standard opening to gain durability.',
+    ],
   },
   {
     id: 'wraith_band',
@@ -246,6 +438,14 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: ['+5 Agility', '+3 All Stats'],
     tier: 'Upgrade',
     buildsFrom: ['Slippers of Agility', 'Circlet'],
+    guide: `Wraith Band is the early-game staple for agility carries. The combined +5 Agi and +3 All Stats gives you attack speed, armor, damage (on agi heroes), HP, and mana for 450 gold — exceptional value. Most agility carries buy 2 Wraith Bands in the laning phase before transitioning.\n\nThe double Wraith Band opening is standard for Phantom Assassin, Morph, Anti-Mage, and Slark. By the mid-game you'll sell one as you build bigger items, but early on the combined stats dramatically improve your CS rate and survivability.\n\nWraith Band is also decent on off-role agility supports who need some cheap stats without overinvesting.`,
+    altTips: [
+      'Two Wraith Bands provide +10 Agility, +6 All Stats — this is often more effective than a single tier-2 item early on agility carries.',
+    ],
+    tips: [
+      'Don\'t build more than 2 Wraith Bands — after two, you\'re better off starting your core item components.',
+      'Sell Wraith Bands in the mid-game slot-by-slot as you build into Yasha, Manta, or Butterfly to recover gold.',
+    ],
   },
   {
     id: 'bracer',
@@ -258,6 +458,15 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: ['+5 Strength', '+3 All Stats'],
     tier: 'Upgrade',
     buildsFrom: ['Gauntlets of Strength', 'Circlet'],
+    guide: `Bracer is the most versatile early defensive item in the game. At 450 gold for +5 Strength (+95 HP, +0.55 HP regen) plus +3 All Stats, it's the best raw HP-per-gold item at this tier. Double Bracer is a classic offlane and support defensive opening.\n\nStrength heroes (Underlord, Axe, Dragon Knight, Clockwerk) love Bracer because it scales with their primary attribute while adding bulk. Supports buy Bracer to survive the burst damage of enemy kill lanes.\n\nBracers also build into a Bracer-Bracer double-stack which, at level 1, gives you approximately 200 bonus HP — that's often the difference between dying to a gank and surviving it.`,
+    altTips: [
+      '+5 Strength = +95 HP, +0.55 HP regen. Stacking two Bracers gives 190 HP — close to a Vanguard\'s HP for a fraction of the cost.',
+      'Bracer does NOT build into any major item — it\'s a pure stat item. Sell it when you need the slot.',
+    ],
+    tips: [
+      'Double Bracer is the go-to defensive opening for offlane strength heroes — buy both components from the base fountain before walking to lane.',
+      'In the late game, two Bracers take up 2 slots for 190 HP — at that point they should be sold for items with higher gold value.',
+    ],
   },
   {
     id: 'null_talisman',
@@ -270,6 +479,14 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: ['+5 Intelligence', '+3 All Stats'],
     tier: 'Upgrade',
     buildsFrom: ['Mantle of Intelligence', 'Circlet'],
+    guide: `Null Talisman is the intelligence equivalent of Wraith Band and Bracer — cheap stats that give intelligence heroes the mana pool and spell pressure they need to dominate the laning phase. At 450 gold it provides +5 Int (+65 mana, +1 mana/sec regen) and +3 All Stats.\n\nDouble Null Talisman is standard on intelligence carries like Invoker, Pugna, and Zeus. The extra mana pool lets you spam spells continuously, and the +3 All Stats contributes to HP and attack speed. In the mid-game, sell one for a larger item.\n\nOn spellcasters, stacking Null Talismans is more gold-efficient than buying individual stat items because Null Talisman over-indexes on the primary attribute you care about most.`,
+    altTips: [
+      '+5 Intelligence = +65 mana pool and +1 mana/second regen. Two Null Talismans give +130 mana — enough for most level-3 spells.',
+    ],
+    tips: [
+      'On Invoker, start with two Null Talismans and a Branch — the mana lets you cycle invocations freely in the early game.',
+      'Don\'t keep Null Talismans past the 20-minute mark if you have better items to build — they provide diminishing returns on intelligence heroes who scale off bigger items.',
+    ],
   },
 
   // ─── EQUIPMENT ─────────────────────────────────────────────────────────────
@@ -285,6 +502,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Chop: Destroys a target tree.',
     tier: 'Basic',
     buildsInto: ['Battle Fury'],
+    guide: `Quelling Blade is the core farming acceleration item for melee carries who rely on auto-attacks to farm. At 200 gold, +32% damage against creeps drastically speeds up last-hitting — you can secure creeps you'd otherwise miss against an aggressive laner.\n\nBuy Quelling Blade on Anti-Mage, Phantom Lancer, Terrorblade, Juggernaut, and other melee farming carries. The active tree-chop is also strategically useful: open up ward spots, create escape paths through forests, or destroy trees enemies are hiding in.\n\nQuelling Blade builds into Battle Fury (which has its own chop). Once you have Battle Fury, sell the Quelling Blade — the effect is redundant and you need the slot.`,
+    altTips: [
+      'The 32% damage bonus applies only to non-hero units: lane creeps, neutral creeps, buildings. It does NOT boost hero damage.',
+      'Chop can destroy trees that Ent or Natures Prophet created — this counters tree-clumping tactics.',
+      'Quelling Blade in the early game lets you out-last-hit almost any opponent regardless of their attack animation speed.',
+      'Ranged heroes get +10% (half the bonus) — it\'s still worth buying if you\'re ranged and going Battle Fury, but it\'s less impactful.',
+    ],
+    tips: [
+      'Buy Quelling Blade on the very first minute if you\'re a melee carry in a tough last-hitting lane — it often pays for itself in 2 minutes of extra gold.',
+      'Use Chop to create escape paths through Ironwood cluster zones on the dire side — common ward spots can become jump routes.',
+      'Quelling Blade + a few Mangos is the standard "budget jungle" kit for carries who need to jungle after a hard lane.',
+      'Never buy Quelling Blade on ranged carries who aren\'t going Battle Fury — the 10% bonus is too small to justify the 200 gold cost.',
+    ],
   },
   {
     id: 'orb_of_venom',
@@ -297,6 +527,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: [],
     passive: 'Poison Attack: Slows enemy movement speed by 13% and deals 10 DPS for 3 seconds.',
     tier: 'Basic',
+    guide: `Orb of Venom is the cheapest persistent slow in the game at 275 gold. It turns any auto-attacking hero into a mild kiter and lane harasser. The 13% slow makes it nearly impossible for enemies to walk away from a fight — they take full hits from you and your support.\n\nBest on heroes who need slow but don't have it natively: Ursa, Wraith King, Viper (who already has it natively), Bristleback, or any melee hero that needs to stick to targets. The 10 DPS is minor but the slow is the real value.\n\nOrb of Venom doesn't build into anything significant — it's a pure early-game harassment tool. Plan to sell it when you're building real items.`,
+    altTips: [
+      'Orb of Venom is an orb effect — it will be overridden by higher-priority orbs (Desolator, Skadi, Maelstrom procs are not orbs but they interact differently).',
+      'The slow does not stack — applying it again just refreshes the duration.',
+      '10 DPS over 3 seconds = 30 total damage per attack. Not significant but consistent.',
+    ],
+    tips: [
+      'On Bounty Hunter, Orb of Venom gives you the slow to guarantee Track catches in lane — the gold bounty pays for it quickly.',
+      'Against heroes with no built-in escape (Tiny, Axe pre-Blink), Orb of Venom makes their lane miserable as they can never walk away from trades.',
+      'Plan your transition — sell Orb of Venom the moment you buy an item that gives you a better slow or you hit power spike items.',
+    ],
   },
   {
     id: 'blink_dagger',
@@ -310,6 +551,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Blink: Teleport to target point up to 1200 units away. 15s cooldown.',
     tier: 'Upgrade',
     lore: 'A relic of the Skywrath Mage that predates the recorded history of the Ghastly Eyrie.',
+    guide: `Blink Dagger is the single most impactful positioning item in Dota 2. The instant 1200-unit teleport with a 15-second cooldown enables heroes to initiate, escape, and reposition in ways nothing else can match. It has no stat components — it's pure mobility.\n\nPriority purchase on: Axe, Tidehunter, Enigma, Sand King, Magnus, Batrider, Faceless Void, and any hero whose ultimate or initiation requires closing distance quickly. Getting Blink at 2250 gold as fast as possible is often these heroes' entire mid-game plan.\n\nBlink Dagger is disabled for 3 seconds after taking player-based damage. This prevents you from blinking away mid-fight after taking a hit — you must engage without having been hit in the last 3 seconds. Play around this by being patient and waiting for the enemy to stop attacking before blinking in.`,
+    altTips: [
+      'Blink is disabled for 3 seconds after taking player-based damage — this includes ANY player-controlled source, but NOT Roshan or creeps.',
+      'The maximum range is 1200 units, but if you click beyond that, you Blink to the maximum range in that direction (not your cursor position).',
+      'You can Blink over impassable terrain — cliffs, water, trees — as long as there\'s a valid landing spot within range.',
+      'Blink Dagger does NOT reveal the fog — you can Blink blind into a smoke situation or unseen area.',
+    ],
+    tips: [
+      'On Axe, stand at max range and Blink into the thickest cluster of creeps for Call — don\'t Blink on top of one hero when 5 are grouped.',
+      'Wait out the 3-second disable: after the enemy\'s last attack or ability hits you, count to 3 before blinking. Experienced players know this and will keep poking you.',
+      'Blink + Force Staff combo: use Force Staff to push yourself forward, then Blink further — covering nearly 1800 units of instantaneous repositioning.',
+      'Buying Blink on non-traditional heroes (Necrophos, Pugna) is sometimes correct — the ability to position for a point-blank Death Pulse or Decrepify saves more than any stat item.',
+    ],
   },
   {
     id: 'shadow_blade',
@@ -324,6 +578,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsFrom: ['Claymore', 'Shadow Amulet'],
     buildsInto: ['Silver Edge'],
+    guide: `Shadow Blade is an aggressive positioning item and split-pushing tool. The 14-second invisibility + 30% movement speed lets you reposition for a kill setup, escape ganks, or walk under the enemy tower unseen. The +22 damage and +30 attack speed also make it excellent for carries who want raw DPS alongside the utility.\n\nBest on heroes who benefit from the first-hit advantage: Phantom Assassin (first hit triggers Coup de Grace more reliably), Bounty Hunter (stealth tracking), or any carry who needs to split-push without being caught.\n\nAt high levels, Shadow Blade becomes less reliable as enemies carry Dust, Sentries, or Gem — transitioning to Silver Edge addresses this while also adding the passive-break mechanic.`,
+    altTips: [
+      'Shadow Blade\'s invisibility is broken by: taking damage from players, using abilities (most of them), or attacking.',
+      'The +30% movement speed from Shadow Walk stacks multiplicatively with other speed bonuses.',
+      'Shadow Blade costs 3000 gold, which is roughly 13 minutes of active farm — consider whether you need positioning or raw stats.',
+    ],
+    tips: [
+      'Use Shadow Blade to walk under enemy tower for a surprise kill — opponents checking the minimap won\'t see you approaching if you\'re invis.',
+      'Shadow Blade is an incredible escape item — pop it the moment you sense a gank beginning, not after you\'ve taken damage.',
+      'On Phantom Assassin, Shadow Blade + Blur passive stacking makes you nearly impossible to catch in the early-mid game.',
+    ],
   },
   {
     id: 'silver_edge',
@@ -338,6 +603,16 @@ export const SHOP_ITEMS: ShopItem[] = [
     passive: 'Superior Shadowblade: Breaks enemy passives for 4 seconds on attack from invisibility.',
     tier: 'Upgrade',
     buildsFrom: ['Shadow Blade', 'Ultimate Orb'],
+    guide: `Silver Edge is the hard counter to passive-dependent heroes. Breaking passives for 4 seconds disables: Bristleback's damage reduction, Centaur's passive return damage, Phantom Assassin's Blur (evasion), Abaddon's Aphotic Shield auto-triggers, Wraith King's reincarnation, and dozens more. This mechanic alone justifies the item against certain lineups.\n\nThe upgrade from Shadow Blade costs ~2600 gold and gives +30 damage, +5 attack speed, and the passive-break — well worth it if the enemy team has one or more passive-reliant heroes. Silver Edge is core on Anti-Mage, Phantom Assassin, and Slark versus the right enemy composition.`,
+    altTips: [
+      'Break lasts 4 seconds — the duration is short enough that enemies will try to re-engage once their passive returns.',
+      'The passive break only triggers when attacking OUT OF INVISIBILITY from Shadow Walk — not from Smoke or other invis.',
+      'Silver Edge\'s passive-break is NOT dispellable — the enemy must simply wait out the 4 seconds.',
+    ],
+    tips: [
+      'Build Silver Edge if the enemy team has two or more passive-dependent heroes — it functions as a "win button" in those matchups.',
+      'Timing the Silver Edge attack: wait until the enemy uses their active defensives (BKB, Linken\'s) before breaking, so you get both the passive break AND their defenses are down.',
+    ],
   },
   {
     id: 'force_staff',
@@ -351,6 +626,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Force: Propels a unit 600 units in the direction they are facing.',
     tier: 'Upgrade',
     buildsInto: ['Hurricane Pike'],
+    guide: `Force Staff is the Swiss Army knife of support utility items. It propels any unit (ally or enemy) 600 units in the direction they're currently facing. This allows you to:\n- Save an ally from a fight by forcing them away\n- Reposition yourself for a spell\n- Push an enemy into your team, or out of position\n- Escape from ganks by forcing yourself out of enemy range\n\nThe +10 HP Regen is substantial for support heroes who get harassed frequently. Force Staff's 20-second cooldown is the main limitation — use it decisively.\n\nForce Staff is core on most position 5 supports and many position 4 rotators. It's also excellent on offlane heroes who need gap-closing (Centaur, Spirit Breaker).`,
+    altTips: [
+      'Force Staff travels through impassable terrain — you can force someone over a cliff if they\'re facing the right direction.',
+      'Force Staff pushes in the direction the unit is facing, not toward your cursor. Make sure your ally is facing the escape direction before forcing.',
+      'The 600-unit push happens instantaneously — it doesn\'t pass through enemies, it jumps.',
+      'Force Staff can be used on magic-immune targets (BKB-active heroes) — it\'s a physical effect, not magical.',
+    ],
+    tips: [
+      'Force Staff yourself into a cliff to "surf" — walk along the cliff edge facing the direction you want to travel, then force. You bypass terrain instantly.',
+      'Turn your hero away from enemies before forcing — a common mistake is having your hero face enemies and forcing yourself further into danger.',
+      'Timing Force saves: force your ally the moment before a Dagger Stun, Hook, or other displacement ability lands — the forced movement sometimes causes the projectile to miss.',
+      'Force enemy heroes into your own creep wave to delay their retreat — 600 units back into the fight often means death for them.',
+    ],
   },
   {
     id: 'hurricane_pike',
@@ -364,9 +652,18 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Hurricane: Pushes you and target enemy apart 450 units each.',
     tier: 'Upgrade',
     buildsFrom: ['Force Staff', 'Dragon Lance'],
+    guide: `Hurricane Pike is Force Staff's upgrade, designed specifically for ranged carries who are being pressured by melee heroes. When activated on an enemy, it pushes you 450 units away from them AND them 450 units away from you — a total separation of 900 units — while giving you a 5-attack rapid-fire mode at range.\n\nThe +150 attack range from Dragon Lance is also massive — Drow Ranger, Sniper, Windranger, and Medusa all benefit enormously from the extended range. It turns them into virtual safe-lane gods who can last-hit from safety.\n\nHurricane Pike is especially powerful against diving heroes like Anti-Mage, Phantom Assassin, or Slark — you can literally launch them away from you while you unload burst attacks.`,
+    altTips: [
+      'Hurricane Push gives you 5 rapid attacks against the pushed enemy before the push — these attacks happen even if the enemy is pushed out of normal range.',
+      'The push effect cannot be used on magic-immune heroes (they can be force-staved but not hurricane-poked).',
+      '+150 attack range is permanent and stacks with other range modifiers — on Sniper this is devastating.',
+    ],
+    tips: [
+      'Hurricane Pike + Dragon Lance is the "keep-away" combo — build this when you have a melee carry chasing you and a naturally high attack range.',
+      'Use the 5 rapid attacks after Hurricane on a target you\'ve crit-setup — guaranteed damage even as they\'re flying away.',
+      'Hurricane can prevent Phantom Assassin from right-clicking you down — pop it the moment she blinks in and she\'s immediately 900 units away.',
+    ],
   },
-
-  // ─── BOOTS ─────────────────────────────────────────────────────────────────
   {
     id: 'boots_of_speed',
     name: 'Boots of Speed',
@@ -378,6 +675,15 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: ['+45 Movement Speed'],
     tier: 'Basic',
     buildsInto: ['Power Treads', 'Phase Boots', 'Tranquil Boots', 'Arcane Boots', 'Boots of Travel'],
+    guide: `Boots of Speed is a must-buy for virtually every hero in the game. +45 movement speed is enormous in the laning phase — it dictates who can chase, who can escape, and who controls lane positioning. Buying boots before the 3-minute mark is almost always correct.\n\nThe only exception is when you're playing an extremely passive farming hero and plan to stay in base for a long time (rare). Otherwise, boots first, then stats.\n\nDon't stay on base Boots of Speed past 10 minutes — upgrade them. The upgrade path depends entirely on your role: Phase for physical carries, Arcane for mana-hungry supports, Tranquil for sustain supports, Power Treads for flexible carries, and Travel for late-game split-pushers.`,
+    altTips: [
+      'Movement speed from multiple sources is additive up to a cap of 550 — Boots contributes to this pool.',
+      'Some heroes (Tiny, Abaddon, Slardar) have naturally low base movement speeds — boots are even more critical for them.',
+    ],
+    tips: [
+      'As a support, buy Boots and immediately walk to the side-shop for additional wards if you have gold — boots are your ticket to effective rotations.',
+      'On safelane carry, buy Boots within the first 2–3 waves — having boots before your offlane opponents gives you a dodge advantage against ganks.',
+    ],
   },
   {
     id: 'power_treads',
@@ -391,6 +697,18 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Switch Attribute: Toggle which attribute is boosted.',
     tier: 'Upgrade',
     buildsFrom: ['Boots of Speed', 'Gloves of Haste', 'Belt of Strength / Robe of the Magi / Slippers'],
+    guide: `Power Treads is the most versatile boots upgrade in the game due to the attribute switching mechanic. The key skill is "Treads Switching" — switching to Intelligence before using a spell to gain more mana (useful when low), then switching back to Strength for the HP pool during a fight.\n\nAt 1400 gold, Power Treads provides +45 MS, +25 Attack Speed, and +10 of your chosen attribute. On agility carries, +10 Agility = +10 attack speed, +1.4 armor, and +10 damage — it's extremely gold-efficient.\n\nTreads-switching is a technique that separates good players from great ones. Practice switching to INT before you use abilities or items to stretch your mana further.`,
+    altTips: [
+      'Switching to INT before using an item or spell increases your total mana pool and current mana proportionally — this "free mana" technique is called Treads-toggling.',
+      'Switching to STR before a fight gives you +190 HP temporarily — useful for baiting enemies into thinking you\'re in kill range.',
+      '+10 Agility on an agi hero = +10 attack speed, +1.4 armor, and +10 damage on the primary stat.',
+    ],
+    tips: [
+      'Treads toggle order: switch to INT → use spell → switch back to STR. Done quickly this is imperceptible and saves 10–15 mana per cast.',
+      'Right-click your Treads in your item bar to switch between STR/AGI/INT — build a muscle memory for this.',
+      'Before using a Healing Salve or Mango, toggle to STR for the extra HP/INT for extra mana. After use, toggle back to AGI.',
+      'Don\'t buy Treads if you\'re a pure support who will never use the attack speed — Phase or Arcane serve you better.',
+    ],
   },
   {
     id: 'phase_boots',
@@ -404,6 +722,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Phase: Grants phased movement and +20% movement speed for 4 seconds.',
     tier: 'Upgrade',
     buildsFrom: ['Boots of Speed', 'Blades of Attack x2'],
+    guide: `Phase Boots is the offensive boots upgrade for physical carries and some junglers. The active Phase movement lets you walk through units — creep blocks, allied/enemy heroes — for 4 seconds, which is invaluable for:\n- Chasing enemies through creep waves\n- Escaping through packed groups\n- Setting up initiations without being blocked\n\nThe +18 damage (melee) is excellent DPS for the cost. Phase is the standard boots for early-fighting cores like Slark, Juggernaut (with Blade Fury), Phantom Assassin, and any hero who needs to close gaps.\n\nPhase active resets your movement speed calculation — use it right after being slowed to counteract the slow briefly.`,
+    altTips: [
+      'Phase does NOT grant movement speed through slows — the +20% is added on top of any slow. If you\'re 50% slowed, Phase Boots partially compensates.',
+      'Phased movement ignores unit collision — you can walk directly through enemy heroes during Phase.',
+      'Phase Boots\' +18 damage applies to ALL attacks while active, not just during the 4-second window.',
+    ],
+    tips: [
+      'Activate Phase when a creep block is stopping you from reaching the enemy — the 4-second window is usually enough to close the gap.',
+      'On Slark, Phase Boots lets him walk through the creep wave to reach the enemy carry in lane — a constant harassment pattern that works until the enemy learns to position better.',
+      'Phase Boots is exceptional on Legion Commander — during Duel, the extra movement speed and damage seal most 1v1 fights.',
+    ],
   },
   {
     id: 'tranquil_boots',
@@ -416,6 +745,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: ['+55 Movement Speed', '+14 HP Regeneration'],
     tier: 'Upgrade',
     buildsFrom: ['Boots of Speed', 'Ring of Protection'],
+    guide: `Tranquil Boots is the movement speed king at +55 MS (highest of any boots outside Travel/phase-active), combined with +14 HP regen. It's the standard boots for position 5 supports who need to walk long distances constantly and sustain in aggressive lanes without a base trip.\n\nThe 14 HP/sec regen is equivalent to half a Ring of Health — over a 60-second rotation, that's 840 HP recovered passively. Supports with Tranquil Boots rarely need to base for HP, freeing up their Tango/Salve slots.\n\nTranquil Boots breaks when you take player-based damage (like Salve), dropping the regen to a much lower value temporarily. They repair automatically after 13 seconds without player-damage — so the pattern is: take damage in a fight, run away, regen quickly, return.`,
+    altTips: [
+      'Tranquil Boots "break" on player-based damage — broken Tranquils give only +8 HP regen and +25 MS instead of full values.',
+      'They repair after 13 seconds without player damage — the cooldown is faster than most players realize.',
+      '+55 movement speed is the highest passive MS of any boots until Boots of Travel.',
+    ],
+    tips: [
+      'Tranquil Boots are the best boots for position 4 and 5 supports — the combination of high MS (faster rotations) and regen (fewer base trips) is unmatched for their role.',
+      'After a fight, run to a tree line or jungle with Tranquil Boots — the fast regen brings you back to full HP in 20-30 seconds without TP.',
+      'If you\'re getting broken frequently in lane, consider switching to Phase or Arcane — Tranquil Boots\' value decreases when you can\'t maintain the regen.',
+    ],
   },
   {
     id: 'arcane_boots',
@@ -430,6 +770,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsFrom: ['Boots of Speed', 'Energy Booster'],
     buildsInto: ['Guardian Greaves'],
+    guide: `Arcane Boots is the teamfight mana solution for supports and mana-intensive heroes. The Replenish Mana active restores 175 mana to ALL nearby allies in a 1200 radius — this is 175 mana for free to your entire team every 55 seconds.\n\nAs a 1300 gold item, Arcane Boots pays for itself in 8 uses if your team has 4+ heroes nearby each time. On supports like Crystal Maiden, Warlock, or Earthshaker who need full mana for fights, Arcane Boots keeps the pressure consistent.\n\nArcane Boots are the standard upgrade path into Guardian Greaves — always build Arcane if you plan to go Greaves. Even without Greaves, Arcane is the correct boots for any hero in the support role whose team fights regularly.`,
+    altTips: [
+      'Replenish Mana restores 175 mana to ALL friendly units within 1200 radius — this includes allies who have plenty of mana already.',
+      'The Replenish Mana has a 55 second cooldown — plan your fights around when it recharges.',
+      'Arcane Boots are consumed into Guardian Greaves — don\'t buy Arcane if you don\'t plan to upgrade them OR your team truly needs raw mana.',
+    ],
+    tips: [
+      'Pop Arcane Boots at the START of a teamfight, not mid-way — your team needs the mana to cast their openers.',
+      'On Crystal Maiden, Arcane Boots double-dip with her passive aura — she gives extra mana regen AND has an active mana restore.',
+      'Arcane Boots on Keeper of the Light is redundant (he has his own mana restore) — consider Tranquil instead.',
+    ],
   },
   {
     id: 'boots_of_travel',
@@ -443,6 +794,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Teleport: Teleport to any friendly unit or building. 45s cooldown.',
     tier: 'Upgrade',
     buildsFrom: ['Boots of Speed'],
+    guide: `Boots of Travel is the late-game boots upgrade that replaces TP Scrolls entirely. At +100 movement speed (highest in the game), plus a 45-second cooldown global teleport, BoT enables the highest level of map play possible.\n\nBuy BoT on heroes who want to split-push and teleport back for fights (Naga Siren, Terrorblade, Anti-Mage, Phantom Lancer). It frees your item slot from TP Scroll permanently, giving you an extra slot for a damage/utility item.\n\nLevel 2 BoT (upgraded) has a 40-second cooldown instead of 45. The upgrade costs 2500 additional gold and is typically purchased in the very late game when efficiency matters.`,
+    altTips: [
+      'Boots of Travel can TP to any FRIENDLY unit — including allied illusions, allied heroes, and friendly creeps near the enemy base.',
+      'The 3-second channel can be cancelled — if you\'re interrupted, the 45-second cooldown is NOT triggered.',
+      'BoT does NOT share the same cooldown as TP Scrolls — you can have a TP Scroll AND BoT if you want two TPs.',
+    ],
+    tips: [
+      'Use BoT to TP to a friendly creep wave pushing an enemy lane — this creates a "free" split-push without walking across the map.',
+      'TP to allied heroes during a fight across the map — BoT is the ultimate "I\'m everywhere" item.',
+      'Sell your old boots upgrade and buy BoT directly from the shop at base — don\'t waste gold buying both an intermediate upgrade and then BoT.',
+    ],
   },
 
   // ─── SUPPORT ───────────────────────────────────────────────────────────────
@@ -459,6 +821,18 @@ export const SHOP_ITEMS: ShopItem[] = [
     passive: 'Charge: Gains 1 charge (max 10) each time a nearby enemy uses an ability.',
     tier: 'Basic',
     buildsInto: ['Magic Wand'],
+    guide: `Magic Stick is one of the most underrated items in the game. Against heroes who spam abilities frequently in lane (Batrider, Zeus, Crystal Maiden, Viper), it charges up to 10 charges rapidly. Releasing those 10 charges gives 150 HP and 150 mana instantly — enough to survive a kill attempt or get off one more spell.\n\nBuy Magic Stick against ANY hero with low-cooldown spells. At 200 gold it's essentially free defensive power. Its upgrade, Magic Wand, increases max charges to 20 and adds +3 All Stats — a must-buy for almost everyone.\n\nThe range at which it charges is 1200 units — any ability used within that radius by an enemy counts. This means in teamfights, Magic Stick can charge to full in seconds from multiple enemy spellcasters.`,
+    altTips: [
+      'Magic Stick charges off ANY enemy ability use within 1200 range — ultimates, spells, item actives, and even autocast abilities all count.',
+      'Charges accumulate even when your inventory is full — you won\'t "miss" a charge just because your hero is in combat.',
+      'The 15 HP + 15 mana per charge is instant — it cannot be interrupted.',
+      'Magic Stick does NOT charge off neutral creep abilities.',
+    ],
+    tips: [
+      'Never build Magic Wand without first having a Magic Stick — you need the Stick as the component, and the Stick alone is valuable as a standalone item.',
+      'Pop Magic Stick defensively the moment you\'re in kill range, not after you\'ve already taken the burst — the 150 HP often saves your life.',
+      'If your lane opponent uses many spells, your Magic Stick charges faster — this is GOOD. Harass them out while passively charging your lifesave.',
+    ],
   },
   {
     id: 'magic_wand',
@@ -473,6 +847,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     passive: 'Charge: Gains 1 charge (max 20) each time a nearby enemy uses an ability.',
     tier: 'Upgrade',
     buildsFrom: ['Magic Stick', 'Circlet', 'Iron Branch'],
+    guide: `Magic Wand is one of the most universally purchased items in Dota 2. 20 charges × 15 HP/mana = 300 HP and 300 mana in an instant. Against spell-heavy teams, this is a full restore.\n\nThe item costs a total of 450 gold but the components are 200 (Stick) + 155 (Circlet) + 50 (Branch) = 405, with 45 gold for the recipe. The +3 All Stats from Circlet continues contributing while you use Wand.\n\nEvery hero benefits from Magic Wand in almost every game — the only reason not to buy one is if you're building Linken's Sphere or another item that specifically requires the slot. Even then, carry a Magic Wand.`,
+    altTips: [
+      'Magic Wand can hold 20 charges (double the Stick\'s 10). In teamfights with 5 spellcasters, it can charge from 0 to full in seconds.',
+      'The Energy Charge releases ALL charges simultaneously — you can\'t release partial charges.',
+      'Magic Wand provides +3 All Stats passively — this is the Circlet contribution.',
+    ],
+    tips: [
+      'Keep Magic Wand on the hotkey. The ideal time to pop it is after the enemy burst lands but before the next hit kills you — it\'s a last-second save tool.',
+      'In fights against Zeus, Lion, or Crystal Maiden, your Wand will be at max charges before the fight even starts — that\'s 300 free HP and mana.',
+      'If you\'re running out of slots, Magic Wand is the LAST item you sell — sell all other stats items before it.',
+    ],
   },
   {
     id: 'wind_lace',
@@ -484,7 +869,15 @@ export const SHOP_ITEMS: ShopItem[] = [
     description: 'A lightweight lace that grants bonus movement speed.',
     stats: ['+25 Movement Speed'],
     tier: 'Basic',
-    buildsInto: ['Tranquil Boots', 'Eul\'s Scepter', 'Drum of Endurance'],
+    buildsInto: ["Tranquil Boots", "Eul's Scepter", 'Drum of Endurance'],
+    guide: `Wind Lace is a pure movement speed component. At 250 gold for +25 MS, it's the cheapest per-unit speed item in the game. It builds into Tranquil Boots, Eul's Scepter of Divinity, and Drum of Endurance.\n\nBuy Wind Lace if you're going to build one of those items and you need a speed boost early before you can afford the full item. Alone it's decent on very mobile supports or offlane heroes who need to walk long distances but can't afford full boots yet.`,
+    altTips: [
+      '+25 movement speed is a flat addition — it does not grant phase movement or any other property.',
+      'Wind Lace is a component, not usually a final item. Plan your build around what it combines into.',
+    ],
+    tips: [
+      'Buy Wind Lace on the way to Eul\'s on supports — it provides the movement boost while you farm the more expensive components.',
+    ],
   },
   {
     id: 'ring_of_regen',
@@ -497,6 +890,14 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: ['+1.75 HP Regeneration'],
     tier: 'Basic',
     buildsInto: ['Headdress', 'Helm of Iron Will', 'Soul Ring'],
+    guide: `Ring of Regen is a pure HP regeneration component at 175 gold. It's an early-game laning sustain item that builds into Headdress, Helm of Iron Will, or Soul Ring. The +1.75 HP/sec is enough to offset light harassment in lane over time.\n\nBuy Ring of Regen if you're building Soul Ring (which requires it) or if you're heading toward a Headdress for the Mekansm path. As a standalone early item, it's best on heroes who take consistent small hits in lane and need passive recovery.`,
+    altTips: [
+      '+1.75 HP/sec means full HP recovery in about 1 minute for a 105 HP deficit — meaningful in lane.',
+      'Ring of Regen stacks — multiple rings combine their regen.',
+    ],
+    tips: [
+      'Don\'t buy Ring of Regen as a final item — always use it as a stepping stone to Soul Ring or Headdress.',
+    ],
   },
   {
     id: 'soul_ring',
@@ -510,6 +911,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Sacrifice: Costs 150 HP to gain 150 mana for 10 seconds.',
     tier: 'Upgrade',
     buildsFrom: ['Ring of Regen', 'Gauntlets of Strength'],
+    guide: `Soul Ring is the mana-from-health conversion item. At 800 gold, it solves mana problems for any hero with a large HP pool but poor mana pool. It's standard on strength heroes (Earthshaker, Tidehunter, Beastmaster) who have excess HP but constantly run dry on mana.\n\nThe active costs 150 HP but grants 150 mana for 10 seconds. The HP cost is immediately offset by the +2.25 HP Regen passive — in 67 seconds you've regenerated the 150 HP you spent. Spam it aggressively.\n\nSoul Ring pairs excellently with natural HP regen items (Vanguard, Bracers) since you can cycle the HP cost rapidly.`,
+    altTips: [
+      'The 150 mana from Sacrifice lasts only 10 seconds — use it RIGHT before casting. Unused mana disappears after 10 seconds.',
+      'The HP cost is DIRECT — it bypasses barriers and other effects. Don\'t use it if you\'re at 200 HP.',
+      'Soul Ring doesn\'t use mana to activate — it\'s purely an HP cost.',
+    ],
+    tips: [
+      'Soul Ring on Earthshaker: the 150 HP cost is negligible with his high strength base, and it funds a full Echo Slam even when mana-dry.',
+      'Sacrifice just before using a spell, not in advance — the 10-second window is short.',
+      'Double Soul Ring is theoretically possible but extremely wasteful — one is always enough.',
+    ],
   },
   {
     id: 'urn_of_shadows',
@@ -524,6 +936,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsFrom: ['Cloak', 'Gauntlets x2', 'Recipe'],
     buildsInto: ['Spirit Vessel'],
+    guide: `Urn of Shadows is an underrated support item that provides both offensive and defensive utility. It charges when enemy heroes die within 1400 units — each kill gives 2 charges (1 if you get an assist). Each charge either heals an ally for 400 HP over 8 seconds or deals 150 damage to an enemy over 8 seconds.\n\nThe heal is one of the strongest HoTs in the game at this price point, and the +25 damage is a meaningful offensive stat. Urn is best on ganking supports (Bounty Hunter, Pudge, Rubick) who roam and get many kills.\n\nIt builds into Spirit Vessel, which also reduces enemy HP regen by 45% — an incredible counter to Dazzle's grave, Omniknight's guardian angel, and high-regen carries like Bristleback.`,
+    altTips: [
+      'You get 2 charges per nearby kill — if 5 heroes die in a teamfight near you, that\'s potentially 10 charges.',
+      'The healing version (on ally) dispels after the target takes player damage — same as Salve.',
+      'The damage version cannot be dispelled — it deals 150 damage over 8 seconds regardless of healing attempts.',
+    ],
+    tips: [
+      'Save Urn charges for after a fight to burst-heal your team back to full — don\'t waste charges healing 50 HP.',
+      'Use the damage version on an enemy who is running away — 150 damage over 8s is often the killing blow at low HP.',
+      'Upgrade to Spirit Vessel as soon as the enemy team has a high-regen hero (Huskar, Bristleback with lifesteal, Alchemist) — the 45% regen reduction is game-changing.',
+    ],
   },
   {
     id: 'spirit_vessel',
@@ -537,6 +960,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Vessel: Heals ally or reduces enemy HP regen by 45% and deals 75 DPS.',
     tier: 'Upgrade',
     buildsFrom: ['Urn of Shadows', 'Vitality Booster', 'Recipe'],
+    guide: `Spirit Vessel is the hard counter to healing-heavy lineups. The 45% HP regen reduction applied to an enemy for 8 seconds is devastating against Huskar (loses most of his tank), Bristleback (his lifesteal becomes half as effective), Dazzle's Shallow Grave (target still dies faster), and Omniknight (Guardian Angel value halved).\n\nThe 75 DPS on the debuffed target also makes it a very respectable damage tool — 600 total damage over 8 seconds from one item activation. Combined with Urn's same charge mechanic, Spirit Vessel is used constantly in fights.\n\nBuild it on the support who participates in the most fights — usually position 4 or 5 roaming support.`,
+    altTips: [
+      'The 45% regen reduction affects HP regen, spell-based lifesteal, and all other HP recovery forms — not just natural regen.',
+      'Spirit Vessel charges from nearby hero deaths exactly like Urn — 2 charges per kill, 1 per assist.',
+      'The heal version is identical to Urn\'s — 400 HP over 8 seconds, dispelled by player damage.',
+    ],
+    tips: [
+      'Against Huskar, applying Spirit Vessel mid-fight removes 45% of his self-healing — this often turns a losing fight into a winning one.',
+      'Apply the damage version on the target your team is focusing — 75 DPS is a substantial additional damage source.',
+      'Don\'t forget this also has the heal option — alternate between offensive and defensive uses depending on what the fight needs.',
+    ],
   },
   {
     id: 'mekansm',
@@ -551,6 +985,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsFrom: ['Headdress', 'Chainmail', 'Recipe'],
     buildsInto: ['Guardian Greaves'],
+    guide: `Mekansm is one of the highest-impact teamfight items in the game. A 250 HP AoE heal to all nearby allies within 750 units — used at the right moment, this is 1250 HP of healing in a 5v5 teamfight. It can instantly swing fights from losing to winning.\n\nBuy Mekansm on position 4 or 5 supports who are almost always near their team in fights. The timing of the Mekansm pop is crucial — use it when the most allies are in range and have taken the most damage (often right after the enemy's opening burst).\n\nBuilds into Guardian Greaves, which combines Mekansm's heal with Arcane Boots' mana restore — the ultimate support item.`,
+    altTips: [
+      'Mekansm has a 65-second cooldown — communicate with your team when it\'s available.',
+      'There\'s a 25-second "immunity" per hero for Mekansm heals — the same hero cannot be healed by two Mekansms within 25 seconds. Only one Mekansm per team is effective.',
+      '+4 Armor is a meaningful combat stat for supports who are diving into fights.',
+    ],
+    tips: [
+      'Hold your Mekansm pop until AFTER the enemy blinks in — if you pop early, the fight hasn\'t developed and the heal is wasted on full-HP allies.',
+      'Only ONE player per team should build Mekansm — communicate this with your team so the second support builds something else.',
+      'Mekansm is excellent on supports who "frontline" (Centaur, Underlord) since they\'re in the thick of the fight when it pops.',
+    ],
   },
   {
     id: 'guardian_greaves',
@@ -564,6 +1009,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Mend: Heals nearby allies and restores mana. Effect scales based on missing HP.',
     tier: 'Upgrade',
     buildsFrom: ['Mekansm', 'Arcane Boots'],
+    guide: `Guardian Greaves is the pinnacle support item combining the healing power of Mekansm and the mana battery of Arcane Boots. The Mend active scales with missing HP — allies who are nearly dead receive more healing. A full team at 20% HP can recover 500+ HP and 175 mana from a single Mend.\n\nGuardian Greaves also frees up an item slot by combining two items into one — this slot can now be filled with a utility item (Force Staff, Lotus Orb). The armor passive and the movement speed combine to make the carrier tanky AND mobile.\n\nBuild Guardian Greaves on the support who is in fights 100% of the time and can reliably pop it at the right moment. The item is dramatically more powerful than having separate Mekansm + Arcane Boots.`,
+    altTips: [
+      'Mend\'s heal scales with missing HP — a hero at 10% HP receives significantly more healing than one at 60%.',
+      'Mend also has a 25-second per-hero immunity like Mekansm — it still stacks with Mekansm if someone else on your team has one.',
+      'Guardian Greaves has a 40-second cooldown — shorter than standalone Mekansm (65s).',
+    ],
+    tips: [
+      'Pop Guardian Greaves after the enemy\'s initiation lands — the scaling with missing HP means maximum value comes from maximum damage taken.',
+      'Guardian Greaves on Crystal Maiden is legendary — she provides mana aura passively, pops Greaves for the active restore, and is always in fights.',
+      'Plan your Greaves timing around BKB expiration — pop it right as BKB runs out so allies get the heal while they\'re vulnerable.',
+    ],
   },
   {
     id: 'pipe_of_insight',
@@ -574,9 +1030,20 @@ export const SHOP_ITEMS: ShopItem[] = [
     imageUrl: img('pipe'),
     description: 'Creates a barrier that absorbs magic damage for nearby friendly heroes. Hard counter to magic damage.',
     stats: ['+8 HP Regen', '+40% Magic Resistance (passive)'],
-    active: 'Barrier: Grants a 400 magic damage absorbing shield to nearby allies for 12 seconds.',
+    active: 'Barrier: Grants a 400 magic damage absorbing shield to nearby allied heroes for 12 seconds.',
     tier: 'Upgrade',
     buildsFrom: ['Headdress', 'Hood of Defiance', 'Recipe'],
+    guide: `Pipe of Insight is the hard counter to magic-damage-heavy lineups. The passive 40% magic resistance applies to the carrier, while the active Barrier applies a 400-HP magic absorption shield to ALL nearby allied heroes for 12 seconds.\n\nAgainst teams built around magical burst (Zeus, Lion, Lina, Storm Spirit), one well-timed Pipe activation can nullify an entire enemy combo. The barrier absorbs up to 400 magic damage per hero — in a teamfight, that's potentially 2000 total HP of magic absorption across 5 heroes.\n\nBuy Pipe as a counter-build — only purchase it when the enemy team has 2+ significant magic damage dealers. In games against physical carry lineups, the gold is better spent elsewhere.`,
+    altTips: [
+      'The 400 HP magic barrier absorbs damage before your HP — it\'s a true shield, not a heal.',
+      'Pipe Barrier applies to allied heroes within 900 radius, not creeps.',
+      'The passive +40% magic resistance applies ONLY to the Pipe carrier — it does NOT passively buff allies.',
+    ],
+    tips: [
+      'Pipe timing: activate it right before the enemy support combo lands, not after. A 12-second barrier window requires proactive play.',
+      'Pipe + BKB on carries: Pipe covers the magic damage while BKB provides spell immunity — layered defensively they cover each other\'s weaknesses.',
+      'If the enemy has a single magic damage hero, don\'t buy Pipe — buy a Cloak instead. Pipe is worth it when magic damage is the primary threat across multiple enemies.',
+    ],
   },
   {
     id: 'glimmer_cape',
@@ -590,6 +1057,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Glimmer: Turns target ally invisible with +45% magic resistance for 5 seconds.',
     tier: 'Upgrade',
     buildsFrom: ['Cloak', 'Shadow Amulet'],
+    guide: `Glimmer Cape is one of the best support defensive items in the game per gold spent. At 1800 gold, it provides +20% magic resistance passively AND an active that grants invisibility + 45% magic resistance for 5 seconds to any ally within 900 range.\n\nUse Glimmer to: save a carry from a targeted kill (invis + magic resistance), escape yourself, or set up an invis initiation. Critically, the invisible target CAN still cast spells without breaking invisibility — they just can't attack. This means a support under Glimmer can use Eul's, Force Staff, or even cast heals without breaking the buff.\n\nGlimmer Cape is standard on position 5 supports who can't afford more expensive saves (Lotus, Linken's) — it's cheap and consistently impactful.`,
+    altTips: [
+      'The invisibility from Glimmer can be used while channeling spells — it provides a layer of protection during channels like Dagger or Black Hole.',
+      '+45% magic resistance combined with your existing passive +20% stacks multiplicatively for extremely high effective magic HP.',
+      'Glimmer breaks on attack — but NOT on spell use. Supports can cast saves while under Glimmer.',
+    ],
+    tips: [
+      'Glimmer on your carry when they\'re about to be burst: pop it the instant you see the combo begin — 45% magic resistance often halves the incoming damage.',
+      'Glimmer yourself to escape ganks — turn invisible, wait for enemies to give up, re-engage later.',
+      'Glimmer is excellent on Warlock — use it on yourself to avoid being targeted during Upheaval channel.',
+    ],
   },
   {
     id: 'solar_crest',
@@ -603,6 +1081,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Shine: Applies +14 armor and 25% evasion to an ally, or -14 armor and -25% evasion to an enemy.',
     tier: 'Upgrade',
     buildsFrom: ['Medallion of Courage', 'Sages Mask', 'Talisman of Evasion'],
+    guide: `Solar Crest is a support item with extreme versatility — it either dramatically enhances an ally or devastates an enemy. Applying -14 armor to an enemy hero turns them into a paper target for physical damage carries. Applying +14 armor to an ally makes them nearly unkillable for 7 seconds.\n\nThe -14 armor debuff applied to Roshan is especially powerful — it increases all physical damage dealt to Rosh by roughly 30%. Solar Crest is a near-mandatory Roshan item.\n\nBest used on position 4 supports who are near their carry for most of the game — apply -armor to the enemy your carry is killing, or +armor to your carry when they're being focused.`,
+    altTips: [
+      'The -armor effect on enemies applies to ALL physical damage sources, including towers. Use it during siege to increase tower damage.',
+      'The +armor buff also includes the +14 armor AND 25% evasion — making it an incredible defensive save.',
+      'Solar Crest has a 7-second duration with a 22-second cooldown — the window is short, use it when it matters most.',
+    ],
+    tips: [
+      'Solar Crest on Roshan is a professional macro play — every team doing a Rosh should have a Solar Crest user present.',
+      'Use Solar Crest on the enemy carry, not the support — the -14 armor hurts physical damage heroes the most.',
+      'Apply Solar Crest FIRST in a combo before your team attacks — the -armor must be on the target before attacks land to count.',
+    ],
   },
 
   // ─── MAGICAL ───────────────────────────────────────────────────────────────
@@ -618,6 +1107,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Cyclone: Tosses target unit into the air for 2.5 seconds.',
     tier: 'Upgrade',
     buildsFrom: ['Void Stone', 'Wind Lace', 'Recipe'],
+    guide: `Eul's Scepter is one of the most versatile utility items in the game. Cyclone renders any unit (ally or enemy) untargetable and invulnerable for 2.5 seconds — this enables:\n- Dispelling debuffs from yourself or an ally (silence, sleep, hex, root)\n- Setting up combos (Cyclone an enemy, land your spells during their 2.5s airtime)\n- Surviving execution (Cyclone yourself when you're about to die)\n- Countering channeling spells (Cyclone interrupts channels)\n\nThe +40 movement speed and +25% mana regen are excellent utility bonuses. Eul's is core on many mid heroes (Skywrath, Puck, Storm Spirit) and a fantastic support item for dispel-and-control plays.`,
+    altTips: [
+      'Cyclone DISPELS: it removes most debuffs from the target. Use it on an ally who\'s been hexed, silenced, or rooted.',
+      'You CAN Cyclone yourself — it makes you invulnerable and dispels debuffs from you.',
+      'Cyclone also interrupts enemy channeling spells (Witch Doctor Voodoo Restoration, Enigma Black Hole) if used on the caster.',
+      'When Cycloning yourself to escape, hold still — enemy AOE spells often follow your last-known position.',
+    ],
+    tips: [
+      'Eul\'s + Thunder Clap (Brewmaster) or Eul\'s + Static Storm (Disruptor) combos: Cyclone the target, immediately cast your spell — it lands the moment Cyclone ends.',
+      'Self-Cyclone vs an incoming projectile: the projectile is lost if you become untargetable before it reaches you — time it precisely.',
+      'Cyclone removes Dust of Appearance from yourself — if an invis hero uses it on themselves while dusted, they\'re clean afterward.',
+      'Eul\'s provides the most movement speed of any single item in the game at its price tier — extremely strong on heroes who need the MS to function.',
+    ],
   },
   {
     id: 'dagon',
@@ -631,6 +1133,18 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Energy Burst: Deals 400 magical damage to target (at level 5: 800 damage).',
     tier: 'Upgrade',
     lore: 'A weapon of immense magical concentration, developed by the wizard Dagon himself.',
+    guide: `Dagon is the nuke item of Dota 2. At base level it deals 400 instant magical damage — at level 5 that's 800 damage. Each upgrade costs 1200 gold and increases the damage by 80 (to a maximum of 800 at level 5) while also lowering the cooldown.\n\nDagon is best on INT heroes who want to one-shot supports (Lina, Lion, Rubick, Puck) or as a secondary kill item for heroes with already high burst (Storm Spirit, Invoker, Zeus). Against heroes with low HP, a single Dagon 5 activation deletes them.\n\nThe item has niche uses in professional play — it's usually picked as a counter to glass-cannon enemies or as a finishing tool when combo damage is high but not quite lethal.`,
+    altTips: [
+      'Dagon deals magical damage — it\'s reduced by magic resistance. Against BKB-active heroes, Dagon deals 0 damage.',
+      'Level 1 Dagon does 400 damage, Level 5 does 800 damage. Each upgrade costs 1200 gold.',
+      'Dagon has a 45-second cooldown at Level 1, decreasing with each upgrade.',
+      'Dagon can be used on units that are untargetable if the target has a "Dagon check" — many spells work this way.',
+    ],
+    tips: [
+      'Only buy Dagon if you plan to upgrade it — Level 1 Dagon at high cost is rarely worth it by itself in the late game.',
+      'Dagon 5 on Rubick lets him two-shot supports after stealing a spell — the combination of stolen spell + 800 damage Dagon is an insta-kill combo.',
+      'Don\'t waste Dagon on high-HP targets with magic resistance — target their squishy supports instead.',
+    ],
   },
   {
     id: 'orchid_malevolence',
@@ -644,6 +1158,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Soul Burn: Silences target for 5 seconds. On silence end, target takes 30% bonus damage.',
     tier: 'Upgrade',
     buildsInto: ['Bloodthorn'],
+    guide: `Orchid Malevolence is a high-impact disable item that combines a 5-second silence with a devastating damage amplifier. The Soul Burn silence also adds a counter that applies 30% of all spell damage dealt during the silence as bonus damage when the silence ends — in practice this is a 30% global damage amplifier on the target for 5 seconds.\n\nBest on: Pugna (Nether Blast under silence deals 30% more), Queen of Pain (can dump her entire kit under Orchid for maximum damage), Razor, and any hero who wants to shut down a single key enemy spellcaster.\n\nOrchid is specifically powerful against heroes who rely entirely on one ability (Crystal Maiden's Frostbite, Earthshaker's Fissure, Pudge's Hook) — shutting it down for 5 seconds in a fight is often the difference.`,
+    altTips: [
+      'The 30% damage bonus applies at the END of the silence — the Soul Burn counter records all spell damage during the 5 seconds, then applies 30% as a final hit.',
+      'Orchid silences can be dispelled by Eul\'s Scepter self-use, BKB, and certain other dispels.',
+      '+225% mana regen is one of the highest raw mana regen stats in the game — great for mana-intensive casters.',
+    ],
+    tips: [
+      'Orchid on an enemy support before a fight starts: silence them for 5 seconds, kill them with team damage, and the 30% amp arrives on their last sliver of HP — killing them faster.',
+      'Build Bloodthorn from Orchid if the game goes long — the critical strike synergy makes Bloodthorn a complete carry/caster hybrid item.',
+      'Orchid is best bought between 15–25 minutes — it\'s strong early-mid but falls off as enemies build dispel.',
+    ],
   },
   {
     id: 'bloodthorn',
@@ -657,6 +1182,16 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Soul Rend: Silences target for 5 seconds. All attacks deal critical damage during silence.',
     tier: 'Upgrade',
     buildsFrom: ['Orchid Malevolence', 'Crystalys'],
+    guide: `Bloodthorn is a hybrid carry-caster item that transforms Orchid's silence into a devastating sustained DPS window. Every attack against a Soul Rend'd target crits — not just one attack, all of them for 5 seconds. Combined with high attack speed from the item itself (+40), this enables a 5-second window of near-perfect DPS output.\n\nBloodthorn is best on Crit-heavy carries who also have high spell damage (Queen of Pain, Shadow Fiend, Storm Spirit). The combination of silence (preventing escapes and counters) with guaranteed crits makes it a late-game finisher item.`,
+    altTips: [
+      'All attacks crit for the duration — not just your attacks. Team attacks also crit against the target.',
+      'The crit multiplier scales with the item\'s level — it\'s approximately 140% by default.',
+      'Soul Rend still applies the 30% bonus damage at silence end, just like Orchid — both effects stack.',
+    ],
+    tips: [
+      'Bloodthorn + Maelstrom/Mjollnir: every attack crits AND has a chance to proc chain lightning — extraordinary damage output.',
+      'Time Bloodthorn after the enemy\'s BKB expires — it\'s a magical silence and doesn\'t pierce spell immunity.',
+    ],
   },
   {
     id: 'rod_of_atos',
@@ -670,6 +1205,16 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Coil: Roots the target in place for 2 seconds.',
     tier: 'Upgrade',
     buildsFrom: ['Staff of Wizardry', 'Vitality Booster', 'Recipe'],
+    guide: `Rod of Atos provides a 2-second root (immobilizes movement but doesn't prevent attack or spell use) combined with exceptional stats: +24 Intelligence and +350 HP. It's one of the best stat-to-gold items in the game if you also value the active root.\n\nBest on intelligence heroes who also benefit from survivability: Crystal Maiden, Lina, Pugna, and Skywrath. The +350 HP keeps them from dying to burst, while the root provides a teamfight setup tool or kill-lock.\n\nRod of Atos is also solid as a first major item on many mid intelligence heroes — the stat combination covers both offense and defense.`,
+    altTips: [
+      'Coil applies a MAGICAL root — it can be purged by BKB, Eul\'s, and most dispels.',
+      'A rooted hero cannot move or Blink, but CAN attack, cast spells, and use items.',
+      '+24 Intelligence at 2750 gold is very gold-efficient — equivalent to two Null Talismans\' Int contribution for a bit more.',
+    ],
+    tips: [
+      'Rod of Atos is a sleeper item on Zeus — root the target, then unload all spells while they can\'t move. The stats also scale his damage directly.',
+      'Rooting a hero before a Fissure or Ravage increases the chance they\'re still in position when the AoE lands.',
+    ],
   },
   {
     id: 'scythe_of_vyse',
@@ -683,6 +1228,18 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Hex: Transforms target hero into a frog for 3.5 seconds.',
     tier: 'Upgrade',
     lore: 'Vyse the Vizier was considered the greatest mage of his day.',
+    guide: `Scythe of Vyse (Sheepstick) is the most powerful single-target disable in the game. Hex converts an enemy hero into a slow-moving critter for 3.5 seconds — during this time they cannot attack, cast spells, or use items. They also move at a reduced speed. The hero is completely helpless.\n\nHex is nearly uncounterable: it pierces spell immunity (except on units specifically immune to Hex like Roshan). No BKB will save a hero from being hexed. The only protection is Linken's Sphere (if the Linken proc absorbs the Hex).\n\nBest on intelligence supports and cores who want to shut down a critical enemy (the enemy carry, a channeling hero, or an escape-dependent hero). Two players buying Sheepstick is redundant — coordinate so only one builds it.`,
+    altTips: [
+      'Hex PIERCES spell immunity — BKB does not protect against it. This is one of very few disables that works through BKB.',
+      'A hexed hero is turned into a critter with 300 HP and very low movement speed — they cannot attack, cast, or item-use.',
+      'Linken\'s Sphere WILL block Hex if the Linken proc is available.',
+      'Sheepstick cooldown is 14 seconds — it\'s usable multiple times in extended teamfights.',
+    ],
+    tips: [
+      'Hex the carry during BKB — the spell immunity doesn\'t protect them. Use it proactively before they channel their initiation.',
+      'Don\'t hex the support when the carry is alive — the carry is the kill target. Sheepstick the carry, burst them, then the supports have no peel.',
+      'Hex during Roshan: sheepstick any hero who tries to contest — they\'re out of the fight for 3.5 seconds while your team finishes the objective.',
+    ],
   },
   {
     id: 'refresher_orb',
@@ -695,6 +1252,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: ['+8 HP Regen', '+400% Mana Regen'],
     active: 'Reset Cooldowns: All your ability and item cooldowns are reset.',
     tier: 'Upgrade',
+    guide: `Refresher Orb is the "double ultimate" item. By resetting all cooldowns, it effectively allows every hero to cast their combo twice in rapid succession. The item costs 5000 gold and the Reset Cooldowns has a 160-second cooldown — it's a big investment but the potential is enormous.\n\nRefresher is best on heroes with powerful ultimates that are devastating on repeat: Enigma (double Black Hole), Invoker (double Sunstrike/Meteor), Earthshaker (double Echo Slam), or Warlock (double Chaotic Offering). In organized team play, "Refresher Earthshaker" is a legendary combo.\n\nThe +400% mana regen is needed to support two full combos — make sure your mana pool is large enough to cast everything twice. Some heroes need a Bloodstone or Soul Booster alongside Refresher for the mana.`,
+    altTips: [
+      'Refresher resets ALL cooldowns — item cooldowns (BKB, Shivas, Eul\'s), ability cooldowns, and passive cooldowns.',
+      'Refresher itself has a 160-second cooldown — it cannot be used every fight.',
+      '+400% mana regen is the highest in the game on a single item — it solves mana sustainability for long fights.',
+    ],
+    tips: [
+      'Use BKB first, combo in BKB window, then Refresh when BKB expires — this gives you two full combat windows back-to-back.',
+      'Save Refresher for the decisive teamfight or high ground push — using it on a skirmish wastes the long cooldown.',
+      'Refresher Rack (buying a second Refresher) used to exist — it\'s been patched out but the "Refresher Orb + Octarine Core" combo still exists to reduce cooldowns.',
+    ],
   },
   {
     id: 'octarine_core',
@@ -708,6 +1276,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     passive: 'Cooldown Reduction: All cooldowns reduced by 25%. Spells heal you for 25% of damage.',
     tier: 'Upgrade',
     buildsFrom: ['Soul Booster', 'Point Booster', 'Recipe'],
+    guide: `Octarine Core is the sustain and frequency item for spellcasters. Two passive effects: all cooldowns reduced by 25% (abilities AND items), and all spell damage heals you for 25% of the damage dealt — spell lifesteal.\n\nThe cooldown reduction affects Refresher Orb's 160s → 120s, Sheepstick 14s → 10.5s, and every other ability. On Invoker or Puck who have many low-cooldown spells, this dramatically increases damage output.\n\nSpell lifesteal is especially powerful on heroes with large-area nuke spells — Zeus's ultimate healing him for 25% of the damage it deals across the map is notable. Combining Octarine with a high-damage ultimate makes the hero almost unkillable during fights.`,
+    altTips: [
+      'The 25% cooldown reduction applies to items as well — Eul\'s becomes 15s, BKB becomes 60s instead of 80s at base.',
+      'Spell lifesteal: 25% of ALL spell damage returns as HP — this includes damage from items that deal magical damage.',
+      'Octarine stacks with other cooldown reduction sources multiplicatively.',
+    ],
+    tips: [
+      'Octarine on Zeus is legendary — his ultimate deals massive damage across the map and he heals 25% of that damage. Nearly impossible to kill in teamfights.',
+      'Octarine + Refresher: Refresh resets Octarine\'s cooldown too — Octarine reduces Refresher to 120s from 160s.',
+      'Buy Octarine on heroes with naturally high-damage spells and low natural sustainability — it solves both problems simultaneously.',
+    ],
   },
 
   // ─── ARMOR ─────────────────────────────────────────────────────────────────
@@ -722,6 +1301,14 @@ export const SHOP_ITEMS: ShopItem[] = [
     stats: ['+4 Armor'],
     tier: 'Basic',
     buildsInto: ['Mekansm', 'Buckler', 'Phase Boots', 'Medallion of Courage'],
+    guide: `Chainmail is a pure armor component. At 550 gold for +4 armor, it reduces incoming physical damage by approximately 14% at typical armor values. It's primarily a building block for Mekansm, Phase Boots, Buckler, and Medallion of Courage.\n\n+4 armor in lane is a meaningful defensive stat — equivalent to reducing 14% of physical damage at 0 base armor. On supports who take many auto-attacks, Chainmail as a standalone item is occasionally valid before you complete a larger item.`,
+    altTips: [
+      '+4 armor reduces physical damage by approximately 14% (varies based on your existing armor).',
+      'Chainmail is a component — plan which upgrade you\'re going to before buying it.',
+    ],
+    tips: [
+      'If you\'re going Mekansm, buy Chainmail first for the immediate armor benefit while you farm the other components.',
+    ],
   },
   {
     id: 'blade_mail',
@@ -735,6 +1322,18 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Damage Return: Returns 100% of incoming damage to attackers for 4.5 seconds.',
     tier: 'Upgrade',
     buildsFrom: ['Claymore', 'Broadsword', 'Recipe'],
+    guide: `Blade Mail is the anti-physical damage item that punishes heroes who rely on auto-attacks or concentrated damage. When active, 100% of ALL damage you receive is reflected back to the attacker — this includes: auto-attack damage, spell damage, and AoE damage.\n\nBlade Mail is most effective against: carry heroes with high DPS (they kill themselves faster), Lesh/Luna/Gyro ults (the AoE reflects to the caster), and any concentrated focus fire. On a 200-armor Axe, activating Blade Mail turns him into a bomb — attackers receive full damage back.\n\nThe reflect is pure damage — it ignores armor, magic resistance, and spell immunity. A reflected Physical attack deals physical damage to the attacker, bypassing the attacker's own defenses.`,
+    altTips: [
+      'Damage Return does NOT reduce damage to you — it COPIES the damage and deals it to attackers. You still take full damage.',
+      'Reflected damage is the same damage type as the incoming damage — physical reflects as physical, magical as magical.',
+      'Blade Mail does NOT work against Roshan — Roshan is immune to the damage return.',
+      'Damage from reflected damage cannot proc on-hit effects — it\'s a separate damage instance.',
+    ],
+    tips: [
+      'Blade Mail on Axe during Call of the Axe: every hero attacking Axe during the taunt takes 100% of their own damage back — often resulting in the attackers damaging themselves more than Axe.',
+      'Activate Blade Mail right when the enemy carry engages — the first 3-4 auto-attacks reflect enormous damage while they don\'t realize what\'s happening.',
+      'Blade Mail counters Spectre\'s Haunt — reflected damage during Haunt hurts Spectre for massive amounts.',
+    ],
   },
   {
     id: 'vanguard',
@@ -749,6 +1348,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsFrom: ['Ring of Health', 'Vitality Booster', 'Recipe'],
     buildsInto: ['Crimson Guard'],
+    guide: `Vanguard is the classic tanking item for melee frontline heroes. At 2150 gold, it provides +250 HP, +6 HP regen, and a 60% chance to block 60 damage from each attack. Over a sustained fight with many attackers, the damage block adds up to thousands of prevented damage.\n\nVanguard is especially powerful in the early-mid game when physical damage numbers are small and 60 blocked damage per attack is proportionally significant. On heroes like Bristleback, Dragon Knight, Timbersaw, and Underlord who are expected to soak damage, Vanguard gives them the room to fight in the thick of enemy attacks.\n\nBuilds into Crimson Guard which applies a version of the block to allies — build Vanguard first if you want Crimson Guard for team protection.`,
+    altTips: [
+      '60% proc chance means on average Vanguard blocks damage on 3 out of every 5 attacks.',
+      'The block applies BEFORE armor reduction — 60 blocked damage is 60 damage subtracted before physical damage calculations.',
+      'Vanguard does NOT block spell damage — only physical attack damage.',
+    ],
+    tips: [
+      'Vanguard is weakest against attack speed items — enemies with high attack speed proc more attacks, each with only 60% block chance.',
+      'Don\'t buy Vanguard on ranged heroes without a very specific reason — the 32 damage block (ranged) is significantly weaker.',
+      'Vanguard into Crimson Guard is mandatory if the enemy has multiple auto-attack carries — the team-wide block dramatically extends fights.',
+    ],
   },
   {
     id: 'crimson_guard',
@@ -762,6 +1372,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Guard: Applies a 70 damage block shield to nearby allied heroes for 12 seconds.',
     tier: 'Upgrade',
     buildsFrom: ['Vanguard', 'Chainmail', 'Recipe'],
+    guide: `Crimson Guard extends Vanguard's damage block to your entire team. The active Guard shield applies 70 damage block (100% chance) to all nearby allied heroes for 12 seconds — unlike Vanguard's passive 60% proc, Guard is a guaranteed 70 block per attack.\n\nAgainst teams with multiple physical attackers (dual carry compositions, or when your team is under tier-2 tower attacks), Crimson Guard is extraordinary. 12 seconds × 70 blocked damage per attack per hero = thousands of prevented damage in teamfights.\n\nBuild Crimson Guard specifically when the enemy team has 2+ physical damage carries (Anti-Mage + Phantom Assassin, etc.) or when you're defending base against a physical push.`,
+    altTips: [
+      'Guard applies to allied HEROES only — not creeps or towers.',
+      'The 70 block is guaranteed (100%) unlike Vanguard\'s 60% chance — it\'s more reliable for short windows.',
+      'Crimson Guard has a 40-second cooldown — use it at the START of a fight.',
+    ],
+    tips: [
+      'Pop Crimson Guard before an enemy Gyrocopter or Luna uses their ultimate — the 70 block per hit dramatically reduces the AoE physical damage.',
+      'Crimson Guard on a frontline hero (Tidehunter, Underlord) who is always first into fights ensures the shield is always applied proactively.',
+      'Crimson Guard + Assault Cuirass is the "physical immunity" combo — the armor reduction on enemies plus the block on allies makes physical fights one-sided.',
+    ],
   },
   {
     id: 'heart_of_tarrasque',
@@ -776,6 +1397,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsFrom: ['Vitality Booster', 'Reaver', 'Recipe'],
     lore: 'The heart of the legendary Tarrasque still beats, powering the hero who carries it.',
+    guide: `Heart of Tarrasque is the ultimate HP item. The combined +40 Strength and +1000 flat HP gives enormous health pools — on a Strength carry, that's often 1500–2000 additional HP from Heart alone. The 1.6% max HP regen per second out of combat recovers the entire health pool in about 62 seconds.\n\nHeart is the "unkillable" item for frontline carries (Wraith King, Dragon Knight, Bristleback, Lycan, Lifestealer). Once a hero has Heart, they can survive nearly any burst combo and regen back to full HP in under a minute outside of combat.\n\nHeart also increases the effectiveness of percentage-based heals and regen (Warlock's passive, Dazzle, lifesteal items) — the higher your max HP, the more raw HP all of these restore.`,
+    altTips: [
+      'The 1.6% regen triggers when you haven\'t taken player-based damage in 5 seconds (melee) or 4 seconds (ranged).',
+      '+40 Strength = +760 HP additionally on top of the flat +1000 HP — total of ~1760 HP on strength heroes.',
+      'Heart regen is percentage-based — the higher your max HP (from other strength items), the faster the absolute regen.',
+    ],
+    tips: [
+      'Heart is most impactful when you are the primary target in teamfights — the massive HP pool forces enemies to commit more resources to killing you.',
+      'After a fight where you survive at low HP, run away for 10 seconds — the regen will bring you back to 50%+ HP rapidly.',
+      'Heart of Tarrasque + Octarine Core: the spell lifesteal on top of Heart\'s huge HP pool makes you nearly immortal in the right composition.',
+    ],
   },
   {
     id: 'shivas_guard',
@@ -790,6 +1422,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     passive: 'Freezing Aura: Reduces enemy attack speed by 45 in 900 radius.',
     tier: 'Upgrade',
     buildsFrom: ['Platemail', 'Staff of Wizardry', 'Recipe'],
+    guide: `Shiva's Guard is the combination of tankiness and offensive aura that punishes right-click heavy lineups. The passive Freezing Aura reduces ALL nearby enemy attack speeds by 45 — this applies in a large 900 radius and significantly slows down carry DPS.\n\nThe Arctic Blast active emits a radial 200-damage magical AoE frost wave that slows enemies it passes through by 40% for 4 seconds. It's both an initiating tool and a chase/escape mechanism.\n\n+15 armor is also massive — on an intelligence hero, it dramatically reduces physical damage taken, making them nearly unkillable by right-click carries. Shiva's is core on many intelligence tanks (Tidehunter, Underlord, and even Pugna).`,
+    altTips: [
+      'Arctic Blast is a circular wave that expands from your hero outward — it doesn\'t require targeting, just activation.',
+      'Freezing Aura is a PERMANENT 45 attack speed reduction to all enemies within 900 units — this is the real value of the item, not just the active.',
+      'Shiva\'s also reduces enemy attack speed against your towers if you are near the tower — excellent during defensive fights.',
+    ],
+    tips: [
+      'Shiva\'s Guard is the best "anti-right-click" item in the game alongside Assault Cuirass — together they reduce enemy attack speed by 80.',
+      'Buy Shiva\'s if the enemy team has 2+ physical carry heroes who rely on high attack speed — the aura alone justifies the cost.',
+      'Use Arctic Blast as an initiation wave — walk into the enemy team and blast, then let your team follow the slowed targets.',
+    ],
   },
   {
     id: 'assault_cuirass',
@@ -803,6 +1446,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     passive: 'Assault Aura: +10 armor and +35 attack speed to allies. -5 armor to nearby enemies.',
     tier: 'Upgrade',
     buildsFrom: ['Chainmail', 'Platemail', 'Hyperstone', 'Recipe'],
+    guide: `Assault Cuirass is the physical carry support item and the backbone of physical-damage teamfight compositions. The Assault Aura gives +10 armor and +35 attack speed to ALL nearby allies while reducing ALL nearby enemies' armor by 5.\n\nThe armor swing is actually +10 − (−5) = 15 armor difference per player in range — in a 5v5 fight, this is an enormous physical damage advantage. Every attack your team makes deals more damage, every attack enemies make is reduced.\n\nBuy Assault Cuirass on a support who is always with your physical damage carry, OR on the carry themselves if they need the attack speed and armor personally. Multiple Assault Cuirasses don't stack auras — only one unique aura applies.`,
+    altTips: [
+      'Multiple AC auras DO NOT stack — only the highest aura applies.',
+      'The -5 armor reduction on enemies applies to ALL physical damage, including TOWERS.',
+      '+35 attack speed is equivalent to a Hyperstone\'s +55 but spread across your entire team.',
+    ],
+    tips: [
+      'AC on a position 4 hero with a strong physical carry (Terrorblade, Drow, Lifestealer) creates a killing aura — the carry effectively attacks 50% faster with higher armor penetration.',
+      'AC during a Roshan: the -5 armor on Rosh combined with Solar Crest\'s -14 armor makes short work of high-HP Roshan.',
+      'Buy AC specifically when you need both armor for yourself and attack speed — if you only need one, another item may be more efficient.',
+    ],
   },
   {
     id: 'lotus_orb',
@@ -816,6 +1470,18 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Echo Shell: Applies a shield that reflects the next targeted spell back to its caster.',
     tier: 'Upgrade',
     buildsFrom: ['Platemail', 'Energy Booster', 'Recipe'],
+    guide: `Lotus Orb is a unique defensive item that punishes supports and initiators who rely on single-target targeted spells. Echo Shell reflects the next targeted spell back to whoever cast it — this means Lion's Hex reflects and Hexes Lion, Slardar's Amplify Damage debuffs Slardar, Bane's Fiend's Grip channels on Bane.\n\nLotus Orb is best used on a high-value hero who is likely to be focused by targeted spells. It has a 15-second window once activated — you must activate it proactively before enemy abilities land. It's also dispellable with some dispels, so time it carefully.\n\nStrategically, Lotus Orb creates enormous disincentives for enemies to use targeted spells — they'll often hold their abilities until the Lotus window expires.`,
+    altTips: [
+      'Echo Shell lasts 6 seconds — if no spell lands in that window, it expires without effect.',
+      'Echo Shell can be cast on allies too — you can Lotus a teammate who is about to be targeted.',
+      'Reflected spells apply full effect to the original caster — Rhasta\'s Shackle shackles Rhasta himself.',
+      'Lotus Orb does NOT reflect AoE spells or auto-attack modifiers — only single-target abilities.',
+    ],
+    tips: [
+      'Lotus yourself right before Lion ults — the Finger of Death reflects back and Lion takes 700 damage from his own spell.',
+      'Lotus on your carry before the enemy support uses their opener — the reflected disable turns the fight immediately.',
+      'Lotus Orb + Linken\'s Sphere: layered spell protection covers both single-target spells (Linken absorbs one) and subsequent spells (Lotus reflects one) — extremely hard to break through.',
+    ],
   },
   {
     id: 'linken_sphere',
@@ -829,6 +1495,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     passive: 'Spell Block: Blocks a targeted spell once every 14 seconds.',
     tier: 'Upgrade',
     buildsFrom: ['Ultimate Orb', 'Perseverance', 'Recipe'],
+    guide: `Linken's Sphere is the strongest single-item protection against targeted spells in the game. The passive Spell Block absorbs a single targeted spell (ability, item, or auto-attack modifier) once every 14 seconds — completely nullifying it. This includes Hex, Lion's Finger, Doom, Shadow Demon's Disruption, and most other powerful single-target spells.\n\nLinken's is purchased specifically to counter heroes whose gameplan revolves around one key targeted ability. If the enemy Silencer can't Global Silence because Linken blocks it, the entire enemy gameplan is disrupted.\n\nThe 15-second recharge means Linken's effectively provides protection once per teamfight. The +15 All Stats and mana/HP regen are significant bonuses on most heroes who buy it.`,
+    altTips: [
+      'Linken\'s blocks the NEXT targeted spell — not a specific spell. Enemies can "pop" it with a low-priority spell (like a slow) before using their kill combo.',
+      'Linken\'s Spell Block has a 14-second internal cooldown — after it triggers, it recharges in 14 seconds.',
+      'You can transfer Linken\'s to an ally by right-clicking — useful to protect your carry from a single targeted disable.',
+    ],
+    tips: [
+      'Linken\'s can be "popped" by baiting out its trigger: enemies will cast a weak spell (Orb of Venom, a slow) to use up the block before their real combo.',
+      'Buy Linken\'s specifically against one dominant single-target threat — if there are 3 targeted heroes, Linken\'s isn\'t enough alone.',
+      'Linken\'s on Anti-Mage is standard — his gameplan is to go late and the spell block protects him from all the targeted disables enemies build to kill him.',
+    ],
   },
 
   // ─── WEAPONS ───────────────────────────────────────────────────────────────
@@ -845,6 +1522,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsFrom: ['Mithril Hammer', 'Gloves of Haste', 'Recipe'],
     buildsInto: ['Mjollnir'],
+    guide: `Maelstrom is the farming acceleration and AoE DPS item for physical carries. The 25% Chain Lightning chance with 4 bounces is an extraordinary farming tool — when it procs in a large creep wave, it often kills 3–4 creeps simultaneously.\n\nOn attack-speed-dependent heroes (Gyrocopter, Juggernaut, Luna), more attacks per second means more Chain Lightning procs per second. At high attack speed, Maelstrom effectively has near-100% uptime with multiple simultaneous proc chains.\n\nMaelstrom builds into Mjollnir, which doubles the Chain Lightning damage and adds an active shield. Buy Maelstrom if you need immediate farming power and upgrade to Mjollnir when you can afford it.`,
+    altTips: [
+      'Chain Lightning can proc off other Chain Lightning procs — a single attack can trigger cascading lightning across many targets.',
+      'Lightning procs are magical damage — reduced by magic resistance.',
+      'Maelstrom does NOT stack with itself — buying two provides diminishing returns on proc chance.',
+    ],
+    tips: [
+      'Maelstrom is one of the best mid-game farming items — clear jungle camps + push waves simultaneously.',
+      'On Gyrocopter, Maelstrom + Call Down + Homing Missile creates an AoE kill zone in teamfights.',
+      'Buy Maelstrom before Daedalus if you need to farm — Daedalus has higher single-target DPS but zero farming efficiency.',
+    ],
   },
   {
     id: 'mjollnir',
@@ -859,6 +1547,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     passive: 'Chain Lightning: 25% chance to chain lightning for 200 damage across 7 targets.',
     tier: 'Upgrade',
     buildsFrom: ['Maelstrom', 'Hyperstone'],
+    guide: `Mjollnir upgrades Maelstrom's Chain Lightning to 200 damage across 7 targets and adds the Static Charge active. Static Charge places a shield on any ally — when the shielded hero is attacked, it retaliates with 200 damage chain lightning to all nearby enemies.\n\nThe +80 attack speed is the highest raw attack speed bonus from a single item in the game. Combined with the improved lightning proc, Mjollnir enables sustained AoE DPS unmatched by most item combinations.\n\nThe Static Charge shield is especially powerful when placed on the frontline hero being focused — every attack against them triggers massive AoE damage against all nearby enemies.`,
+    altTips: [
+      'Static Charge retaliates when the TARGET is attacked — place it on the hero the enemy will focus.',
+      'Chain Lightning from Mjollnir bounces 7 times (vs 4 for Maelstrom) — it can jump back to the same target if there are fewer than 7 unique targets.',
+      '+80 attack speed is equivalent to almost doubling attack speed for slow heroes.',
+    ],
+    tips: [
+      'Place Static Charge on your carry when they\'re diving the enemy team — every attack against them fires lightning back.',
+      'Mjollnir on Razor: Razor uses Static Link to drain attack damage while dealing lightning procs from Mjollnir — dual stacking DPS that most enemies can\'t trade into.',
+      'Mjollnir\'s lightning procs don\'t require a target — it procs on ANY attack that connects, even in melee range.',
+    ],
   },
   {
     id: 'monkey_king_bar',
@@ -872,6 +1571,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     passive: 'True Strike: Cannot miss. 40% chance to deal 160 bonus damage and mini-stun.',
     tier: 'Upgrade',
     buildsFrom: ['Mithril Hammer x2', 'Javelin'],
+    guide: `Monkey King Bar is the mandatory counter to evasion. Any hero running Butterfly, Talisman of Evasion, Windrun, or other evasion abilities becomes trivial once MKB is purchased — the True Strike passive ensures every attack lands regardless of evasion.\n\nThe 40% mini-bash chance for 160 damage is also a significant damage source. At high attack speeds (300+ AS), the mini-bashes stun enemies for 0.01 seconds — enough to interrupt channels like Laguna Blade or Refresher use.\n\nMKB is core on physical carries in games where the enemy has evasion. Without it, you're dealing 25–40% less effective DPS against evasion targets. With it, every single attack lands.`,
+    altTips: [
+      'True Strike ignores ALL evasion — Butterfly, Blur (from Shadow Blade), Windrun, Smokescreen, etc.',
+      'The 160 bonus damage from mini-bash is physical — it\'s reduced by armor.',
+      'Mini-bash interrupts most channeling spells — but the stun duration is too short to prevent most instant-cast items.',
+    ],
+    tips: [
+      'Buy MKB specifically when Phantom Assassin is on the enemy team (Blur = 35% evasion) — every other physical item is less effective against her without it.',
+      'MKB counters Butterfly — if you see the enemy carry buying Butterfly, buy MKB in response. The counter-buy rule applies here.',
+      'MKB + Daedalus: True Strike ensures every attack lands (no wasted crits from misses), making the combination extremely reliable DPS.',
+    ],
   },
   {
     id: 'battle_fury',
@@ -886,6 +1596,18 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Chop: Destroys target tree.',
     tier: 'Upgrade',
     buildsFrom: ['Claymore', 'Mithril Hammer', 'Quelling Blade', 'Perseverance'],
+    guide: `Battle Fury is the cleave farming item that defines the playstyle of many melee carries. The 60% cleave to nearby units turns every auto-attack into an AoE hit — combined with high damage, it clears creep waves and jungle camps in seconds.\n\nOn Anti-Mage, Phantom Lancer, Terrorblade, and Chaos Knight (who creates illusions), Battle Fury's cleave multiplies damage across many targets. Anti-Mage with BFury clears jungle camps in 4–5 attacks and pushes waves from safe positions.\n\nThe 400% mana regen is enormous for Anti-Mage specifically — it fuels his Blink and Spell Shield passive effectively. For other heroes, the regen is a useful bonus but not the primary reason to buy BFury.`,
+    altTips: [
+      'Cleave is NOT a spell — it cannot be spell blocked by Linken\'s or reflected by Lotus Orb.',
+      'Cleave range is 520 units — it affects units in a cone behind the primary target, not a full circle.',
+      'Multiple Battle Furies DO NOT stack cleave — the cleave percentage doesn\'t increase.',
+      'BFury\'s active Chop is identical to Quelling Blade — you don\'t need to carry both.',
+    ],
+    tips: [
+      'Battle Fury on Anti-Mage: buy it as fast as possible (aim for 12–14 minutes) — the faster you have it, the faster you farm your subsequent items.',
+      'BFury in teamfights: position yourself in the middle of grouped enemies so your cleave hits all of them simultaneously.',
+      'Against Phantom Lancer or Naga Siren illusion armies, a single BFury-carrying hero can clear the entire illusion field in seconds.',
+    ],
   },
   {
     id: 'radiance',
@@ -900,6 +1622,18 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsFrom: ['Sacred Relic', 'Recipe'],
     lore: 'The radiant gem channels ancient energies, scorching all who draw near.',
+    guide: `Radiance is the "presence" item — it doesn't require any action but deals continuous damage to all enemies within 700 units while they're near you. The 17% miss chance passively handicaps every attacker in range.\n\nRadiance is best on tanky heroes who are expected to fight in melee range for extended periods: Bristleback (who has built-in tankiness), Timbersaw, Batrider, Lifestealer, and Chaos Knight (who creates illusions that all radiate).\n\nIllusion-based heroes benefit especially — Chaos Knight's illusions, Naga Siren's illusions, and Phantom Lancer's illusions all independently apply Radiance burn if they carry it. Five illusions with Radiance effectively deal 350 DPS AoE to everyone nearby.`,
+    altTips: [
+      'Radiance burn is MAGICAL damage — it\'s reduced by magic resistance.',
+      'The 17% miss chance applies to all nearby enemies, not just those attacking you — they miss allies too.',
+      'Illusions DO carry Radiance if the main hero has it — this is the core reason Radiance is bought on illusion heroes.',
+      'Radiance\'s burn triggers Blink Dagger\'s disable — you cannot Blink when burning from Radiance.',
+    ],
+    tips: [
+      'Radiance on Chaos Knight is a signature combo — his ultimate creates 3–4 permanent illusions, each burning nearby enemies for 70 DPS. That\'s 210–280 passive DPS without any action.',
+      'Against a Radiance hero, keep distance — the 700 burn radius is large but not infinite. Ranged heroes and kiting strategies negate it.',
+      'Don\'t buy Radiance if you plan to stay at max attack range — you need to be in the middle of fights for it to deal meaningful damage.',
+    ],
   },
   {
     id: 'daedalus',
@@ -914,6 +1648,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsFrom: ['Crystalys', 'Sacred Relic'],
     lore: 'Legend holds that this weapon was created by a deranged genius.',
+    guide: `Daedalus is the highest raw single-target DPS item in the game. The 30% chance to deal 225% damage is a massive burst that one-shots squishy heroes and creates enormous variance in fights. At high attack speeds, Daedalus will proc roughly once every 3–4 attacks on average.\n\nBest on carries who already have high base damage (Juggernaut, Phantom Assassin, Anti-Mage, Terrorblade) — the crit multiplier scales with your total attack damage, so higher base damage = larger crits.\n\nDaedalus is strictly a single-target DPS item — it has zero utility, no farming efficiency bonus (compared to Maelstrom), and no defensive value. Buy it when you have enough other items and need the final damage spike to kill tankier heroes.`,
+    altTips: [
+      '225% damage means the crit deals 2.25× your total attack damage — on a 400-damage hero, that\'s a 900-damage hit.',
+      'Daedalus crits are PHYSICAL damage — they\'re reduced by armor like regular attacks.',
+      'Multiple Daedalus DO NOT stack additively — having two gives marginally more proc frequency but not multiplicative crits.',
+    ],
+    tips: [
+      'Daedalus + Monkey King Bar: every attack lands (MKB ensures no misses) and Daedalus procs create massive burst. MKB fills the "miss coverage" role while Daedalus provides the spike.',
+      'On Phantom Assassin, Daedalus stacks with her innate Coup de Grace — she can proc BOTH simultaneously for hits exceeding 2000 damage.',
+      'Buy Daedalus after your survivability items, not before — a dead carry with high damage does nothing.',
+    ],
   },
   {
     id: 'skull_basher',
@@ -928,6 +1673,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsInto: ['Abyssal Blade'],
     buildsFrom: ['Mithril Hammer', 'Belt of Strength', 'Recipe'],
+    guide: `Skull Basher provides the bash mechanic — a chance to stun on attack — that makes physical carries into disablers. The 1.4-second stun on a 25% proc rate (melee) means on average every 4th attack is a free stun. Against a hero with no escape, this leads to a permanent lockdown chain at high attack speeds.\n\nBash is especially powerful on heroes with high attack speeds (Slardar with sprint, Juggernaut during Blade Fury) or heroes who already have bash synergy. It builds into Abyssal Blade, which adds a guaranteed active stun.\n\nNote: some heroes have innate bash abilities (Slardar, Spirit Breaker, Troll Warlord) — these don't stack with Skull Basher. Don't buy it on those heroes.`,
+    altTips: [
+      'Bash from Skull Basher does NOT stack with other bash sources (other Skull Bashers, innate hero bashes).',
+      '25% proc rate (melee) means at 100 attacks per minute (reasonable mid-game speed), you\'re stunning roughly 25 times per minute.',
+      'The 1.4-second stun is long enough to land most follow-up spells during the lockdown.',
+    ],
+    tips: [
+      'Skull Basher into Abyssal Blade is the standard build — don\'t stop at Skull Basher unless gold is extremely tight.',
+      'Bash stuns can interrupt channeling spells — if an enemy Dagger or Blackhole begins channeling, a proc will stop it.',
+      'Against BKB users, save Abyssal Blade\'s active stun — it pierces spell immunity, making it the tool for after BKB expires.',
+    ],
   },
   {
     id: 'abyssal_blade',
@@ -942,6 +1698,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     passive: 'Bash: 25% chance to stun for 1.4 seconds (melee).',
     tier: 'Upgrade',
     buildsFrom: ['Skull Basher', 'Vanguard'],
+    guide: `Abyssal Blade is the upgraded Skull Basher that adds a guaranteed 2-second stun piercing spell immunity. The active Overwhelm is one of the very few abilities that completely bypasses BKB — when an enemy activates BKB, Abyssal Blade still stuns them for 2 seconds.\n\nThis makes Abyssal Blade mandatory against carries who rely on BKB windows (Wraith King, Lifestealer, Dragon Knight). The timing of Abyssal's active stun defines fights: wait for BKB to activate, then immediately stun them for 2 seconds — your team converges on the now-helpless hero.\n\nThe +250 HP from Vanguard and continued bash passive make Abyssal a complete physical carry item — damage, stun, bash, HP all in one.`,
+    altTips: [
+      'Overwhelm pierces spell immunity — it works through BKB, Black King Bar, and other spell immunity sources.',
+      'Overwhelm has a 24-second cooldown — use it at the highest-impact moment (BKB activation, key carry engaged).',
+      'The bash and Overwhelm do NOT stack their stun duration — they\'re two separate stun sources.',
+    ],
+    tips: [
+      'Abyssal + BKB as a duo: activate BKB yourself, Abyssal the enemy carry through their BKB, and your BKB protects you while you deal damage.',
+      'Hold Abyssal for the moment the enemy activates their key defensive. Using it before BKB is up loses the spell-immune counter.',
+      'Abyssal is standard on Anti-Mage who needs the stun to prevent enemy escapes while he blinks around draining mana.',
+    ],
   },
   {
     id: 'desolator',
@@ -956,6 +1723,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsFrom: ['Mithril Hammer x2'],
     lore: 'The jagged edges of this axe are designed to cut through the toughest armor.',
+    guide: `Desolator is the armor reduction item that amplifies ALL physical damage sources on a target — not just your own attacks. The -7 armor debuff applied to an enemy affects your entire team's physical damage against them.\n\nAt -7 armor, physical damage dealt is increased by approximately 28% depending on the target's base armor. Combined with Assault Cuirass (-5 armor aura) and Solar Crest (-14), an enemy can be at -26 armor — an extreme vulnerability.\n\nDesolator is most powerful on heroes who attack frequently (Ursa during Overpower, Juggernaut during Blade Fury, Sniper with high attack speed) because they reapply the armor debuff constantly and deal the highest damage bonus from it.`,
+    altTips: [
+      '-7 armor is approximately 28% more physical damage taken at the base armor level of most heroes.',
+      'Desolator debuff stacks with ALL other armor reductions — Solar Crest, Assault Cuirass, Slardar Corrosive Haze, etc.',
+      'Desolator on structures reduces tower armor — excellent for tower-diving phases.',
+    ],
+    tips: [
+      'Desolator + Slardar: Slardar\'s Corrosive Haze gives -20 armor, Desolator gives -7 = -27 armor total. Targets melt instantly.',
+      'Buy Desolator specifically when the enemy carry has naturally high armor (Dragon Knight, Slardar himself, heroes with Ring of Basilius aura).',
+      'Desolator vs Daedalus: Deso is better for sustained damage against tanky heroes, Daedalus is better for one-shotting squishies.',
+    ],
   },
   {
     id: 'satanic',
@@ -970,6 +1748,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     passive: 'Lifesteal: Steals 25% of attack damage as HP.',
     tier: 'Upgrade',
     buildsFrom: ['Reaver', 'Claymore', 'Helm of the Dominator'],
+    guide: `Satanic is the ultimate self-healing item for physical carries. The passive 25% lifesteal is already strong — at high damage values you're healing hundreds of HP per second. The Unholy Rage active cranks that to 175% lifesteal for 4.5 seconds — essentially restoring your full HP bar in seconds during the active.\n\nSatanic is best on carries who already deal high damage and want to stay alive through burst (Wraith King with reincarnation timing, Lifestealer with Rage immunity, Anti-Mage after BF+Manta). The 4.5 seconds of 175% lifesteal can take you from 10% HP to 100% if you're hitting a high-HP target.\n\nSatanic also provides a purge on activation — it removes most debuffs when you activate Unholy Rage, similar to an Eul's self-cast.`,
+    altTips: [
+      'Unholy Rage activation PURGES most debuffs — silences, roots, slows. This is the hidden gem of Satanic.',
+      '175% lifesteal means you heal 1.75× your attack damage per hit. On a 300-damage hero, that\'s 525 HP per attack.',
+      'Passive 25% lifesteal applies to ALL physical attacks — auto-attacks, cleave from Battle Fury, etc.',
+    ],
+    tips: [
+      'Satanic vs Wraith King reincarnation: time the activation DURING reincarnation. The purge removes your death debuffs and the lifesteal kicks in as you resurrect.',
+      'Never pop Satanic early in a fight — save it for when you\'re at low HP. The lower you are, the more impactful the lifesteal return.',
+      'On Juggernaut, Satanic + Omnislash = near-infinite HP during the Omnislash hits — the lifesteal returns HP faster than damage arrives.',
+    ],
   },
   {
     id: 'butterfly',
@@ -983,6 +1772,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     passive: 'Flutter: Active ability temporarily converts evasion to movement speed.',
     tier: 'Upgrade',
     buildsFrom: ['Talisman of Evasion', 'Eaglesong', 'Quarterstaff'],
+    guide: `Butterfly is the signature luxury item for agility carries. The combination of +30 Agility, +35 Attack Speed, and 30% Evasion makes it the single strongest offensive-defensive item in the game for right-click carries.\n\nThe 30% evasion means enemies literally miss 30% of their attacks against you — at high damage values, this is equivalent to 30% more effective HP against physical damage. Combined with natural agility carry armor, Butterfly makes you nearly unkillable by right-click heroes.\n\nThe Flutter active converts evasion to +35% movement speed for 5 seconds — useful for chasing or escaping when evasion isn't needed. Buy Butterfly as your mid-late game luxury item after survivability and farming items.`,
+    altTips: [
+      '30% evasion is FLAT — it applies to all physical attacks from all sources (heroes, towers, Roshan).',
+      'Flutter deactivates evasion during its 5-second window — you\'re vulnerable to physical attacks but much faster.',
+      'MKB counters Butterfly entirely — if an enemy buys MKB, your Butterfly\'s evasion provides zero value.',
+    ],
+    tips: [
+      'Buy Butterfly when the enemy team has no MKB and multiple physical attackers — it\'s free damage reduction.',
+      'Check if enemies have bought MKB before buying Butterfly — if they have, consider Linken\'s or Heart instead for the survivability budget.',
+      'Butterfly on Phantom Assassin combined with her Blur passive (35% evasion) gives roughly 55% total effective evasion — enemies have less than a coin-flip chance to hit.',
+    ],
   },
 
   // ─── ARTIFACTS ─────────────────────────────────────────────────────────────
@@ -999,6 +1799,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsFrom: ['Point Booster', 'Staff of Wizardry', 'Ogre Club', 'Blade of Alacrity'],
     lore: 'The scepter of a wizard of great power, it allows the user to reach new heights of power.',
+    guide: `Aghanim's Scepter is the most hero-dependent item in Dota 2. Nearly every hero has a unique Scepter upgrade — some completely transform a hero's kit while others provide moderate improvements. Always check your hero's specific Scepter upgrade before deciding whether to buy it.\n\nHigh-impact Scepter upgrades include: Earthshaker (Echo Slam hits 4x), Tinker (march refreshes all items), Invoker (can invoke 4 spells simultaneously), Silencer (Global Silence lasts longer and affects a wider area), and many more. On these heroes, Scepter is often a top-priority purchase.\n\nAghanim's Shard (the cheaper 1400-gold fragment) also deserves consideration first — some heroes benefit more from Shard than from Scepter.`,
+    altTips: [
+      'Scepter can be consumed by Alchemist\'s Greevil\'s Greed ability to give its effect to another hero.',
+      'If you already have Scepter, buying a second does nothing — the effect doesn\'t stack.',
+      'Scepter also provides: +10 All Stats, +200 HP, +150 Mana — reasonable stats even if the upgrade is minor.',
+    ],
+    tips: [
+      'Before any game, look up your hero\'s Scepter upgrade on the wiki — knowing whether it\'s a first-priority item or a luxury changes your build drastically.',
+      'Scepter on Zeus: his Lightning Bolt reveals units in a 750 radius and he gets a new map-wide Global Silence-like ultimate. Extremely powerful in solo queue.',
+      'Alchemist can synthesize a Scepter for an ally — this gives Alchemist a role as a "scepter-giver" in specialized team compositions.',
+    ],
   },
   {
     id: 'aghanims_shard',
@@ -1007,11 +1818,22 @@ export const SHOP_ITEMS: ShopItem[] = [
     category: 'Artifacts',
     cost: 1400,
     imageUrl: img('aghanims_shard'),
-    description: 'A fragment of Aghanim\'s power that upgrades a non-ultimate ability or adds a new spell.',
+    description: "A fragment of Aghanim's power that upgrades a non-ultimate ability or adds a new spell.",
     stats: [],
     passive: "Shard: Upgrades a non-ultimate ability or grants a new ability to the hero.",
     tier: 'Upgrade',
-    lore: 'A shard of the great wizard\'s scepter, still crackling with residual power.',
+    lore: "A shard of the great wizard's scepter, still crackling with residual power.",
+    guide: `Aghanim's Shard is the 1400-gold minor upgrade that enhances a non-ultimate spell or grants a new ability. It becomes purchasable after 20 minutes in the game. Unlike Scepter, Shard has no stat contribution — it's purely the ability upgrade.\n\nSome heroes have extremely powerful Shard upgrades that make it a near-mandatory purchase: Pudge (Rot becomes massive AoE), Axe (Call gains additional armor), Phoenix (Icarus Dive gains additional targets), and dozens more. These heroes often buy Shard before their full Scepter.\n\nCheck your hero's Shard upgrade — at 1400 gold, a powerful Shard is one of the best gold-efficiency purchases in the game.`,
+    altTips: [
+      'Shard becomes purchasable at 20 minutes — you cannot buy it before the timer.',
+      'Shard has no stat contribution — it\'s purely a spell enhancement.',
+      'Shard effects are hero-specific and unique — no two heroes have the same Shard upgrade.',
+    ],
+    tips: [
+      'On Pudge, buy Shard immediately at 20 minutes — the Rot upgrade is massive for ganking and pushing.',
+      'Many supports should prioritize Shard over Scepter — the ability enhancements are often more game-changing than Scepter\'s stat boost.',
+      'Against a team with Shard-enhanced heroes, learn what their Shard does — it changes how you play against them significantly.',
+    ],
   },
   {
     id: 'black_king_bar',
@@ -1026,6 +1848,18 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsFrom: ['Mithril Hammer', 'Ogre Club', 'Recipe'],
     lore: 'Upon activation, the spirit of a slain dragon envelopes the hero.',
+    guide: `Black King Bar is the most impactful defensive item in the game. During Avatar, the hero is completely immune to most magical spells and abilities — this includes silences, stuns, disables, most ultimates, and debuffs. Combined with physical damage carries who deal damage through auto-attacks, BKB creates an untouchable window to deal damage.\n\nBKB degrades with each use: first use is 10 seconds, subsequent uses are 9s, 8s... down to a minimum of 5 seconds. This means BKB is most powerful in the early-mid game when you use it for the first time.\n\nMandatory on carries against heavy CC compositions (Crystal Maiden, Disruptor, Lion, Rubick). Timing BKB is a critical skill — pop it during the enemy's initiation phase, not before, and not after you've already been disabled.`,
+    altTips: [
+      'BKB duration decreases by 1 second each use, to a minimum of 5 seconds.',
+      'Some spells PIERCE BKB: Doom, Abyssal Blade\'s Overwhelm, Primal Roar (Spirit Breaker ult), Fiend\'s Grip through the duration. Know your counter-plays.',
+      'BKB purges most debuffs on activation — if you\'re hexed or rooted, activating BKB removes it.',
+      'BKB blocks most spell damage but NOT physical damage from carries or towers.',
+    ],
+    tips: [
+      'Don\'t pop BKB the moment a fight starts — wait for the enemy to use their key disable first, THEN activate BKB to negate the follow-up spells.',
+      'BKB + Abyssal Blade combo: activate BKB for immunity, then Abyssal stun an enemy through THEIR BKB — the double spell-immune window is nearly unbeatable.',
+      'Track enemy BKB cooldowns during a game — if their carry\'s BKB is on cooldown, engage immediately. If it\'s up, play cautiously.',
+    ],
   },
   {
     id: 'eye_of_skadi',
@@ -1040,6 +1874,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsFrom: ['Ultimate Orb', 'Ultimate Orb', 'Point Booster'],
     lore: 'The eye of the frost giant Skadi, said to flash blue when struck by sunlight.',
+    guide: `Eye of Skadi is the complete late-game utility item for physical carries. The Cold Attack debuff slows movement by 35% and attack speed by 35 for 3 seconds on every hit — against any hero trying to escape or disengage, this is a permanent kite that never falls off as long as you keep hitting them.\n\nSkadi also reduces HP regeneration — the Cold Attack halves all healing effects on the target (Healing Salve, lifesteal, natural regen) during the slow duration. This counters Dazzle's Shallow Grave, Huskar's passive healing, and other HP restoration.\n\nThe stats alone (+25 All Stats, +250 HP, +250 Mana) are excellent, making Skadi valuable even setting aside the debuff. It's the standard late-game "everything" item on Universal heroes and some Strength/Agility carries.`,
+    altTips: [
+      'Cold Attack slow applies to ranged and melee attacks — even ranged auto-attacks slow enemies from max range.',
+      'The 35% movement slow and 35 attack speed reduction stack with other slow sources additively.',
+      'Cold Attack halves healing from most sources (lifesteal, Salves, spells) for the 3-second duration.',
+    ],
+    tips: [
+      'Skadi + Desolator: Skadi keeps targets slow and can\'t attack, Desolator strips their armor — the combination destroys both mobile and tanky heroes.',
+      'Skadi on Terrorblade: his illusions ALL apply the Cold Attack slow — entire teamfights become a frozen zone where nobody can escape.',
+      'Don\'t buy Skadi if the enemy team has no escapable heroes — if they\'re all slow or have no gap-closing, Daedalus or Satanic provides more direct impact.',
+    ],
   },
   {
     id: 'divine_rapier',
@@ -1054,6 +1899,18 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsFrom: ['Sacred Relic', 'Demon Edge'],
     lore: 'So powerful it cannot be held by the dead.',
+    guide: `Divine Rapier is the highest-risk, highest-reward item in Dota 2. The +330 damage is transformative — it turns any hero into a one-shot machine. The catch: it drops on death and can be picked up by ANY enemy hero. If your team is already winning decisively, Rapier closes games instantly. If the game is close, Rapier can feed the enemy and lose you the game single-handedly.\n\nRapier is typically bought in one of three situations:\n1. Your team has a commanding lead and you want to end the game immediately\n2. You need a gold sink and cannot convert gold into items any other way\n3. It's a desperate gamble when your team is behind and needs the damage spike to win\n\nThe 330 damage is ADDITIVE — on a carry already dealing 200 damage, Rapier makes it 530 damage per hit. Combined with a crit item (Daedalus), one Rapier hit can deal over 1000 damage.`,
+    altTips: [
+      'Rapier drops on hero death — it then becomes "free" for the enemy. They can pick it up without buying it.',
+      'If YOUR team kills an enemy carrying a Rapier, your hero who picks it up gets the full +330 damage.',
+      'Rapier does NOT drop from illusions — illusions cannot use or drop Rapier.',
+      'A hero who recently revived (from Wraith King reincarnation) still drops the Rapier if killed during reincarnation.',
+    ],
+    tips: [
+      'Never buy Rapier if the game is close — the risk is never worth it in competitive situations.',
+      'Rapier + Phantom Assassin: her crits deal 2-3× her total attack damage — with 330 bonus damage, crits exceed 1500+ damage per hit, one-shotting most heroes.',
+      'If you accidentally drop a Rapier in a fight, your highest-priority goal is getting any hero to stand on it to prevent the enemy from picking it up — block access to it physically if needed.',
+    ],
   },
   {
     id: 'bloodstone',
@@ -1068,6 +1925,16 @@ export const SHOP_ITEMS: ShopItem[] = [
     passive: 'Blood Bath: Nearby allied hero deaths charge the stone for stronger heals.',
     tier: 'Upgrade',
     buildsFrom: ['Soul Booster', 'Point Booster'],
+    guide: `Bloodstone is the caster stat item providing +500 HP and +500 Mana at 5050 gold — an enormous resource pool for intelligence spellcasters. The passive Blood Bath stores charges from nearby hero deaths, and the active Bloodpact sacrifices your hero to provide HP and mana to nearby allies based on charges.\n\nBloodstone is niche — mostly purchased on heroes who frequently die in fights and want a faster respawn timer, or heroes who need both massive HP and mana simultaneously (Invoker, Storm Spirit, Leshrac). The sacrifice mechanic is rarely used in non-desperate situations.\n\nThe stat block (500 HP + 500 Mana) is excellent for Bloodstone's cost compared to component items. Consider it on high-mana-pool intelligence carries who also need survivability.`,
+    altTips: [
+      'Bloodstone reduces your respawn timer — each charge reduces respawn time by 4 seconds.',
+      'Bloodpact sacrifices you — you die instantly but restore HP+mana to allies. Only use in extremely tactical situations.',
+      'Blood Bath charges gain from any hero death within 1600 units — even enemy heroes contribute charges.',
+    ],
+    tips: [
+      'Bloodstone on Storm Spirit: the mana pool lets him use Ball Lightning more aggressively, and the HP prevents one-shots.',
+      'Using Bloodpact strategically: if you\'re about to die anyway and your team is in a critical fight, sacrifice yourself for the HP+mana restore — it\'s better than dying randomly.',
+    ],
   },
   {
     id: 'manta_style',
@@ -1081,6 +1948,18 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Mirror Image: Spawns 2 illusions of yourself for 20 seconds.',
     tier: 'Upgrade',
     buildsFrom: ['Yasha', 'Ultimate Orb', 'Recipe'],
+    guide: `Manta Style is one of the most versatile items in the game. Mirror Image creates 2 illusions that deal 33% damage (melee) or 28% damage (ranged) and take 350% damage — they're fragile but their damage contribution adds up. But the most powerful feature is the DISPEL on activation.\n\nUsing Mirror Image dispels: silences, roots, most slows, and many other debuffs — it's a free Eul's self-cast without the 2.5-second vulnerability. Professional players use Manta primarily as a defensive dispel tool, not for the illusions.\n\nManta is core on carries who are frequently silenced or rooted (Anti-Mage, Morphling, Spectre, Naga Siren). It's also an incredible farming item when the illusions are used to right-click two different camp locations simultaneously.`,
+    altTips: [
+      'Mirror Image DISPELS silences, roots, and most negative effects on activation — this is the primary use in many situations.',
+      'Illusions are detected by Sentry Wards (they show as invisible in some interpretations) — actually illusions are NOT invisible, enemies can see them normally.',
+      'Manta illusions cannot use abilities or items — they only auto-attack.',
+      '+10% movement speed is a multiplicative bonus — it stacks well with other speed sources.',
+    ],
+    tips: [
+      'Manta dispel timing: activate it the INSTANT a silence or root lands on you — the dispel is instant and breaks the debuff.',
+      'Illusions inherit your current items\' damage but not active effects — Radiance on main hero IS carried by illusions (it\'s a passive).',
+      'Use Manta illusions to scout: send them into fog and see if enemies react — each illusion that gets killed confirms an enemy\'s position.',
+    ],
   },
   {
     id: 'ethereal_blade',
@@ -1094,6 +1973,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     active: 'Ether Blast: Slows and deals agility-based magic damage. Target becomes ethereal for 3 seconds.',
     tier: 'Upgrade',
     buildsFrom: ['Ghost Scepter', 'Eaglesong'],
+    guide: `Ethereal Blade applies the ethereal state to a target — while ethereal, the target takes 40% increased magic damage and CANNOT be physically attacked (they're immune to auto-attacks). This is a massive dual purpose: amplify your magic damage while removing the threat of their physical retaliation.\n\nEther Blast also deals (your agility + target agility) × 2 as magic damage — on an agility carry like Drow or Sniper with 150+ agility, this is 300+ instant magic damage. Combined with the 40% amp, total magic damage multiplied.\n\nBest on intelligence/agility hybrid heroes who deal significant magic burst (Templar Assassin, Queen of Pain) or as a combo tool with powerful magical nukes. Also excellent as a defensive item on intelligence heroes — self-casting makes you physically immune for 3 seconds.`,
+    altTips: [
+      'While ethereal, a hero cannot be physically attacked — this makes EB excellent for preventing carry right-clicks for 3 seconds.',
+      'The damage scales with (your agility + target agility) × 2 — higher agility heroes deal more damage with EB.',
+      'Self-casting EB on yourself makes YOU physically immune for 3 seconds — incredible in some scenarios to avoid physical attacks.',
+    ],
+    tips: [
+      'Ethereal Blade on Invoker: combine with Cold Snap and Alacrity — the target cannot dodge physical punishment after EB expires, and the magic damage from EB is amplified by Cold Snap.',
+      'Self-EB during a Phantom Assassin jump: the 3 seconds of physical immunity absorbs her entire combo window.',
+      'EB before your team\'s magical burst (Zeus ult, Lina ult) amplifies the incoming damage by 40% — tell your team when you\'re Etherealing a target.',
+    ],
   },
   {
     id: 'sange_yasha',
@@ -1107,6 +1997,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     passive: 'Meld: Grants lifesteal, slow resistance and movement speed. Enhanced Greater Maim on attacks.',
     tier: 'Upgrade',
     buildsFrom: ['Sange', 'Yasha'],
+    guide: `Sange and Yasha is the balanced physical carry item that provides both offensive (damage, attack speed, maim) and defensive (lifesteal, slow resistance) benefits. The Greater Maim on attacks slows enemy movement by 20% and attack speed by 20 for 4 seconds — similar to a minor Skadi effect but cheaper.\n\nThe slow resistance from S&Y is the hidden gem — it reduces slows applied to you by a significant amount, making you harder to kite. Combined with the movement speed bonus, S&Y carriers are extremely difficult to catch or escape from.\n\nBest on heroes who want to chase enemies (Slardar, Bristleback, Lifestealer) or melee carries who need the balance of both stats. Not the flashiest item but extremely reliable and efficient.`,
+    altTips: [
+      'Greater Maim applies a 20% movement slow and 20 attack speed reduction — stacks with other slow sources.',
+      'Slow resistance from S&Y reduces incoming slows by ~25% — enemies need significantly stronger slows to affect you.',
+      'S&Y can be upgraded by adding a Talisman of Evasion to create Sange, Yasha, and Kaya — a three-way combination item.',
+    ],
+    tips: [
+      'S&Y on Lifestealer: the lifesteal from S&Y combined with Rage (phased immunity) and Feast passive makes him heal through most physical engagements.',
+      'S&Y is one of the most gold-efficient mid-game items — it provides stats in both offensive and defensive categories that otherwise require two separate items.',
+      'Build S&Y when the enemy team has multiple chase or escape tools — the slow resistance and own maim counter both.',
+    ],
   },
   {
     id: 'vladmirs_offering',
@@ -1120,6 +2021,17 @@ export const SHOP_ITEMS: ShopItem[] = [
     passive: "Vladmir's Aura: Grants nearby allies +18% lifesteal, +3 armor, +18% damage, +1.5 mana regen.",
     tier: 'Upgrade',
     buildsFrom: ['Headdress', 'Ring of Basilius', 'Mask of Death'],
+    guide: `Vladimir's Offering is the aura item for physical carry lineups. The aura applies to ALL nearby allied heroes: +18% lifesteal (keeps them alive), +3 armor (reduces damage taken), +18% damage (more DPS), and +1.5 mana/sec regen. In a 5-man push scenario with all heroes in range, Vlads provides roughly equivalent to 5 free lifesteal items.\n\nThe 18% damage bonus is particularly powerful — it applies to all physical damage including tower hits. Pushing high ground with Vlad means your team does 18% more damage to everything.\n\nBuy Vladimir's on the hero who will spend the most time with your physical carry: often the position 4 initiator or the position 3 offlaner who fights alongside carries.`,
+    altTips: [
+      'Vladimir\'s Aura applies in 1200 radius — heroes must be within range to receive the buff. Moving out of range loses it instantly.',
+      'Multiple Vlads do NOT stack — the aura is unique. Coordinate with your team so only one player builds it.',
+      '+18% lifesteal on a carry dealing 300 damage per attack = 54 HP per attack passively — very significant sustain.',
+    ],
+    tips: [
+      'Buy Vlads specifically when your team has 2+ physical right-click carries — the aura pays dividends on every attack from each carry.',
+      'Vlads during Roshan: the 18% damage bonus and lifesteal dramatically speed up and stabilize Roshan attempts.',
+      'Don\'t buy Vlads as the carry themselves unless no support will build it — it\'s better on a support who fights near the carry.',
+    ],
   },
   {
     id: 'hand_of_midas',
@@ -1134,6 +2046,19 @@ export const SHOP_ITEMS: ShopItem[] = [
     tier: 'Upgrade',
     buildsFrom: ['Gloves of Haste', 'Recipe'],
     lore: 'Those with the touch of Midas are eternally wealthy.',
+    guide: `Hand of Midas is the investment item — it pays for itself over time through repeated Transmute uses. At 2200 gold with a 90-second cooldown, each Transmute gives 160 gold and 2.5× the unit's base XP. Against a Satyr Tormenter (900g/XP creep), Midas is highly efficient.\n\nThe item pays for itself after approximately 14 uses (14 × 160 = 2240 gold). Against an average camp worth 80 gold (base), it pays off after 28 uses — roughly 42 minutes of Midas uses. The real value comes from XP: 2.5× XP accelerates level gains dramatically.\n\nBuy Midas ONLY in the first 6–7 minutes of the game (aim for 5:00 timing on efficient games). A late Midas (bought after 10 minutes) rarely pays off before the game ends. Early Midas compounds into a significant gold and XP lead by the 20-minute mark.`,
+    altTips: [
+      'Transmute grants 160 gold and 2.5× the unit\'s base XP — the XP bonus often matters more than the gold in practice.',
+      'Transmute can be used on Roshan — it instantly kills him for 160 gold and removes the Aegis from the pit (Roshan dies without dropping Aegis). This is an infamous trick.',
+      'Transmute works on any non-hero unit: creeps, neutrals, couriers, wards.',
+      'Midas has a 90-second cooldown — use it on cooldown every game. Missing one Transmute = 160 gold lost.',
+    ],
+    tips: [
+      'Use Midas on the highest-XP camp available (Ancients) — prioritize XP gain over raw gold.',
+      'Set a timer for every 90 seconds to remind yourself to Midas — it\'s surprising how often players forget in the heat of the game.',
+      'Sell Midas in the late game (after 40+ minutes) when the cooldown is still valuable but the item slot matters more — calculate if you\'ve gotten enough uses.',
+      'Midas on Chen\'s controlled creeps: Transmute your own dominated creep for free gold — this combo used to be more common in niche strategies.',
+    ],
   },
 ];
 

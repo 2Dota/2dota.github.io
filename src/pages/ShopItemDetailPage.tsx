@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowLeft, ChevronRight, Coins, Zap, Shield,
-  Package, ArrowRight, Box,
+  Package, ArrowRight, Box, BookOpen, Lightbulb,
+  Keyboard, ChevronDown, ChevronUp, Star,
 } from 'lucide-react';
 import { SHOP_ITEMS, SHOP_CATEGORIES } from '../data/shopItems';
 import { CATEGORY_COLORS, CATEGORY_ICONS } from '../data/shopMeta';
@@ -64,6 +65,145 @@ function RelatedCard({ item }: { item: typeof SHOP_ITEMS[0] }) {
   );
 }
 
+/** Full rich guide section with collapsible support */
+function GuideSection({ guide, color }: { guide: string; color: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const paragraphs = guide.split('\n\n').filter(Boolean);
+  const preview = paragraphs[0];
+  const rest = paragraphs.slice(1);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: 0.25 }}
+      className="p-6 rounded-2xl border border-white/8 bg-[#0d1117]"
+    >
+      <div className="flex items-center gap-2 mb-4">
+        <div
+          className="w-6 h-6 rounded-lg flex items-center justify-center"
+          style={{ background: `${color}20`, border: `1px solid ${color}40` }}
+        >
+          <BookOpen className="w-3.5 h-3.5" style={{ color }} strokeWidth={2} />
+        </div>
+        <h2 className="font-semibold text-white">Item Guide</h2>
+      </div>
+
+      {/* Always show first paragraph */}
+      <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">{preview}</p>
+
+      {/* Collapsible rest */}
+      <AnimatePresence initial={false}>
+        {expanded && rest.length > 0 && (
+          <motion.div
+            key="guide-rest"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
+          >
+            <div className="space-y-3 mt-3">
+              {rest.map((para, i) => (
+                <p key={i} className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">{para}</p>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {rest.length > 0 && (
+        <button
+          onClick={() => setExpanded(e => !e)}
+          className="mt-4 flex items-center gap-1.5 text-xs font-medium transition-colors"
+          style={{ color }}
+        >
+          {expanded ? (
+            <><ChevronUp className="w-3.5 h-3.5" /> Show less</>
+          ) : (
+            <><ChevronDown className="w-3.5 h-3.5" /> Read full guide</>
+          )}
+        </button>
+      )}
+    </motion.div>
+  );
+}
+
+/** Alt-hold tips panel — styled to mimic the in-game Alt tooltip feel */
+function AltTipsPanel({ tips, color }: { tips: string[]; color: string }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: 0.3 }}
+      className="p-6 rounded-2xl border bg-[#0a0d12] overflow-hidden relative"
+      style={{ borderColor: `${color}30` }}
+    >
+      {/* Subtle corner glow */}
+      <div
+        className="absolute top-0 right-0 w-32 h-32 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at top right, ${color}12 0%, transparent 70%)`,
+        }}
+      />
+
+      <div className="flex items-center gap-2 mb-4 relative">
+        <div
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold tracking-widest uppercase"
+          style={{ background: `${color}18`, color, border: `1px solid ${color}35` }}
+        >
+          <Keyboard className="w-3 h-3" strokeWidth={2.5} />
+          ALT
+        </div>
+        <h2 className="font-semibold text-white text-sm">Hidden Mechanics</h2>
+      </div>
+
+      <ul className="space-y-3 relative">
+        {tips.map((tip, i) => (
+          <li key={i} className="flex gap-3">
+            <div
+              className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
+              style={{ background: color, boxShadow: `0 0 6px ${color}80` }}
+            />
+            <p className="text-sm text-gray-300 leading-relaxed">{tip}</p>
+          </li>
+        ))}
+      </ul>
+    </motion.div>
+  );
+}
+
+/** Pro tips panel */
+function ProTipsPanel({ tips, color }: { tips: string[]; color: string }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: 0.35 }}
+      className="p-6 rounded-2xl border border-white/8 bg-[#0d1117]"
+    >
+      <div className="flex items-center gap-2 mb-4">
+        <div className="w-6 h-6 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center">
+          <Lightbulb className="w-3.5 h-3.5 text-amber-400" strokeWidth={2} />
+        </div>
+        <h2 className="font-semibold text-white">Tips & Tricks</h2>
+        <span className="ml-1 text-xs text-gray-600 font-normal">things most players never figure out</span>
+      </div>
+
+      <ul className="space-y-4">
+        {tips.map((tip, i) => (
+          <li key={i} className="flex gap-3">
+            <div className="shrink-0 mt-0.5">
+              <Star className="w-3.5 h-3.5 text-amber-500/70" strokeWidth={1.75} fill="currentColor" />
+            </div>
+            <p className="text-sm text-gray-300 leading-relaxed">{tip}</p>
+          </li>
+        ))}
+      </ul>
+    </motion.div>
+  );
+}
+
 export function ShopItemDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -92,9 +232,13 @@ export function ShopItemDetailPage() {
     .filter(i => i.id !== item.id && i.category === item.category)
     .slice(0, 6);
 
+  const hasGuide = Boolean(item.guide);
+  const hasAltTips = item.altTips && item.altTips.length > 0;
+  const hasProTips = item.tips && item.tips.length > 0;
+
   return (
     <div className="min-h-screen">
-      {/* Ambient */}
+      {/* Ambient glow */}
       <div
         className="fixed top-0 left-0 right-0 h-96 pointer-events-none"
         style={{ background: `radial-gradient(ellipse 60% 40% at 50% -10%, ${color}10 0%, transparent 70%)` }}
@@ -128,7 +272,6 @@ export function ShopItemDetailPage() {
           className="rounded-3xl border border-white/10 bg-[#0d1117] overflow-hidden mb-8"
           style={{ boxShadow: `0 30px 80px -20px ${color}25` }}
         >
-          {/* Top accent */}
           <div className="h-1" style={{ background: `linear-gradient(90deg, transparent, ${color}, transparent)` }} />
 
           <div className="p-8 flex flex-col sm:flex-row items-start gap-8">
@@ -142,7 +285,6 @@ export function ShopItemDetailPage() {
 
             {/* Main info */}
             <div className="flex-1 min-w-0">
-              {/* Category badge */}
               <div
                 className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border mb-4"
                 style={{ color, borderColor: `${color}40`, background: `${color}12` }}
@@ -163,7 +305,6 @@ export function ShopItemDetailPage() {
 
               <p className="text-gray-300 leading-relaxed mb-6">{item.description}</p>
 
-              {/* Cost + tier */}
               <div className="flex flex-wrap items-center gap-3">
                 <div
                   className="flex items-center gap-2 px-4 py-2 rounded-xl border"
@@ -183,7 +324,7 @@ export function ShopItemDetailPage() {
 
         {/* Details grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          {/* Stats + abilities */}
+          {/* Left column: stats, abilities, guide, alt-tips, pro-tips */}
           <div className="lg:col-span-2 space-y-5">
             {/* Stats */}
             {item.stats.length > 0 && (
@@ -238,9 +379,18 @@ export function ShopItemDetailPage() {
                 <p className="text-sm text-gray-300 leading-relaxed">{item.passive}</p>
               </motion.div>
             )}
+
+            {/* Rich guide */}
+            {hasGuide && <GuideSection guide={item.guide!} color={color} />}
+
+            {/* Alt-hold hidden mechanics */}
+            {hasAltTips && <AltTipsPanel tips={item.altTips!} color={color} />}
+
+            {/* Pro tips */}
+            {hasProTips && <ProTipsPanel tips={item.tips!} color={color} />}
           </div>
 
-          {/* Build path sidebar */}
+          {/* Right sidebar: build path + categories */}
           <div className="space-y-5">
             {/* Builds from */}
             {buildsFrom.length > 0 && (
@@ -317,7 +467,6 @@ export function ShopItemDetailPage() {
                     <Link
                       key={cat}
                       to="/shop"
-                      onClick={() => {}}
                       className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${
                         isActive ? 'bg-white/8 text-white' : 'text-gray-500 hover:text-gray-300 hover:bg-white/4'
                       }`}
