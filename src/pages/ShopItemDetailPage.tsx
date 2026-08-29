@@ -41,6 +41,29 @@ function ItemImage({ item }: { item: typeof SHOP_ITEMS[0] }) {
   );
 }
 
+function RelatedMiniCard({ rel }: { rel: typeof SHOP_ITEMS[0] }) {
+  const [imgErr, setImgErr] = useState(false);
+  const relColor = CATEGORY_COLORS[rel.category];
+  return (
+    <Link key={rel.id} to={`/shop/${rel.id}`} className="group p-4 rounded-2xl border border-white/8 bg-[#0d1117] hover:border-white/20 transition-all duration-200 flex flex-col items-center text-center gap-3">
+      <div className="w-14 h-14 rounded-xl bg-[#0a0d12] flex items-center justify-center">
+        {!imgErr ? (
+          <img src={rel.imageUrl} alt={rel.name} className="w-12 h-12 object-contain group-hover:scale-110 transition-transform" onError={() => setImgErr(true)} loading="lazy" />
+        ) : (
+          <Package className="w-6 h-6 text-gray-600" strokeWidth={1.5} />
+        )}
+      </div>
+      <div>
+        <p className="text-xs font-semibold text-white group-hover:text-rose-300 transition-colors line-clamp-2 leading-snug">{rel.name}</p>
+        <div className="flex items-center justify-center gap-1 mt-1">
+          <Coins className="w-2.5 h-2.5" style={{ color: relColor }} strokeWidth={2} />
+          <span className="text-xs" style={{ color: relColor }}>{rel.cost === 0 ? 'Free' : rel.cost}</span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 function RelatedCard({ item }: { item: typeof SHOP_ITEMS[0] }) {
   const [err, setErr] = useState(false);
   const color = CATEGORY_COLORS[item.category];
@@ -497,28 +520,7 @@ export function ShopItemDetailPage() {
               </Link>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-              {related.map(rel => {
-                const [imgErr, setImgErr] = useState(false);
-                const relColor = CATEGORY_COLORS[rel.category];
-                return (
-                  <Link key={rel.id} to={`/shop/${rel.id}`} className="group p-4 rounded-2xl border border-white/8 bg-[#0d1117] hover:border-white/20 transition-all duration-200 flex flex-col items-center text-center gap-3">
-                    <div className="w-14 h-14 rounded-xl bg-[#0a0d12] flex items-center justify-center">
-                      {!imgErr ? (
-                        <img src={rel.imageUrl} alt={rel.name} className="w-12 h-12 object-contain group-hover:scale-110 transition-transform" onError={() => setImgErr(true)} loading="lazy" />
-                      ) : (
-                        <Package className="w-6 h-6 text-gray-600" strokeWidth={1.5} />
-                      )}
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold text-white group-hover:text-rose-300 transition-colors line-clamp-2 leading-snug">{rel.name}</p>
-                      <div className="flex items-center justify-center gap-1 mt-1">
-                        <Coins className="w-2.5 h-2.5" style={{ color: relColor }} strokeWidth={2} />
-                        <span className="text-xs" style={{ color: relColor }}>{rel.cost === 0 ? 'Free' : rel.cost}</span>
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
+              {related.map(rel => <RelatedMiniCard key={rel.id} rel={rel} />)}
             </div>
           </motion.section>
         )}
