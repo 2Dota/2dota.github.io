@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sword, ShoppingBag, Home } from 'lucide-react';
+import { Menu, X, Sword, ShoppingBag, Home, Package } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const NAV = [
   { to: '/', label: 'Home', Icon: Home },
   { to: '/shop', label: 'In-Game Shop', Icon: ShoppingBag },
+  { to: '/neutral', label: 'Neutral Items', Icon: Package },
 ];
 
 export function Header() {
