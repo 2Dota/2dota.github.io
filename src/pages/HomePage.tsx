@@ -1,17 +1,8 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  Sparkles,
-  ShoppingBag,
-  ArrowRight,
-  Sword,
-  Star,
-  Shield,
-  Zap,
-  Package,
-  BookOpen,
+  ShoppingBag, ArrowRight, Sword, Star, Shield, Zap, Package, BookOpen,
 } from 'lucide-react';
-import { STORE_ITEMS } from '../data/items';
 import { SHOP_ITEMS, SHOP_CATEGORIES } from '../data/shopItems';
 
 const FADE_UP = {
@@ -23,103 +14,16 @@ const FADE_UP = {
   }),
 };
 
-interface SectionCardProps {
-  to: string;
-  Icon: React.ElementType;
-  title: string;
-  subtitle: string;
-  description: string;
-  stats: { label: string; value: string }[];
-  accentFrom: string;
-  accentTo: string;
-  delay: number;
-  tag: string;
-}
-
-function SectionCard({
-  to, Icon, title, subtitle, description, stats, accentFrom, accentTo, delay, tag,
-}: SectionCardProps) {
-  return (
-    <motion.div
-      custom={delay}
-      initial="hidden"
-      animate="show"
-      variants={FADE_UP}
-    >
-      <Link to={to} className="group block h-full">
-        <article className="relative h-full rounded-3xl border border-white/8 bg-[#0d1117] overflow-hidden hover:border-white/16 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/50">
-          {/* Top gradient bar */}
-          <div className={`h-1 bg-gradient-to-r ${accentFrom} ${accentTo}`} />
-
-          {/* Background glow */}
-          <div
-            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-            style={{
-              background: `radial-gradient(ellipse 60% 40% at 50% 0%, ${accentFrom.replace('from-', '').replace('[', '').replace(']', '')}08 0%, transparent 70%)`,
-            }}
-          />
-
-          <div className="p-8">
-            {/* Tag */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-gray-400 mb-6">
-              <BookOpen className="w-3 h-3" />
-              {tag}
-            </div>
-
-            {/* Icon + title */}
-            <div className="flex items-start gap-5 mb-6">
-              <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${accentFrom} ${accentTo} flex items-center justify-center shadow-lg shrink-0`}>
-                <Icon className="w-7 h-7 text-white" strokeWidth={1.75} />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-white tracking-tight group-hover:text-rose-300 transition-colors">
-                  {title}
-                </h2>
-                <p className="text-sm text-gray-500 mt-0.5">{subtitle}</p>
-              </div>
-            </div>
-
-            {/* Description */}
-            <p className="text-gray-400 leading-relaxed mb-8 text-sm">
-              {description}
-            </p>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              {stats.map(s => (
-                <div key={s.label} className="text-center p-3 rounded-xl bg-white/3 border border-white/5">
-                  <p className="text-xl font-bold text-white">{s.value}</p>
-                  <p className="text-xs text-gray-600 mt-0.5">{s.label}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA */}
-            <div className="flex items-center gap-2 text-sm font-semibold text-rose-400 group-hover:text-rose-300 transition-colors">
-              Explore
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </div>
-        </article>
-      </Link>
-    </motion.div>
-  );
-}
-
 export function HomePage() {
-  const arcanaCount = STORE_ITEMS.filter(i => i.category === 'Arcana').length;
-  const heroCount = new Set(STORE_ITEMS.filter(i => i.hero).map(i => i.hero)).size;
-  const availableCount = STORE_ITEMS.filter(i => i.isAvailable).length;
-
   const shopItemCount = SHOP_ITEMS.length;
   const shopCategoryCount = SHOP_CATEGORIES.length;
   const upgradeCount = SHOP_ITEMS.filter(i => i.tier === 'Upgrade').length;
+  const basicCount = SHOP_ITEMS.filter(i => i.tier === 'Basic').length;
 
   return (
     <div>
-      {/* ── Hero ─────────────────────────────────────────────── */}
+      {/* ── Hero ──────────────────────────────────────────────── */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Background */}
         <div className="absolute inset-0 bg-[#070a0f]" />
         <div
           className="absolute inset-0 opacity-40"
@@ -131,7 +35,6 @@ export function HomePage() {
             `,
           }}
         />
-        {/* Grid */}
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -141,7 +44,6 @@ export function HomePage() {
         />
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center py-32">
-          {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -149,10 +51,9 @@ export function HomePage() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-rose-500/30 bg-rose-500/8 text-rose-400 text-sm font-medium mb-8"
           >
             <Star className="w-3.5 h-3.5" />
-            Complete Dota 2 Reference
+            Complete Dota 2 Item Reference
           </motion.div>
 
-          {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -168,22 +69,20 @@ export function HomePage() {
                 WebkitTextFillColor: 'transparent',
               }}
             >
-              Knowledge Base
+              Shop Guide
             </span>
           </motion.h1>
 
-          {/* Sub */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto mb-12"
           >
-            Your complete reference for Dota 2. Every cosmetic from the store and every
-            purchasable item from the in-game shop, documented with official artwork and full explanations.
+            Every purchasable item from the Dota 2 in-game shop. Rich guides, hidden mechanics,
+            and pro tips — everything you need to master the item economy.
           </motion.p>
 
-          {/* Stat pills */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -191,10 +90,10 @@ export function HomePage() {
             className="flex flex-wrap items-center justify-center gap-3 mb-14"
           >
             {[
-              { Icon: Sparkles, label: `${STORE_ITEMS.length} Cosmetics` },
-              { Icon: ShoppingBag, label: `${SHOP_ITEMS.length} Shop Items` },
-              { Icon: Shield, label: `${heroCount} Heroes Covered` },
-              { Icon: Zap, label: `${arcanaCount} Arcanas` },
+              { Icon: ShoppingBag, label: `${shopItemCount} Items` },
+              { Icon: Shield, label: `${shopCategoryCount} Categories` },
+              { Icon: Zap, label: `${upgradeCount} Upgrades` },
+              { Icon: Star, label: `${basicCount} Basic Items` },
             ].map(({ Icon, label }) => (
               <div
                 key={label}
@@ -206,7 +105,6 @@ export function HomePage() {
             ))}
           </motion.div>
 
-          {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -214,23 +112,15 @@ export function HomePage() {
             className="flex flex-wrap items-center justify-center gap-4"
           >
             <Link
-              to="/cosmetics"
+              to="/shop"
               className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-rose-600 to-rose-500 text-white font-semibold text-sm shadow-lg shadow-rose-500/30 hover:shadow-rose-500/50 hover:-translate-y-0.5 transition-all duration-200"
             >
-              <Sparkles className="w-4 h-4" strokeWidth={1.75} />
-              Browse Cosmetics
-            </Link>
-            <Link
-              to="/shop"
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl border border-white/15 bg-white/5 text-white font-semibold text-sm hover:bg-white/10 hover:border-white/25 hover:-translate-y-0.5 transition-all duration-200"
-            >
               <ShoppingBag className="w-4 h-4" strokeWidth={1.75} />
-              Shop Guide
+              Browse All Items
             </Link>
           </motion.div>
         </div>
 
-        {/* Scroll hint */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
           <motion.div
             animate={{ y: [0, 8, 0] }}
@@ -242,7 +132,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* ── Section cards ────────────────────────────────────── */}
+      {/* ── Shop card ─────────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <motion.div
           custom={0}
@@ -252,48 +142,65 @@ export function HomePage() {
           variants={FADE_UP}
           className="text-center mb-14"
         >
-          <p className="text-rose-400 text-xs font-semibold uppercase tracking-widest mb-3">Explore</p>
-          <h2 className="text-4xl font-bold text-white tracking-tight">Two worlds of Dota 2</h2>
-          <p className="text-gray-500 mt-3">Pick your area of interest</p>
+          <p className="text-rose-400 text-xs font-semibold uppercase tracking-widest mb-3">Reference</p>
+          <h2 className="text-4xl font-bold text-white tracking-tight">In-Game Shop</h2>
+          <p className="text-gray-500 mt-3">Every buyable item, fully documented</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <SectionCard
-            to="/cosmetics"
-            Icon={Sparkles}
-            title="Cosmetics Wiki"
-            subtitle="Store Items Reference"
-            description="Every Arcana, Persona, Immortal, Courier, Terrain, HUD, Announcer, and cosmetic item available in the Dota 2 store. Full descriptions, lore, customizations, and official artwork sourced directly from Valve."
-            stats={[
-              { label: 'Total Items', value: String(STORE_ITEMS.length) },
-              { label: 'Arcanas', value: String(arcanaCount) },
-              { label: 'In Store', value: String(availableCount) },
-            ]}
-            accentFrom="from-rose-600"
-            accentTo="to-rose-500"
-            delay={1}
-            tag="Cosmetics"
-          />
-          <SectionCard
-            to="/shop"
-            Icon={ShoppingBag}
-            title="In-Game Shop Guide"
-            subtitle="All Purchasable Items"
-            description="Complete guide to every item buyable in the Dota 2 in-game shop. Stats, costs, build paths, active and passive abilities, with official item artwork. Everything you need to understand the item economy."
-            stats={[
-              { label: 'Shop Items', value: String(shopItemCount) },
-              { label: 'Categories', value: String(shopCategoryCount) },
-              { label: 'Upgrades', value: String(upgradeCount) },
-            ]}
-            accentFrom="from-amber-500"
-            accentTo="to-orange-500"
-            delay={2}
-            tag="In-Game"
-          />
-        </div>
+        <motion.div
+          custom={1}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={FADE_UP}
+        >
+          <Link to="/shop" className="group block max-w-2xl mx-auto">
+            <article className="relative rounded-3xl border border-white/8 bg-[#0d1117] overflow-hidden hover:border-white/16 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/50">
+              <div className="h-1 bg-gradient-to-r from-amber-500 to-orange-500" />
+              <div className="p-8">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-gray-400 mb-6">
+                  <BookOpen className="w-3 h-3" />
+                  In-Game
+                </div>
+                <div className="flex items-start gap-5 mb-6">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-lg shrink-0">
+                    <ShoppingBag className="w-7 h-7 text-white" strokeWidth={1.75} />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-white tracking-tight group-hover:text-rose-300 transition-colors">
+                      In-Game Shop Guide
+                    </h2>
+                    <p className="text-sm text-gray-500 mt-0.5">All Purchasable Items</p>
+                  </div>
+                </div>
+                <p className="text-gray-400 leading-relaxed mb-8 text-sm">
+                  Complete guide to every item in the Dota 2 shop. Stats, costs, build paths,
+                  active and passive abilities, rich guides, alt-hold hidden mechanics, and pro
+                  tips. Everything you need to master the item economy.
+                </p>
+                <div className="grid grid-cols-3 gap-4 mb-8">
+                  {[
+                    { label: 'Shop Items', value: String(shopItemCount) },
+                    { label: 'Categories', value: String(shopCategoryCount) },
+                    { label: 'Upgrades', value: String(upgradeCount) },
+                  ].map(s => (
+                    <div key={s.label} className="text-center p-3 rounded-xl bg-white/3 border border-white/5">
+                      <p className="text-xl font-bold text-white">{s.value}</p>
+                      <p className="text-xs text-gray-600 mt-0.5">{s.label}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex items-center gap-2 text-sm font-semibold text-rose-400 group-hover:text-rose-300 transition-colors">
+                  Explore
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </article>
+          </Link>
+        </motion.div>
       </section>
 
-      {/* ── Coming soon ──────────────────────────────────────── */}
+      {/* ── Coming soon ───────────────────────────────────────── */}
       <section className="border-t border-white/5 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
