@@ -149,7 +149,7 @@ export function HomePage() {
             className="text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto mb-12"
           >
             Every purchasable item and neutral drop in Dota 2. Rich guides, hidden mechanics,
-            tips and pro strategies — everything you need to master the item economy.
+            tips and pro strategies for every item in the game.
           </motion.p>
 
           <motion.div

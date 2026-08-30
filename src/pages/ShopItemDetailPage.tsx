@@ -152,7 +152,7 @@ function GuideSection({ guide, color }: { guide: string; color: string }) {
   );
 }
 
-/** Alt-hold tips panel — styled to mimic the in-game Alt tooltip feel */
+/** Alt-hold tips panel styled to mimic the in-game Alt tooltip feel */
 function AltTipsPanel({ tips, color }: { tips: string[]; color: string }) {
   return (
     <motion.div
