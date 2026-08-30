@@ -5,7 +5,7 @@ import {
   ChevronRight, Package, TriangleAlert,
 } from 'lucide-react';
 import {
-  NEUTRAL_ITEMS, NEUTRAL_TIERS, TIER_INFO,
+  NEUTRAL_ITEMS, NEUTRAL_TIERS, TIER_INFO, SYSTEM_NOTES,
   type NeutralItem, type NeutralTier,
 } from '../data/neutralItems';
 
@@ -338,33 +338,15 @@ export function NeutralItemsPage() {
           >
             <div className="flex items-center gap-2 mb-4">
               <TriangleAlert className="w-5 h-5 text-yellow-400" strokeWidth={1.75} />
-              <h2 className="font-semibold text-white">How Neutral Items Work</h2>
+              <h2 className="font-semibold text-white">How Neutral Items Work (Patch 7.39)</h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-gray-400 leading-relaxed">
-              <div className="space-y-1">
-                <p className="font-medium text-gray-300">Dropping</p>
-                <p>Neutral creeps have a chance to drop a neutral item when killed. Only one item drops per camp kill. The tier of the item depends on the current game time.</p>
-              </div>
-              <div className="space-y-1">
-                <p className="font-medium text-gray-300">Stashing</p>
-                <p>Dropped items go to the Neutral Item Stash — a shared team inventory. Any hero on your team can retrieve items from the stash at any time.</p>
-              </div>
-              <div className="space-y-1">
-                <p className="font-medium text-gray-300">Limits</p>
-                <p>Each hero can carry one neutral item. You cannot sell or drop neutral items to enemy heroes. Unused items sit in the stash until retrieved.</p>
-              </div>
-              <div className="space-y-1">
-                <p className="font-medium text-gray-300">Stash limit</p>
-                <p>The stash holds up to 12 neutral items per team. Once full, new drops are destroyed automatically — clear the stash regularly.</p>
-              </div>
-              <div className="space-y-1">
-                <p className="font-medium text-gray-300">Prioritization</p>
-                <p>Decide early who gets which tier. Supports benefit most from Tier 1-2 utility items. Carries want Tier 3-4 damage or survivability. Tier 5 is usually for the most impactful hero.</p>
-              </div>
-              <div className="space-y-1">
-                <p className="font-medium text-gray-300">Timing</p>
-                <p>Tier upgrades happen at fixed times regardless of which item drops. Kill jungle camps actively during transition windows to maximize the chance of getting higher-tier items.</p>
-              </div>
+              {SYSTEM_NOTES.map(note => (
+                <div key={note.title} className="space-y-1">
+                  <p className="font-medium text-gray-300">{note.title}</p>
+                  <p>{note.body}</p>
+                </div>
+              ))}
             </div>
           </motion.div>
         )}
@@ -473,28 +455,28 @@ export function NeutralItemsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
               {[
                 {
-                  title: 'Clear the stash',
-                  body: 'The neutral stash has a 12-item cap. Assign a carry to check it after every teamfight and equip unused items on the most appropriate hero before the stash fills up.',
+                  title: 'Farm camps actively',
+                  body: 'Clearing full camps drops Madstone. The more camps you clear the faster you craft your neutral item. Junglers and offlaners should be clearing camps on cooldown.',
                 },
                 {
-                  title: 'Tier transitions are key',
-                  body: 'At each tier window (7, 17, 27, 37 min), push into the enemy jungle to steal their camps right as the tier upgrades. Denying their neutral creeps denies their items.',
+                  title: 'Save Dormant Curio',
+                  body: 'If you receive a Dormant Curio at Tier 1, hold it and wait until Tier 3 or higher before using it. The 30% potency increase is far more valuable on stronger artifacts.',
                 },
                 {
-                  title: 'Pass down items on death',
-                  body: 'When a hero dies and drops a neutral item, retrieving it from the ground resets it to the stash. Quickly recover items before the enemy team picks them up.',
+                  title: 'Steal enemy jungle',
+                  body: 'At each tier transition window (7, 17, 27, 37 min), rotate into the enemy jungle to deny their camps. Less Madstone for them means slower neutral item crafting.',
                 },
                 {
-                  title: 'Support first at Tier 1-2',
-                  body: "Supports gain the most relative power from Tier 1-2 items. Items like Philosopher's Stone and Bullwhip are transformative for position 4 and 5 heroes.",
+                  title: 'Supports at Tier 1-2',
+                  body: 'Supports should prioritize farming Madstone for their early tiers. Items like Kobold Cup, Essence Ring, and Ring of Aquila are transformative for position 4 and 5 heroes.',
                 },
                 {
-                  title: 'Carry first at Tier 4-5',
-                  body: 'High-tier items like Apex, Ninja Gear, and Pirate Hat are so powerful that they should almost always go to the carry or the hero who can create the most impact.',
+                  title: 'Carries at Tier 4-5',
+                  body: 'High-tier items like Apex, Helm of the Undying, and Giants Ring are so powerful they should go to the carry or whoever creates the most impact in teamfights.',
                 },
                 {
-                  title: 'Situational awareness',
-                  body: 'Read the game before equipping. A support holding a Clumsy Net becomes a second initiator. A carry with Mirror Shield becomes immune to hex. Always think about what the enemy lineup does.',
+                  title: 'Read the enemy lineup',
+                  body: 'Choose your artifact based on what the enemy has. Clumsy Net versus an immobile hero. Mirror Shield or Divine Regalia versus single-target lockdown. Always adapt to the draft.',
                 },
               ].map(({ title, body }) => (
                 <div key={title} className="p-5 rounded-2xl border border-white/8 bg-[#0d1117]">
