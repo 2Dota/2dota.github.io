@@ -119,49 +119,6 @@ src/
 
 ---
 
-## Data Model
-
-### Shop Item
-
-```typescript
-interface ShopItem {
-  id: string;
-  name: string;
-  slug: string;           // Valve CDN image slug
-  category: ShopCategory; // 9 categories
-  cost: number;
-  imageUrl: string;       // cdn.cloudflare.steamstatic.com/...
-  description: string;
-  stats: string[];
-  active?: string;
-  passive?: string;
-  tips: string[];
-  buildsFrom?: string[];
-  buildsInto?: string[];
-  tier: 'Basic' | 'Upgrade';
-}
-```
-
-### Neutral Item
-
-```typescript
-interface NeutralItem {
-  id: string;
-  name: string;
-  slug: string;           // Valve CDN internal name (not display name)
-  tier: 1 | 2 | 3 | 4 | 5;
-  imageUrl: string;
-  description: string;
-  stats: string[];
-  active?: string;
-  passive?: string;
-  tips: string[];
-  dropTime: string;
-}
-```
-
----
-
 ## Item Coverage
 
 ### Shop - 9 Categories, 94 Items
