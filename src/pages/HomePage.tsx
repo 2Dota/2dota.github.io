@@ -2,10 +2,11 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   ShoppingBag, ArrowRight, Sword, Star, Shield,
-  Zap, Package, BookOpen,
+  Zap, Package, BookOpen, Users,
 } from 'lucide-react';
 import { SHOP_ITEMS, SHOP_CATEGORIES } from '../data/shopItems';
 import { NEUTRAL_ITEMS, NEUTRAL_TIERS } from '../data/neutralItems';
+import { ALL_HEROES, HERO_ATTRIBUTES, ATTRIBUTE_COLORS } from '../data/heroes';
 
 const FADE_UP = {
   hidden: { opacity: 0, y: 24 },
@@ -58,7 +59,7 @@ function SectionCard({
                 <h2 className="text-2xl font-bold text-white tracking-tight group-hover:text-rose-300 transition-colors">
                   {title}
                 </h2>
-                <p className="text-sm mt-0.5" style={{ color: accentColor + '99' }}>{subtitle}</p>
+                <p className="text-sm mt-0.5" style={{ color: `${accentColor}99` }}>{subtitle}</p>
               </div>
             </div>
             <p className="text-gray-400 leading-relaxed mb-8 text-sm">{description}</p>
@@ -82,16 +83,20 @@ function SectionCard({
 }
 
 export function HomePage() {
-  const shopItemCount = SHOP_ITEMS.length;
+  const shopItemCount     = SHOP_ITEMS.length;
   const shopCategoryCount = SHOP_CATEGORIES.length;
-  const upgradeCount = SHOP_ITEMS.filter(i => i.tier === 'Upgrade').length;
-  const neutralCount = NEUTRAL_ITEMS.length;
-  const neutralTierCount = NEUTRAL_TIERS.length;
-  const tier5Count = NEUTRAL_ITEMS.filter(i => i.tier === 5).length;
+  const upgradeCount      = SHOP_ITEMS.filter(i => i.tier === 'Upgrade').length;
+  const neutralCount      = NEUTRAL_ITEMS.length;
+  const neutralTierCount  = NEUTRAL_TIERS.length;
+  const tier5Count        = NEUTRAL_ITEMS.filter(i => i.tier === 5).length;
+  const heroCount         = ALL_HEROES.length;
+  const strCount          = ALL_HEROES.filter(h => h.attribute === 'Strength').length;
+  const agiCount          = ALL_HEROES.filter(h => h.attribute === 'Agility').length;
+  const intCount          = ALL_HEROES.filter(h => h.attribute === 'Intelligence').length;
 
   return (
     <div>
-      {/* ── Hero ──────────────────────────────────────────────── */}
+      {/* ── Hero ──────────────────────────────────────────── */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-[#070a0f]" />
         <div
@@ -148,10 +153,11 @@ export function HomePage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto mb-12"
           >
-            Every purchasable item and neutral drop in Dota 2. Rich guides, hidden mechanics,
-            tips and pro strategies for every item in the game.
+            Every hero, every shop item, and every neutral drop in Dota 2.
+            Rich guides, stats, tips, and pro strategies in one place.
           </motion.p>
 
+          {/* Stat pills */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -159,10 +165,10 @@ export function HomePage() {
             className="flex flex-wrap items-center justify-center gap-3 mb-14"
           >
             {[
+              { Icon: Users,       label: `${heroCount} Heroes` },
               { Icon: ShoppingBag, label: `${shopItemCount} Shop Items` },
-              { Icon: Package, label: `${neutralCount} Neutral Items` },
-              { Icon: Shield, label: `${shopCategoryCount} Categories` },
-              { Icon: Zap, label: `${upgradeCount} Upgrades` },
+              { Icon: Package,     label: `${neutralCount} Neutral Items` },
+              { Icon: Zap,         label: `${upgradeCount} Upgrades` },
             ].map(({ Icon, label }) => (
               <div
                 key={label}
@@ -174,6 +180,7 @@ export function HomePage() {
             ))}
           </motion.div>
 
+          {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -181,22 +188,23 @@ export function HomePage() {
             className="flex flex-wrap items-center justify-center gap-4"
           >
             <Link
-              to="/shop"
+              to="/heroes"
               className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-rose-600 to-rose-500 text-white font-semibold text-sm shadow-lg shadow-rose-500/30 hover:shadow-rose-500/50 hover:-translate-y-0.5 transition-all duration-200"
             >
-              <ShoppingBag className="w-4 h-4" strokeWidth={1.75} />
-              Browse Shop Items
+              <Users className="w-4 h-4" strokeWidth={1.75} />
+              Browse Heroes
             </Link>
             <Link
-              to="/neutral"
+              to="/shop"
               className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl border border-white/15 bg-white/5 text-white font-semibold text-sm hover:bg-white/10 hover:border-white/25 hover:-translate-y-0.5 transition-all duration-200"
             >
-              <Package className="w-4 h-4" strokeWidth={1.75} />
-              Neutral Items
+              <ShoppingBag className="w-4 h-4" strokeWidth={1.75} />
+              Item Shop
             </Link>
           </motion.div>
         </div>
 
+        {/* Scroll hint */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
           <motion.div
             animate={{ y: [0, 8, 0] }}
@@ -208,7 +216,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* ── Section cards ─────────────────────────────────────── */}
+      {/* ── Section cards ─────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <motion.div
           custom={0}
@@ -219,26 +227,43 @@ export function HomePage() {
           className="text-center mb-14"
         >
           <p className="text-rose-400 text-xs font-semibold uppercase tracking-widest mb-3">Explore</p>
-          <h2 className="text-4xl font-bold text-white tracking-tight">Choose your guide</h2>
-          <p className="text-gray-500 mt-3">Everything documented, nothing missing</p>
+          <h2 className="text-4xl font-bold text-white tracking-tight">Three guides, everything covered</h2>
+          <p className="text-gray-500 mt-3">Pick where you want to start</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <SectionCard
+            to="/heroes"
+            Icon={Users}
+            title="Heroes"
+            subtitle="Full Hero Directory"
+            description="All heroes with attributes, roles, attack type, and complexity. Filter by anything to find your next pick or learn the roster."
+            stats={[
+              { label: 'Heroes', value: String(heroCount) },
+              { label: 'STR / AGI',  value: `${strCount}/${agiCount}` },
+              { label: 'INT / UNI',  value: `${intCount}/${ALL_HEROES.filter(h => h.attribute === 'Universal').length}` },
+            ]}
+            gradientFrom="from-rose-600"
+            gradientTo="to-purple-600"
+            accentColor="#fb7185"
+            delay={1}
+            tag="Heroes"
+          />
           <SectionCard
             to="/shop"
             Icon={ShoppingBag}
             title="In-Game Shop"
             subtitle="All Purchasable Items"
-            description="Complete guide to every item in the Dota 2 shop. Stats, costs, build paths, active and passive abilities, and pro tips. Everything to master the item economy."
+            description="Complete reference for every item in the Dota 2 shop. Stats, costs, build paths, active and passive abilities for all 94 items."
             stats={[
-              { label: 'Shop Items', value: String(shopItemCount) },
+              { label: 'Items',      value: String(shopItemCount) },
               { label: 'Categories', value: String(shopCategoryCount) },
-              { label: 'Upgrades', value: String(upgradeCount) },
+              { label: 'Upgrades',   value: String(upgradeCount) },
             ]}
             gradientFrom="from-amber-500"
             gradientTo="to-orange-500"
             accentColor="#f59e0b"
-            delay={1}
+            delay={2}
             tag="In-Game"
           />
           <SectionCard
@@ -246,22 +271,82 @@ export function HomePage() {
             Icon={Package}
             title="Neutral Items"
             subtitle="Jungle Drop Guide"
-            description="All 5 tiers of neutral items dropped in the Dota 2 jungle. Full stats, tips, prioritization guides, and strategies for every item from Tier 1 basics to Tier 5 game-changers."
+            description="All 43 neutral items across 5 tiers. Full stats, drop times, Madstone crafting guide, and pro tips for every tier."
             stats={[
-              { label: 'Neutral Items', value: String(neutralCount) },
-              { label: 'Tiers', value: String(neutralTierCount) },
-              { label: 'Tier 5 Items', value: String(tier5Count) },
+              { label: 'Neutrals', value: String(neutralCount) },
+              { label: 'Tiers',    value: String(neutralTierCount) },
+              { label: 'Tier 5',   value: String(tier5Count) },
             ]}
             gradientFrom="from-yellow-500"
             gradientTo="to-amber-600"
             accentColor="#eab308"
-            delay={2}
+            delay={3}
             tag="Jungle"
           />
         </div>
       </section>
 
-      {/* ── Coming soon ───────────────────────────────────────── */}
+      {/* ── Hero attribute preview ─────────────────────────── */}
+      <section className="border-t border-white/5 py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="flex items-end justify-between mb-10"
+          >
+            <div>
+              <p className="text-gray-600 text-xs font-semibold uppercase tracking-widest mb-2">By the numbers</p>
+              <h2 className="text-2xl font-bold text-white">Hero breakdown</h2>
+            </div>
+            <Link
+              to="/heroes"
+              className="flex items-center gap-1.5 text-sm text-rose-400 hover:text-rose-300 transition-colors"
+            >
+              View all
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </motion.div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {HERO_ATTRIBUTES.map((attr, i) => {
+              const color = ATTRIBUTE_COLORS[attr];
+              const count = ALL_HEROES.filter(h => h.attribute === attr).length;
+              const pct   = Math.round((count / ALL_HEROES.length) * 100);
+              return (
+                <motion.div
+                  key={attr}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                >
+                  <Link to={`/heroes?attr=${attr}`} className="group block p-5 rounded-2xl border border-white/8 bg-[#0d1117] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5">
+                    <div
+                      className="w-9 h-9 rounded-xl flex items-center justify-center mb-4"
+                      style={{ background: `${color}15`, border: `1px solid ${color}30` }}
+                    >
+                      <Shield className="w-4.5 h-4.5" style={{ color }} strokeWidth={1.75} />
+                    </div>
+                    <p className="text-2xl font-bold text-white mb-0.5">{count}</p>
+                    <p className="text-sm font-medium" style={{ color }}>{attr}</p>
+                    <div className="mt-3 h-1 rounded-full bg-white/5 overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all duration-700"
+                        style={{ width: `${pct}%`, background: color }}
+                      />
+                    </div>
+                    <p className="text-xs text-gray-600 mt-1">{pct}% of roster</p>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Coming soon ───────────────────────────────────── */}
       <section className="border-t border-white/5 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -277,10 +362,10 @@ export function HomePage() {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {[
-              { Icon: Shield, label: 'Heroes', sub: 'All 124 heroes' },
-              { Icon: Sword, label: 'Patch Notes', sub: 'Change history' },
-              { Icon: Star, label: 'Tier Lists', sub: 'Meta analysis' },
-              { Icon: BookOpen, label: 'Guides', sub: 'Strategy content' },
+              { Icon: Sword,    label: 'Patch Notes', sub: 'Change history' },
+              { Icon: Star,     label: 'Tier Lists',  sub: 'Meta analysis' },
+              { Icon: BookOpen, label: 'Guides',      sub: 'Strategy content' },
+              { Icon: Zap,      label: 'Abilities',   sub: 'Full ability index' },
             ].map(({ Icon, label, sub }, i) => (
               <motion.div
                 key={label}

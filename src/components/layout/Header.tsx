@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sword, ShoppingBag, Home, Package } from 'lucide-react';
+import { Menu, X, Sword, ShoppingBag, Home, Package, Users } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const NAV = [
-  { to: '/', label: 'Home', Icon: Home },
-  { to: '/shop', label: 'In-Game Shop', Icon: ShoppingBag },
+  { to: '/',        label: 'Home',          Icon: Home },
+  { to: '/heroes',  label: 'Heroes',        Icon: Users },
+  { to: '/shop',    label: 'In-Game Shop',  Icon: ShoppingBag },
   { to: '/neutral', label: 'Neutral Items', Icon: Package },
 ];
 
 export function Header() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen]       = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { pathname } = useLocation();
+  const { pathname }          = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -32,6 +33,7 @@ export function Header() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
+          {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group shrink-0">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-rose-500 via-rose-600 to-amber-500 flex items-center justify-center shadow-lg shadow-rose-500/30 group-hover:shadow-rose-500/50 transition-all duration-200 group-hover:scale-105">
               <Sword className="w-4 h-4 text-white" strokeWidth={2.5} />
@@ -42,6 +44,7 @@ export function Header() {
             </div>
           </Link>
 
+          {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
             {NAV.map(({ to, label, Icon }) => {
               const active = pathname === to || (to !== '/' && pathname.startsWith(to));
@@ -62,6 +65,7 @@ export function Header() {
             })}
           </nav>
 
+          {/* Mobile toggle */}
           <button
             className="md:hidden p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all"
             onClick={() => setOpen(v => !v)}
@@ -72,6 +76,7 @@ export function Header() {
         </div>
       </div>
 
+      {/* Mobile drawer */}
       <AnimatePresence>
         {open && (
           <motion.div
