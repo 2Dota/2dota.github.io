@@ -4,6 +4,7 @@ import { HomePage } from './pages/HomePage';
 import { ShopGuidePage } from './pages/ShopGuidePage';
 import { ShopItemDetailPage } from './pages/ShopItemDetailPage';
 import { NeutralItemsPage } from './pages/NeutralItemsPage';
+import { HeroesPage } from './pages/HeroesPage';
 
 const basename = import.meta.env.BASE_URL;
 
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/shop" element={<ShopGuidePage />} />
           <Route path="/shop/:id" element={<ShopItemDetailPage />} />
           <Route path="/neutral" element={<NeutralItemsPage />} />
+          <Route path="/heroes" element={<HeroesPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>
