@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search, X, Shield, Zap, Brain, Globe,
@@ -67,11 +68,12 @@ function HeroCard({ hero, index }: { hero: Hero; index: number }) {
   const color = ATTRIBUTE_COLORS[hero.attribute];
 
   return (
+    <Link to={`/heroes/${hero.slug}`} className="group block">
     <motion.article
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, delay: Math.min(index * 0.025, 0.5) }}
-      className="group relative rounded-2xl border border-white/8 bg-[#0d1117] overflow-hidden hover:border-white/22 hover:-translate-y-1 transition-all duration-200 hover:shadow-xl hover:shadow-black/50 cursor-default"
+      className="relative rounded-2xl border border-white/8 bg-[#0d1117] overflow-hidden hover:border-white/22 hover:-translate-y-1 transition-all duration-200 hover:shadow-xl hover:shadow-black/50"
     >
       {/* Attribute accent line */}
       <div
@@ -132,6 +134,7 @@ function HeroCard({ hero, index }: { hero: Hero; index: number }) {
         </div>
       </div>
     </motion.article>
+    </Link>
   );
 }
 
