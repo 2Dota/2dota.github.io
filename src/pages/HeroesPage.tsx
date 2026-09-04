@@ -46,7 +46,7 @@ function HeroImg({ hero, className = '' }: { hero: Hero; className?: string }) {
       <img
         src={hero.imageUrl}
         alt={hero.name}
-        className={`w-full h-full object-cover object-top ${className}`}
+        className={`w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105 ${className}`}
         onError={() => setErr(true)}
         loading="lazy"
       />

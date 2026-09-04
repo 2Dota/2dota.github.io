@@ -8,8 +8,8 @@
 //   Visage, Void Spirit, Windranger
 // Spectre moved from Universal to Agility in 7.40
 
-const CDN = 'https://cdn.dota2.com/apps/dota2/images/heroes';
-const img = (slug: string) => `${CDN}/${slug}_lg.png`;
+const CDN = 'https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes';
+const img = (slug: string) => `${CDN}/${slug}.png`;
 
 export type HeroAttribute = 'Strength' | 'Agility' | 'Intelligence' | 'Universal';
 export type HeroRole =

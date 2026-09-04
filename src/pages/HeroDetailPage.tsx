@@ -18,27 +18,25 @@ function AttrIcon({ attr, size = 14 }: { attr: HeroAttribute; size?: number }) {
   return <Globe {...props} />;
 }
 
+const HERO_CDN = 'https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes';
+
 function HeroPortrait({ slug, name }: { slug: string; name: string }) {
   const [err, setErr] = useState(false);
-  const url = `https://cdn.dota2.com/apps/dota2/images/heroes/${slug}_full.png`;
 
   if (!err) {
     return (
       <img
-        src={url}
+        src={`${HERO_CDN}/${slug}.png`}
         alt={name}
-        className="w-full h-full object-cover object-center"
+        className="w-full h-full object-cover object-top scale-110"
         onError={() => setErr(true)}
       />
     );
   }
-  // Fallback to _lg.png
   return (
-    <img
-      src={`https://cdn.dota2.com/apps/dota2/images/heroes/${slug}_lg.png`}
-      alt={name}
-      className="w-full h-full object-cover object-center"
-    />
+    <div className="w-full h-full flex items-center justify-center bg-[#0a0d12]">
+      <Users className="w-16 h-16 text-gray-700" strokeWidth={1} />
+    </div>
   );
 }
 
@@ -455,7 +453,7 @@ export function HeroDetailPage() {
                     <div className="h-px" style={{ background: `linear-gradient(90deg, transparent, ${relColor}70, transparent)` }} />
                     <div className="h-24 bg-[#0a0d12] overflow-hidden">
                       <img
-                        src={`https://cdn.dota2.com/apps/dota2/images/heroes/${rel.slug}_lg.png`}
+                        src={`https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/${rel.slug}.png`}
                         alt={rel.name}
                         className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                         loading="lazy"
